@@ -7,18 +7,39 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct FeedView: View {
+    //@State var  =
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            PostView()
         }
-        .padding()
     }
 }
 
-#Preview {
-    ContentView()
+struct PostView: View {
+
+    var body: some View {
+        HStack() {
+            Color(.blue)
+                .frame(width: 200, height: 100)
+            //left side
+            VStack() {
+                Rectangle().frame(width: 100, height: 100).foregroundColor(Color.red).offset(x: -75, y: -175)
+            }
+            //right side
+            VStack() {
+                
+            }
+        }
+    }
+}
+
+
+
+
+struct FeedView_Previews: PreviewProvider {
+    static var previews: some View {
+        FeedView()
+    }
 }

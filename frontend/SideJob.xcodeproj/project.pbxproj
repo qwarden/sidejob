@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		F6B789492ACDE8ED00D161BE /* SideJob.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SideJob.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideJobApp.swift; sourceTree = "<group>"; };
-		F6B7894E2ACDE8ED00D161BE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F6B7894E2ACDE8ED00D161BE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = SideJob/ContentView.swift; sourceTree = SOURCE_ROOT; };
 		F6B789502ACDE8EE00D161BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F6B789532ACDE8EE00D161BE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
