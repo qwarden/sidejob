@@ -9,11 +9,16 @@ import SwiftUI
 
 struct FeedView: View {
     
-    let post = Post(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "India")
+    let post1 = Post(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "India")
+    let post2 = Post(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
+    let post3 = Post(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
     
     var body: some View {
         VStack {
-            PostView(post: post)
+            PostView(post: post1)
+            PostView(post: post2)
+            PostView(post: post3)
+            
         }
     }
 }
