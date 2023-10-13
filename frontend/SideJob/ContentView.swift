@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct FeedView: View {
+    var postList = [Post]()
     
     let post1 = Post(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "India")
     let post2 = Post(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
     let post3 = Post(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
     
+    //postList.append(post1)
+    
+    
     var body: some View {
-        VStack {
-            PostView(post: post1)
-            PostView(post: post2)
-            PostView(post: post3)
-            
+        VStack() {
+            PostView(post: post1).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
+            PostView(post: post2).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
+            PostView(post: post3).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5)
+                .padding(10)
         }
     }
 }
@@ -34,11 +38,6 @@ struct PostView: View {
     let post : Post
     
     var body: some View {
-        //background
-        Color(red: 0.7, green: 0.8, blue: 1.0)
-            .frame(width: 300, height: 200)
-            .cornerRadius(10)
-        
         HStack() {
             //left side
             VStack() {
@@ -50,8 +49,8 @@ struct PostView: View {
                         .background(.red)
                         .foregroundColor(Color.white)
                         .cornerRadius(5)
-                        .frame(width: 150, height: 30)
-                        .offset(x: 0, y: -110)
+                        .frame(width: 150, height: 110, alignment: .bottom)
+                        
                 }
                     
             }
@@ -62,15 +61,13 @@ struct PostView: View {
                     .font(.system(size: 30))
                     .foregroundColor(Color.black)
                     .bold()
-                    .offset(x: 0, y: -200)
+                    .padding(10)
                 Text(post.description)
                     .foregroundColor(Color.black)
-                    .offset(x:0, y: -180)
                 Text("\(post.price)$ per hour")
                     .foregroundColor(Color.black)
-                    .offset(x:0, y: 0)
                     .font(.system(size: 20))
-                    .offset(x:0, y: -180)
+                    
 
                 Button(){
                     
@@ -80,7 +77,6 @@ struct PostView: View {
                         .foregroundColor(Color.white)
                         .cornerRadius(5)
                         .frame(width: 75, height: 30)
-                        .offset(x: 0, y: -165)
                 }
                 
             }
@@ -89,12 +85,31 @@ struct PostView: View {
 }
 
 
+// TAB VIEW
+struct TabViewDemo: View {
+    @State var selection = 1
+    init() {
+    UITabBar.appearance().backgroundColor = UIColor.gray
+    }
+    
+    var body: some View {
+        TabView(selection: $selection) {
+            FeedView()
+                .tabItem() {
+                    Image(systemName: "list.bullet")
+                }.tag(1)
+            ProfileView()
+                .tabItem() {
+                    Image(systemName: "person")
+                }.tag(2)
+            
+        }
+    }
+}
 
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        
-      
         FeedView()
     }
 }
