@@ -15,8 +15,9 @@ type User struct {
 
 type Job struct {
   ID          uint
+  Name        string
   Address     string
   Description string
+  UserID      uint
 }
-
 

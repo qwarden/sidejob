@@ -2,27 +2,32 @@ package main
 
 import (
     "net/http"
+    "os"
+    "fmt"
+    "time"
+    "log"
+
     "github.com/gin-gonic/gin"
     "gorm.io/gorm"
-    "gorm.io/driver/mysql"
+    "gorm.io/driver/postgres"
 )
 
 // var db *gorm.DB
 
 func main() {
-  r := init_router()
-  init_db()
-
+  r := initRouter()
+  initDB()
+  
   r.Run(":8080")
 }
 
-func init_router() *gin.Engine {
+func initRouter() *gin.Engine {
     r := gin.Default()
 
     r.GET("/", func (c *gin.Context) {
       c.JSON(http.StatusOK, gin.H{
         "version": "1.0",
-      })
+     })
   })
 
     // User Routes
@@ -43,9 +48,12 @@ func init_router() *gin.Engine {
     return r
 }
 
-func init_db() *gorm.DB {
-    dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
-    db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+func initDB() *gorm.DB {
+    dsn := os.Getenv("DATABASE_URL") 
+    config := gorm.Config{}
+    timeout := 5 * time.Minute
+
+    db, err := waitForDB(dsn, &config, timeout)
 
     if err != nil {
       panic("Failed to connect to database: " + err.Error())
@@ -60,4 +68,26 @@ func init_db() *gorm.DB {
     return db
 }
 
+func waitForDB(dsn string, config *gorm.Config, timeout time.Duration) (*gorm.DB, error) {
+    ticker := time.NewTicker(time.Second)
+    defer ticker.Stop()
+
+    timeoutExceeded := time.After(timeout)
+
+    for {
+      select {
+      case <-timeoutExceeded:
+        return nil, fmt.Errorf("db connection failed after %s timeout", timeout)
+
+      case <-ticker.C:
+        db, err := gorm.Open(postgres.Open(dsn), config)
+
+        if err == nil {
+          return db, nil
+        } 
+
+        log.Println(fmt.Errorf("%w failed to connect to db %s", err, dsn))
+    }
+  }
+}
 
