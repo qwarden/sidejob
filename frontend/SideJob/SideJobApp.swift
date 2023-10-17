@@ -11,7 +11,7 @@ import SwiftUI
 struct SideJobApp: App {
     var body: some Scene {
         WindowGroup {
-            FeedView()
+            LoginView().environmentObject(UserInfo())
         }
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
     var body: some View {
         ProfilePictureView()
         //abViewDemo()
@@ -19,10 +20,13 @@ struct ProfileView: View {
 struct ProfilePictureView: View {
     //@Binding var imageName: String
     var body: some View {
-        Image(systemName: "person.circle")
-        .resizable()
-        .scaledToFit()
-        .clipShape(Circle())
+        VStack {
+            Image(systemName: "person.circle")
+                .resizable()
+                .scaledToFit()
+                .clipShape(Circle())
+        }
+        
     }
 }
 
