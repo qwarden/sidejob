@@ -8,28 +8,21 @@
 import SwiftUI
 
 struct LoginView: View {
+    @State private var username = ""
+    @State private var password = ""
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Login to your Account:")
+        VStack(spacing: 100) {
+            HStack { Text("Username"); TextField("username", text: $username) }
+            HStack { Text("Password"); TextField("password", text: $password) }
+            Button("Log In", action: attemptLogin).buttonStyle(.bordered)
+        }.padding()
     }
 }
 
-
-class UserInfo: ObservableObject {
-    var name: String
-    var email: String
-    var phoneNumber: String
-    var userID: Int
-    var jobsPostedIDs: [Int]
-    var jobsWorkedIDs: [Int]
-    
-    init() {
-        self.name = ""
-        self.email = ""
-        self.phoneNumber = ""
-        self.userID = -1
-        self.jobsPostedIDs = [Int]()
-        self.jobsWorkedIDs = [Int]()
-    }
+func attemptLogin(){
+    // where we check with backed to see if user is valid
+    // if it works, set logged in to true
 }
 
 #Preview {
