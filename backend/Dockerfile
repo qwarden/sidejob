@@ -10,16 +10,16 @@ RUN go mod download
 
 COPY src/*.go ./
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/sidejob-api
+RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/sidejob-api
 
 FROM gcr.io/distroless/base-debian11 AS build-release-stage
 
-WORKDIR /
+WORKDIR /api
 
-COPY --from=build-stage /bin/sidejob-api /bin/sidejob-api
+COPY --from=build-stage /api/bin/sidejob-api ./bin/sidejob-api
 
 EXPOSE 8080
 
 USER nonroot:nonroot
 
-ENTRYPOINT ["/bin/sidejob-api"]
+ENTRYPOINT ["/api/bin/sidejob-api"]

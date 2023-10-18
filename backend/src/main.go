@@ -25,10 +25,10 @@ func initRouter() *gin.Engine {
     r := gin.Default()
 
     r.GET("/", func (c *gin.Context) {
-      c.JSON(http.StatusOK, gin.H{
+      c.JSON(http.StatusOK, gin.H {
         "version": "1.0",
-     })
-  })
+      })
+    })
 
     // User Routes
     r.GET("/users", getUsers)
