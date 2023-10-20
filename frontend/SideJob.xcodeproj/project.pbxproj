@@ -7,16 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A8451E5F2ADF180500FA3CE0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E5E2ADF180500FA3CE0 /* LoginView.swift */; };
+		A8451E612ADF182500FA3CE0 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E602ADF182400FA3CE0 /* DetailsView.swift */; };
+		A8451E652ADF185800FA3CE0 /* MyJobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E642ADF185800FA3CE0 /* MyJobsView.swift */; };
+		A8451E692ADF18B200FA3CE0 /* MyListingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E682ADF18B200FA3CE0 /* MyListingsView.swift */; };
+		A8451E6B2ADF18C600FA3CE0 /* EditInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E6A2ADF18C600FA3CE0 /* EditInfoView.swift */; };
+		A87817632AE04B840021625C /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87817622AE04B830021625C /* WelcomeView.swift */; };
+		A87817652AE04B930021625C /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87817642AE04B930021625C /* CreateAccountView.swift */; };
+		A8F2938D2AD9DCD20071F842 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2938C2AD9DCD20071F842 /* ProfileView.swift */; };
 		F6B7894D2ACDE8ED00D161BE /* SideJobApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */; };
-		F6B7894F2ACDE8ED00D161BE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7894E2ACDE8ED00D161BE /* ContentView.swift */; };
+		F6B7894F2ACDE8ED00D161BE /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7894E2ACDE8ED00D161BE /* FeedView.swift */; };
 		F6B789512ACDE8EE00D161BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6B789502ACDE8EE00D161BE /* Assets.xcassets */; };
 		F6B789542ACDE8EE00D161BE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6B789532ACDE8EE00D161BE /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A8451E5E2ADF180500FA3CE0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A8451E602ADF182400FA3CE0 /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
+		A8451E642ADF185800FA3CE0 /* MyJobsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyJobsView.swift; sourceTree = "<group>"; };
+		A8451E682ADF18B200FA3CE0 /* MyListingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListingsView.swift; sourceTree = "<group>"; };
+		A8451E6A2ADF18C600FA3CE0 /* EditInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfoView.swift; sourceTree = "<group>"; };
+		A87817622AE04B830021625C /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		A87817642AE04B930021625C /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
+		A8F2938C2AD9DCD20071F842 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		F6B789492ACDE8ED00D161BE /* SideJob.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SideJob.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideJobApp.swift; sourceTree = "<group>"; };
-		F6B7894E2ACDE8ED00D161BE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F6B7894E2ACDE8ED00D161BE /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FeedView.swift; path = SideJob/FeedView.swift; sourceTree = SOURCE_ROOT; };
 		F6B789502ACDE8EE00D161BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F6B789532ACDE8EE00D161BE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,10 +67,18 @@
 		F6B7894B2ACDE8ED00D161BE /* SideJob */ = {
 			isa = PBXGroup;
 			children = (
+				A8451E602ADF182400FA3CE0 /* DetailsView.swift */,
 				F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */,
-				F6B7894E2ACDE8ED00D161BE /* ContentView.swift */,
+				F6B7894E2ACDE8ED00D161BE /* FeedView.swift */,
+				A8F2938C2AD9DCD20071F842 /* ProfileView.swift */,
+				A8451E5E2ADF180500FA3CE0 /* LoginView.swift */,
+				A8451E642ADF185800FA3CE0 /* MyJobsView.swift */,
+				A8451E682ADF18B200FA3CE0 /* MyListingsView.swift */,
+				A8451E6A2ADF18C600FA3CE0 /* EditInfoView.swift */,
 				F6B789502ACDE8EE00D161BE /* Assets.xcassets */,
 				F6B789522ACDE8EE00D161BE /* Preview Content */,
+				A87817622AE04B830021625C /* WelcomeView.swift */,
+				A87817642AE04B930021625C /* CreateAccountView.swift */,
 			);
 			path = SideJob;
 			sourceTree = "<group>";
@@ -137,7 +161,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6B7894F2ACDE8ED00D161BE /* ContentView.swift in Sources */,
+				F6B7894F2ACDE8ED00D161BE /* FeedView.swift in Sources */,
+				A8451E692ADF18B200FA3CE0 /* MyListingsView.swift in Sources */,
+				A8451E6B2ADF18C600FA3CE0 /* EditInfoView.swift in Sources */,
+				A8451E612ADF182500FA3CE0 /* DetailsView.swift in Sources */,
+				A87817652AE04B930021625C /* CreateAccountView.swift in Sources */,
+				A87817632AE04B840021625C /* WelcomeView.swift in Sources */,
+				A8451E652ADF185800FA3CE0 /* MyJobsView.swift in Sources */,
+				A8F2938D2AD9DCD20071F842 /* ProfileView.swift in Sources */,
+				A8451E5F2ADF180500FA3CE0 /* LoginView.swift in Sources */,
 				F6B7894D2ACDE8ED00D161BE /* SideJobApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,7 +229,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -254,7 +286,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -279,6 +311,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -288,7 +321,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -307,6 +340,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -316,7 +350,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
