@@ -9,14 +9,14 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetJobsForUser(c *gin.Context) {
+func GetJobsForUser(c *gin.Context, db *gorm.DB) {
 	var jobs []models.Job
 	userID := c.Param("userID")
 	db.Where("posted_by_id = ?", userID).Find(&jobs)
 	c.JSON(http.StatusOK, gin.H{"jobs": jobs})
 }
 
-func GetJobForUser(c *gin.Context) {
+func GetJobForUser(c *gin.Context, db *gorm.DB) {
 	var job models.Job
 	userID := c.Param("userID")
 	jobID := c.Param("jobID")
@@ -27,7 +27,7 @@ func GetJobForUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"job": job})
 }
 
-func PostJobForUser(c *gin.Context) {
+func PostJobForUser(c *gin.Context, db *gorm.DB) {
 	var job models.Job
 	userID := c.Param("userID")
 
@@ -65,11 +65,11 @@ func PostJobForUser(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"job": job})
 }
 
-func PatchJobForUser(c *gin.Context) {
+func PatchJobForUser(c *gin.Context, db *gorm.DB) {
 
 }
 
-func DeleteJobForUser(c *gin.Context) {
+func DeleteJobForUser(c *gin.Context, db *gorm.DB) {
 	jobID := c.Param("jobID")
 	if err := db.Delete(&models.Job{}, jobID).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error deleting job"})
