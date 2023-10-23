@@ -1,4 +1,4 @@
-module github.com/qwarden/sidejob
+module github.com/qwarden/sidejob/backend
 
 go 1.21.1
 
