@@ -9,16 +9,20 @@ import SwiftUI
 
 struct WelcomeView: View {
     var body: some View {
-        Text("Welcome to SideJob!")
-        NavigationDemo()
+        VStack {
+            LoginAccountNavigation()
+        }
     }
 }
 
-struct NavigationDemo: View {
+struct LoginAccountNavigation: View {
     var body: some View {
         NavigationStack {
+            Text("SideJob").font(.system(size: 48, weight: .bold, design: .default))
+                .foregroundColor(Color(.systemBlue)).padding(100)
             NavigationLink(destination: LoginView()) {
-                Text("Login").font(.largeTitle) }
+                Text("Login").font(.largeTitle)
+            }.padding()
             NavigationLink(destination: CreateAccountView()) {
                 Text("Create Account").font(.largeTitle)
             }
