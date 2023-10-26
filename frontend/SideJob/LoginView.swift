@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var username = ""
+    @State private var email = ""
     @State private var password = ""
     var body: some View {
-        Text("Login to your Account:")
-        VStack(spacing: 100) {
-            HStack { Text("Username"); TextField("username", text: $username) }
-            HStack { Text("Password"); TextField("password", text: $password) }
+        Text("Login to your Account:").font(.system(size: 24, weight: .bold, design: .default)).padding()
+        VStack(spacing: 25) {
+            HStack { Text("Email"); TextField("email", text: $email) }
+            HStack { Text("Password"); SecureField("password", text: $password) }
             Button("Log In", action: attemptLogin).buttonStyle(.bordered)
         }.padding()
     }

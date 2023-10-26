@@ -17,9 +17,9 @@ struct WelcomeView: View {
 
 struct LoginAccountNavigation: View {
     var body: some View {
+        Text("SideJob").font(.system(size: 48, weight: .bold, design: .default))
+            .foregroundColor(Color(.systemBlue)).padding(100)
         NavigationStack {
-            Text("SideJob").font(.system(size: 48, weight: .bold, design: .default))
-                .foregroundColor(Color(.systemBlue)).padding(100)
             NavigationLink(destination: LoginView()) {
                 Text("Login").font(.largeTitle)
             }.padding()
@@ -27,25 +27,6 @@ struct LoginAccountNavigation: View {
                 Text("Create Account").font(.largeTitle)
             }
         }
-    }
-}
-
-
-class UserInfo: ObservableObject {
-    var name: String
-    var email: String
-    var phoneNumber: String
-    var userID: Int
-    var jobsPostedIDs: [Int]
-    var jobsWorkedIDs: [Int]
-    
-    init() {
-        self.name = ""
-        self.email = ""
-        self.phoneNumber = ""
-        self.userID = -1
-        self.jobsPostedIDs = [Int]()
-        self.jobsWorkedIDs = [Int]()
     }
 }
 
