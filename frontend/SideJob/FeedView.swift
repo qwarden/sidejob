@@ -8,78 +8,21 @@
 import SwiftUI
 
 struct FeedView: View {
-    var postList = [Post]()
+    var jobList = [Job]()
     
-    let post1 = Post(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "India")
-    let post2 = Post(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
-    let post3 = Post(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
+    let job1 = Job(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "India")
+    let job2 = Job(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
+    let job3 = Job(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
     
     //postList.append(post1)
     
     
     var body: some View {
         VStack() {
-            PostView(post: post1).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
-            PostView(post: post2).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
-            PostView(post: post3).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5)
+            JobView(job: job1).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
+            JobView(job: job2).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
+            JobView(job: job3).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5)
                 .padding(10)
-        }
-    }
-}
-
-struct Post{
-    let title : String
-    let description : String
-    let price : String
-    let postedBy : String
-}
-
-struct PostView: View {
-    let post : Post
-    
-    var body: some View {
-        HStack() {
-            //left side
-            VStack() {
-               
-                Button(){
-                    
-                } label: {
-                    Text("I'm Interested")
-                        .background(.red)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(5)
-                        .frame(width: 150, height: 110, alignment: .bottom)
-                        
-                }
-                    
-            }
-            //right side
-            VStack(alignment: .leading) {
-                Text(post.title)
-                    .frame(alignment: .top)
-                    .font(.system(size: 30))
-                    .foregroundColor(Color.black)
-                    .bold()
-                    .padding(10)
-                Text(post.description)
-                    .foregroundColor(Color.black)
-                Text("\(post.price)$ per hour")
-                    .foregroundColor(Color.black)
-                    .font(.system(size: 20))
-                    
-
-                Button(){
-                    
-                } label: {
-                    Text("View")
-                        .background(.red)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(5)
-                        .frame(width: 75, height: 30)
-                }
-                
-            }
         }
     }
 }
