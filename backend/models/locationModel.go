@@ -1,7 +1,12 @@
 package models
 
+import (
+	"gorm.io/gorm"
+)
+
 type Location struct {
-	Zip     string `json:"zip" gorm:"primaryKey"`
+  gorm.Model
+	Zip     string `json:"zip"`
 	City    string `json:"city"`
 	State   string `json:"state"`
 	Address string `json:"address"`
