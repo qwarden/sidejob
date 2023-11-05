@@ -10,7 +10,7 @@ import (
 
 type UsersController struct {}
 
-func (u *UsersController) Retrieve(c *gin.Context) {
+func (u UsersController) Retrieve(c *gin.Context) {
   db := db.GetDB()
 	userID := c.Param("userID")
 	var user models.User
@@ -23,7 +23,7 @@ func (u *UsersController) Retrieve(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"user": user})
 }
 
-func (u *UsersController) Create(c *gin.Context) {
+func (u UsersController) Create(c *gin.Context) {
   db := db.GetDB()
 	var user models.User
 
@@ -39,7 +39,7 @@ func (u *UsersController) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"user": user})
 }
 
-func (u *UsersController) Update(c *gin.Context) {
+func (u UsersController) Update(c *gin.Context) {
   db := db.GetDB()
   userID := c.Param("userID")
   var user models.User
@@ -62,7 +62,7 @@ func (u *UsersController) Update(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"user": user})
 }
 
-func (u *UsersController) Delete(c *gin.Context) {
+func (u UsersController) Delete(c *gin.Context) {
   db := db.GetDB()
 	userID := c.Param("userID")
 

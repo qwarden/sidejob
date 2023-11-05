@@ -10,7 +10,7 @@ import (
 
 type JobsController struct {}
 
-func (j *JobsController) RetrieveAll(c *gin.Context) {
+func (j JobsController) RetrieveAll(c *gin.Context) {
   db := db.GetDB()  
   var jobs []models.Job
 
@@ -18,7 +18,7 @@ func (j *JobsController) RetrieveAll(c *gin.Context) {
   c.JSON(http.StatusOK, gin.H{"jobs": jobs})
 }
 
-func (j *JobsController) Create(c *gin.Context) {
+func (j JobsController) Create(c *gin.Context) {
   db := db.GetDB()
   var job models.Job
 
@@ -35,7 +35,7 @@ func (j *JobsController) Create(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"job": job})
 }
 
-func (j *JobsController) Update(c *gin.Context) {
+func (j JobsController) Update(c *gin.Context) {
   db := db.GetDB()
   jobID := c.Param("jobID")
   var job models.Job
@@ -58,7 +58,7 @@ func (j *JobsController) Update(c *gin.Context) {
   c.JSON(http.StatusCreated, gin.H{"job": job})
 }
 
-func (j *JobsController) Delete(c *gin.Context) {
+func (j JobsController) Delete(c *gin.Context) {
   db := db.GetDB()
 	jobID := c.Param("jobID")
 
