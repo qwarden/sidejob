@@ -18,11 +18,13 @@ struct FeedView: View {
     
     
     var body: some View {
-        VStack() {
-            JobView(job: job1).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
-            JobView(job: job2).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
-            JobView(job: job3).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5)
-                .padding(10)
+        NavigationView{
+            VStack() {
+                JobView(job: job1).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
+                JobView(job: job2).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
+                JobView(job: job3).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5)
+                    .padding(10)
+            }
         }
     }
 }

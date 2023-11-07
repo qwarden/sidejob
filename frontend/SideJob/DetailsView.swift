@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct DetailsView: View {
+    let job: Job
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("Title: \(job.title)")
+                .padding(.bottom, 70)
+            Text("Description: \(job.description)")
+                .padding(5)
+            Text("Price: \(job.price)$ per hour")
+                .padding(5)
+            Text("Posted By: \(job.postedBy)")
+                .padding(5)
+        }
+        .frame(maxWidth: .infinity)
+        .background(Color(red: 0.7, green: 0.8, blue: 1.0))
+        .foregroundColor(Color.black)
+        .cornerRadius(5)
+        .padding(10)
     }
 }
 
 #Preview {
-    DetailsView()
+    DetailsView(job: Job(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "Luke"))
 }
