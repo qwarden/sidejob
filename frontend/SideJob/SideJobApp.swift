@@ -11,6 +11,7 @@ import SwiftUI
 struct SideJobApp: App {
     var body: some Scene {
         WindowGroup {
+            WelcomeView()
             LoginView().environmentObject(UserInfo())
         }
     }
