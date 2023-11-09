@@ -7,35 +7,23 @@
 
 import SwiftUI
 
-struct FeedView: View {
-    var postList = [Post]()
-    
-    let post1 = Post(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "India")
-    let post2 = Post(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
-    let post3 = Post(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
-    
-    //postList.append(post1)
-    
-    
-    var body: some View {
-        VStack() {
-            PostView(post: post1).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
-            PostView(post: post2).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
-            PostView(post: post3).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5)
-                .padding(10)
-        }
-    }
-}
-
-struct Post{
+struct Job{
     let title : String
     let description : String
     let price : String
     let postedBy : String
+    let saved: Bool
 }
 
-struct PostView: View {
-    let post : Post
+//hard coded example
+let post1 = Job(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "India", saved: false)
+let post2 = Job(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India", saved: false)
+let post3 = Job(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India", saved: false)
+
+
+ 
+struct JobView: View {
+    let job : Job
     
     var body: some View {
         HStack() {
@@ -56,15 +44,15 @@ struct PostView: View {
             }
             //right side
             VStack(alignment: .leading) {
-                Text(post.title)
+                Text(job.title)
                     .frame(alignment: .top)
                     .font(.system(size: 30))
                     .foregroundColor(Color.black)
                     .bold()
                     .padding(10)
-                Text(post.description)
+                Text(job.description)
                     .foregroundColor(Color.black)
-                Text("\(post.price)$ per hour")
+                Text("\(job.price)$ per hour")
                     .foregroundColor(Color.black)
                     .font(.system(size: 20))
                     
@@ -85,24 +73,20 @@ struct PostView: View {
 }
 
 
-// TAB VIEW
-struct TabViewDemo: View {
-    @State var selection = 1
-    init() {
-    UITabBar.appearance().backgroundColor = UIColor.gray
-    }
+struct FeedView: View {
+    var postList = [Job]()
+    
+    //postList.append(post1)
+    
     
     var body: some View {
-        TabView(selection: $selection) {
-            FeedView()
-                .tabItem() {
-                    Image(systemName: "list.bullet")
-                }.tag(1)
-            ProfileView()
-                .tabItem() {
-                    Image(systemName: "person")
-                }.tag(2)
+        VStack() {
             
+            //THIS NEEDS TO BE A LOOP
+            JobView(job: post1).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
+            JobView(job: post2).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5).padding(10)
+            JobView(job: post3).background(Color(red: 0.7, green: 0.8, blue: 1.0)).cornerRadius(5)
+                .padding(10)
         }
     }
 }

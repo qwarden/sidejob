@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45863E212AFD395A008C262C /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45863E202AFD395A008C262C /* JobListView.swift */; };
 		A82486872AEAF675003C356B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82486862AEAF675003C356B /* User.swift */; };
 		A8451E5F2ADF180500FA3CE0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E5E2ADF180500FA3CE0 /* LoginView.swift */; };
 		A8451E612ADF182500FA3CE0 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E602ADF182400FA3CE0 /* DetailsView.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		45863E202AFD395A008C262C /* JobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListView.swift; sourceTree = "<group>"; };
 		A82486862AEAF675003C356B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A8451E5E2ADF180500FA3CE0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A8451E602ADF182400FA3CE0 /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				A8451E602ADF182400FA3CE0 /* DetailsView.swift */,
+				45863E202AFD395A008C262C /* JobListView.swift */,
 				F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */,
 				F6B7894E2ACDE8ED00D161BE /* FeedView.swift */,
 				A8F2938C2AD9DCD20071F842 /* ProfileView.swift */,
@@ -82,7 +85,6 @@
 				A87817622AE04B830021625C /* WelcomeView.swift */,
 				A82486862AEAF675003C356B /* User.swift */,
 				A87817642AE04B930021625C /* CreateAccountView.swift */,
-				45D80EC32AF148BF00FCC415 /* AppView.swift */,
 			);
 			path = SideJob;
 			sourceTree = "<group>";
@@ -169,8 +171,8 @@
 				A8451E692ADF18B200FA3CE0 /* MyListingsView.swift in Sources */,
 				A8451E6B2ADF18C600FA3CE0 /* EditInfoView.swift in Sources */,
 				A8451E612ADF182500FA3CE0 /* DetailsView.swift in Sources */,
-				45D80EC42AF148C000FCC415 /* AppView.swift in Sources */,
 				A87817652AE04B930021625C /* CreateAccountView.swift in Sources */,
+				45863E212AFD395A008C262C /* JobListView.swift in Sources */,
 				A87817632AE04B840021625C /* WelcomeView.swift in Sources */,
 				A8451E652ADF185800FA3CE0 /* MyJobsView.swift in Sources */,
 				A8F2938D2AD9DCD20071F842 /* ProfileView.swift in Sources */,
