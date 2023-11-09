@@ -7,27 +7,18 @@
 
 import SwiftUI
 
-struct Job{
-    let title : String
-    let description : String
-    let price : String
-    let postedBy : String
-    let saved: Bool
-}
-
-//hard coded example
-let post1 = Job(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "India", saved: false)
-let post2 = Job(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India", saved: false)
-let post3 = Job(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India", saved: false)
-
-
- 
-struct JobView: View {
-    let job : Job
+struct FeedView: View {
+    var jobList = [Job]()
+    
+    let job1 = Job(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "India")
+    let job2 = Job(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
+    let job3 = Job(title: "Paint Job", description: "Paint my house", price: "25", postedBy: "India")
+    
+    //postList.append(post1)
+    
     
     var body: some View {
-        HStack() {
-            //left side
+        NavigationView{
             VStack() {
                
                 Button(){
