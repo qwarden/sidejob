@@ -7,7 +7,12 @@
 
 import SwiftUI
 
+
+
 struct MyListingsView: View {
+    
+    let strings: [String] = ["test", "test2", "test3"]
+    
     var body: some View {
         VStack{
             Text("My Listings")
