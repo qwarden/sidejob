@@ -29,9 +29,9 @@ struct DetailsView: View {
     }
 }
 
-struct DetailsView_Preview: PreviewProvider {
+/*struct DetailsView_Preview: PreviewProvider {
     static var previews: some View {
-        DetailsView()
+        DetailsView(job: )
     }
 }
 

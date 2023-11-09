@@ -8,3 +8,18 @@
 import SwiftUI
 
 
+struct JobListView: View {
+
+    
+    var body: some View {
+       
+    }
+}
+
+
+
+struct JobListView_Preview: PreviewProvider {
+    static var previews: some View {
+        FeedView()
+    }
+}
