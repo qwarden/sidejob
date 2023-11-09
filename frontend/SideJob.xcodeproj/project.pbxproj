@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		45D80EC42AF148C000FCC415 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D80EC32AF148BF00FCC415 /* AppView.swift */; };
+		A82486872AEAF675003C356B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82486862AEAF675003C356B /* User.swift */; };
 		A8451E5F2ADF180500FA3CE0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E5E2ADF180500FA3CE0 /* LoginView.swift */; };
 		A8451E612ADF182500FA3CE0 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E602ADF182400FA3CE0 /* DetailsView.swift */; };
 		A8451E652ADF185800FA3CE0 /* MyJobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E642ADF185800FA3CE0 /* MyJobsView.swift */; };
@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		45D80EC32AF148BF00FCC415 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		A82486862AEAF675003C356B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A8451E5E2ADF180500FA3CE0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A8451E602ADF182400FA3CE0 /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		A8451E642ADF185800FA3CE0 /* MyJobsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyJobsView.swift; sourceTree = "<group>"; };
@@ -80,6 +80,7 @@
 				F6B789502ACDE8EE00D161BE /* Assets.xcassets */,
 				F6B789522ACDE8EE00D161BE /* Preview Content */,
 				A87817622AE04B830021625C /* WelcomeView.swift */,
+				A82486862AEAF675003C356B /* User.swift */,
 				A87817642AE04B930021625C /* CreateAccountView.swift */,
 				45D80EC32AF148BF00FCC415 /* AppView.swift */,
 			);
@@ -175,6 +176,7 @@
 				A8F2938D2AD9DCD20071F842 /* ProfileView.swift in Sources */,
 				A8451E5F2ADF180500FA3CE0 /* LoginView.swift in Sources */,
 				F6B7894D2ACDE8ED00D161BE /* SideJobApp.swift in Sources */,
+				A82486872AEAF675003C356B /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
