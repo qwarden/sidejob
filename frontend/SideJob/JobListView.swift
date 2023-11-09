@@ -12,8 +12,10 @@ struct JobListView: View {
 
     
     var body: some View {
-       
+       Text("test")
     }
+    
+
 }
 
 

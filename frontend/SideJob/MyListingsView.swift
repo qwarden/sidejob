@@ -17,9 +17,9 @@ struct MyListingsView: View {
         VStack{
             Text("My Listings")
                 .font(.system(size: 25)).padding(.bottom, 50)
-            Text("listing Test")
-            Text("listing Test 2")
-            Text("listing Test 3")
+            ScrollView{
+                JobListView()
+            }
         }.frame( maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
