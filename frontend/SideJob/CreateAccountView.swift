@@ -13,6 +13,8 @@ struct CreateAccountView: View {
     }
 }
 
-#Preview {
-    CreateAccountView()
+struct CreateAccount_Preview: PreviewProvider {
+    static var previews: some View {
+        CreateAccountView()
+    }
 }

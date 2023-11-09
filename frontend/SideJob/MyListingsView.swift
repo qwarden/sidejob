@@ -9,10 +9,18 @@ import SwiftUI
 
 struct MyListingsView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Text("My Listings")
+                .font(.system(size: 25)).padding(.bottom, 50)
+            Text("listing Test")
+            Text("listing Test 2")
+            Text("listing Test 3")
+        }.frame( maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 
-#Preview {
-    MyListingsView()
+struct MyListingsView_Preview: PreviewProvider {
+    static var previews: some View {
+        MyListingsView()
+    }
 }

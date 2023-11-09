@@ -13,6 +13,8 @@ struct EditInfoView: View {
     }
 }
 
-#Preview {
-    EditInfoView()
+struct EditInfoView_Preview: PreviewProvider {
+    static var previews: some View {
+        EditInfoView()
+    }
 }

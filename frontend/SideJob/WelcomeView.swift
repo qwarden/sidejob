@@ -45,6 +45,8 @@ class UserInfo: ObservableObject {
     }
 }
 
-#Preview {
-    WelcomeView()
+struct WelcomeView_Preview: PreviewProvider {
+    static var previews: some View {
+        WelcomeView()
+    }
 }

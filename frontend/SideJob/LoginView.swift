@@ -25,6 +25,8 @@ func attemptLogin(){
     // if it works, set logged in to true
 }
 
-#Preview {
-    LoginView()
+struct LoginView_Preview: PreviewProvider {
+    static var previews: some View {
+        LoginView()
+    }
 }

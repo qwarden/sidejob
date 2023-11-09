@@ -13,6 +13,9 @@ struct DetailsView: View {
     }
 }
 
-#Preview {
-    DetailsView()
+struct DetailsView_Preview: PreviewProvider {
+    static var previews: some View {
+        DetailsView()
+    }
 }
+
