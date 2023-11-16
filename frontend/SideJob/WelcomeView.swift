@@ -26,7 +26,19 @@ struct WelcomeView: View {
     
     func checkLoggedIn() -> Bool {
         //here we implement checking the persistence to see if user has already logged in, if so we get that login info and update the user environment object
-        return false
+        
+        // first check authentication token
+            // if it works, return true
+        // if it doesn't validate
+            // check the refresh token
+            // if the refresh token validates
+                // check new authentication token
+            // if it doesn't validate
+                // return false
+        
+        // persist the authentication and refresh tokens
+        
+        return false // default return false and make them login again
     }
     
     
