@@ -15,6 +15,15 @@ func Init() {
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 
+  router.Use(func(c *gin.Context) {
+		path := c.Request.URL.Path
+		if len(path) > 1 && path[len(path)-1] == '/' {
+			normalizedPath := strings.TrimRight(path, "/")
+			c.Request.URL.Path = normalizedPath
+		}
+		c.Next()
+	})
+
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"version": "1.0",
