@@ -1,15 +1,15 @@
 package server
 
 import (
-  "net/http"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qwarden/sidejob/backend/controllers"
 )
 
 func Init() {
-  r := NewRouter()
-  r.Run(":8080")
+	r := NewRouter()
+	r.Run(":8080")
 }
 
 func NewRouter() *gin.Engine {
@@ -21,25 +21,22 @@ func NewRouter() *gin.Engine {
 		})
 	})
 
-  userGroup := r.Group("users")
-  {
-    userCtrl := new(controllers.UsersController)
-    userGroup.GET("/:userID", userCtrl.Retrieve)
-    userGroup.GET("/:userID/jobs", userCtrl.RetrieveJobs)
-    userGroup.GET(":userID/jobs/:jobID", userCtrl.RetrieveJob)
-    userGroup.POST("/", userCtrl.Create)
-    userGroup.PATCH("/:userID", userCtrl.Update)
-    userGroup.DELETE("/:userID", userCtrl.Delete)
-  }
+	userGroup := r.Group("/users")
+	userCtrl := new(controllers.UsersController)
+	userGroup.GET("/:userID", userCtrl.Retrieve)
+	userGroup.GET("/:userID/jobs", userCtrl.RetrieveJobs)
+	userGroup.GET("/:userID/jobs/:jobID", userCtrl.RetrieveJob)
+	userGroup.POST("/", userCtrl.Create)
+	userGroup.PATCH("/:userID", userCtrl.Update)
+	userGroup.DELETE("/:userID", userCtrl.Delete)
 
-  jobGroup := r.Group("jobs")
-  {
-    jobCtrl := new(controllers.JobsController)
-    jobGroup.GET("/", jobCtrl.RetrieveAll)
-    jobGroup.POST("/", jobCtrl.Create)
-    jobGroup.PATCH("/:jobID", jobCtrl.Update)
-    jobGroup.DELETE("/:jobID", jobCtrl.Delete)
-  }
+	jobGroup := r.Group("/jobs")
+	jobCtrl := new(controllers.JobsController)
+	jobGroup.GET("/", jobCtrl.RetrieveAll)
+	jobGroup.POST("/", jobCtrl.Create)
+	jobGroup.PATCH("/:jobID", jobCtrl.Update)
+	jobGroup.DELETE("/:jobID", jobCtrl.Delete)
 
-  return r
+	return r
 }
+
