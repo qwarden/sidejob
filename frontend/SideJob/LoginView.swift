@@ -14,7 +14,8 @@ struct LoginView: View {
     @State private var emailErrorMessage = ""
     @State private var passwordErrorMessage = ""
     @State private var loginErrorMessage = ""
-
+    
+    @EnvironmentObject var userTokens: UserTokens
     
     var body: some View {
         Text("Login to your Account:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
@@ -39,8 +40,31 @@ struct LoginView: View {
         if (frontEndChecks()) {
             // where we check with backed to see if user is valid
             // if it works, set logged in to true
+            // persist tokens
+            userTokens.accessToken = 1
+            userTokens.refreshToken = 2
+            saveChanges()
         }
     }
+    
+    func saveChanges() {
+        
+        let itemArchiveURL: URL = {
+            let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let documentDirectory = documentDirectories.first!
+            return documentDirectory.appendingPathComponent("tokens.json")
+        }()
+        
+        let jsonEncoder = JSONEncoder()
+        do {
+            let jsonData = try jsonEncoder.encode(userTokens)
+            try jsonData.write(to: itemArchiveURL, options: [.atomicWrite])
+        }
+        catch let error {
+            print("error saving to json: \(error)")
+        }
+    }
+
     
     func frontEndChecks() -> Bool {
         var frontendChecksPassed = true

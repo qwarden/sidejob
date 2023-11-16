@@ -21,6 +21,8 @@ struct CreateAccountView: View {
     @State private var passwordErrorMessageMatch = ""
     @State private var accountCreationErrorMessages = ""
     
+    @EnvironmentObject var userTokens: UserTokens
+    
     var body: some View {
         Text("Create your Account:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
         VStack(spacing: 25) {
@@ -56,11 +58,32 @@ struct CreateAccountView: View {
             // where we check with backend to see if user creation is valid
 //            if (true) {
 //                // update the observable object for the user
+                  userTokens.accessToken = 1
+                  userTokens.refreshToken = 2
+                  saveChanges()
 //                FeedView()
 //            }
 //            else {
 //                accountCreationErrorMessages = "Sorry, there were issues on our side creating your account."
 //            }
+        }
+    }
+    
+    func saveChanges() {
+        
+        let itemArchiveURL: URL = {
+            let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let documentDirectory = documentDirectories.first!
+            return documentDirectory.appendingPathComponent("tokens.json")
+        }()
+        
+        let jsonEncoder = JSONEncoder()
+        do {
+            let jsonData = try jsonEncoder.encode(userTokens)
+            try jsonData.write(to: itemArchiveURL, options: [.atomicWrite])
+        }
+        catch let error {
+            print("error saving to json: \(error)")
         }
     }
     
