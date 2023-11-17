@@ -36,7 +36,7 @@ func NewRouter() *gin.Engine {
 	jobGroup.POST("/", jobCtrl.Create)
 	jobGroup.PATCH("/:jobID", jobCtrl.Update)
 	jobGroup.DELETE("/:jobID", jobCtrl.Delete)
+	jobGroup.POST("/reset", jobCtrl.ResetTable)
 
 	return r
 }
-
