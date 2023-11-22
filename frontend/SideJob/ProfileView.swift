@@ -52,7 +52,7 @@ struct ProfileView: View {
                         /*
                         Button("Sign Out") {
                             showingAlert = true
-                            
+                            `
                         }.alert("Are you sure you want to sign out?", isPresented: $showingAlert) {
                             Button("Cancel") { }
                             NavigationLink(destination: WelcomeView(), label: {

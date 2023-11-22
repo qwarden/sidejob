@@ -13,34 +13,35 @@ struct JobView: View {
     let job: Job
     
     var body: some View {
+        // Vertical stack for job content
         VStack(alignment: .leading, spacing: 10) {
+            // Job title
             Text(job.title)
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
                 .padding([.top, .horizontal])
             
+            // Job description
             Text(job.description)
                 .font(.body)
                 .foregroundColor(.secondary)
                 .padding([.bottom, .horizontal])
             
+            // Pay information
             HStack {
                 Text(job.formattedPay)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                Spacer()
-                Text("/ hour")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                Text(job.payType)
             }
             .padding(.horizontal)
             
+            // Job location
             Text(job.location)
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .padding([.bottom, .horizontal])
             
+            // Navigation link to the details view
             NavigationLink(destination: DetailsView(job: job)) {
                 Text("View Details")
                     .frame(minWidth: 0, maxWidth: .infinity)
@@ -54,11 +55,3 @@ struct JobView: View {
         }
     }
 }
-
-
-
-//struct JobView_Preview: PreviewProvider {
-//    static var previews: some View {
-//        JobView(job: Job(id: 1, createdAt: Date(), updatedAt: Date(), title: "Lawn Job", description: "Cut my grass", payAmount: 3000,  location: "123 Main St", postedBy: 1))
-//    }
-//}

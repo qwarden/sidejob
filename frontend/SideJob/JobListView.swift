@@ -9,19 +9,50 @@ import SwiftUI
 
 
 struct JobListView: View {
-    @ObservedObject var jobListViewModel: JobViewModel
+    // Using ObservedObject to observe changes in the shared JobService instance
+    @ObservedObject var jobService = JobService.shared
+    @State private var showingPostView = false
 
     var body: some View {
-        List(jobListViewModel.jobs) { job in
-            NavigationLink(destination: DetailsView(job: job)) {
-                JobView(job: job)
+        NavigationView {
+            ZStack(alignment: .bottomTrailing) {
+                // List of jobs, each represented by JobView
+                List(jobService.jobs) { job in
+                    JobView(job: job)
+                }
+                .navigationBarTitle("Jobs")
+                // Fetch jobs when the view appears
+                .onAppear {
+                    jobService.fetchJobs()
+                }
+
+                // Floating action button to show the PostView
+                FloatingActionButton(action: {
+                    self.showingPostView = true
+                })
             }
-            .buttonStyle(PlainButtonStyle())
-            .listRowInsets(EdgeInsets())
+            // Present the PostView as a sheet
+            .sheet(isPresented: $showingPostView) {
+                PostView()
+            }
         }
-        .onAppear {
-            print("JobListView appeared")
-            jobListViewModel.fetchJobs()
+    }
+}
+
+// NewJob button
+struct FloatingActionButton: View {
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: "plus")
+                .resizable()
+                .frame(width: 24, height: 24)
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .clipShape(Circle())
+                .padding()
         }
     }
 }

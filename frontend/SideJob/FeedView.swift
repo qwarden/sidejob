@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct FeedView: View {
-    @StateObject private var jobViewModel = JobViewModel()
+    @StateObject private var jobService = JobService.shared
     
     var body: some View {
         NavigationView {
             VStack {
-                JobListView(jobListViewModel: jobViewModel)
+                JobListView()
             }
-            .navigationBarTitle("Sidejobs")
             .onAppear {
-                jobViewModel.fetchJobs()
+                jobService.fetchJobs()
             }
         }
     }

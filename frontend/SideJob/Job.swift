@@ -17,8 +17,6 @@ struct Job: Decodable, Identifiable {
     let postedByID : Int64
     let payType: String
 
-//    // TODO: Once we get swift to display our jobs we should uncomment
-//    let postedByID : Int64
 //    let photo: URL?
     
     var formattedPay: String {
@@ -43,4 +41,12 @@ struct Job: Decodable, Identifiable {
         case updatedAt = "UpdatedAt"
         case title, description, location, postedByID, payType, payAmount
     }
+}
+
+struct NewJob: Encodable {
+    let title: String
+    let description: String
+    let payAmount: Int64
+    let location: String
+    let payType: String
 }
