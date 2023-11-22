@@ -10,19 +10,18 @@ import SwiftUI
 
 
 struct MyJobsView: View {
+    @StateObject private var jobViewModel = JobViewModel()
     
     var body: some View {
 
-        VStack{
+        VStack {
             Text("Saved Jobs")
                 .font(.system(size: 25)).padding(.bottom, 50)
-            ScrollView{
-                JobListView()
+            ScrollView {
+                JobListView(jobListViewModel: jobViewModel)
             }
-           
-        }.frame( maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        
-        
+        }
+        .frame( maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 

@@ -16,9 +16,9 @@ struct DetailsView: View {
                 .padding(.bottom, 70)
             Text("Description: \(job.description)")
                 .padding(5)
-            Text("Price: \(job.price)$ per hour")
+            Text("Price: \(job.payAmount)$ per hour")
                 .padding(5)
-            Text("Posted By: \(job.postedBy)")
+            Text("Posted By: \(job.postedByID)")
                 .padding(5)
         }
         .frame(maxWidth: .infinity)

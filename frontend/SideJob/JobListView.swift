@@ -9,15 +9,22 @@ import SwiftUI
 
 
 struct JobListView: View {
+    @ObservedObject var jobListViewModel: JobViewModel
 
-    
     var body: some View {
-       Text("test")
+        List(jobListViewModel.jobs) { job in
+            NavigationLink(destination: DetailsView(job: job)) {
+                JobView(job: job)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .listRowInsets(EdgeInsets())
+        }
+        .onAppear {
+            print("JobListView appeared")
+            jobListViewModel.fetchJobs()
+        }
     }
-    
-
 }
-
 
 
 struct JobListView_Preview: PreviewProvider {

@@ -10,15 +10,14 @@ import SwiftUI
 
 
 struct MyListingsView: View {
-    
-    let strings: [String] = ["test", "test2", "test3"]
+    @StateObject private var jobViewModel = JobViewModel()
     
     var body: some View {
         VStack{
             Text("My Listings")
                 .font(.system(size: 25)).padding(.bottom, 50)
             ScrollView{
-                JobListView()
+                JobListView(jobListViewModel: jobViewModel)
             }
         }.frame( maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
