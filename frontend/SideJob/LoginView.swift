@@ -15,25 +15,32 @@ struct LoginView: View {
     @State private var passwordErrorMessage = ""
     @State private var loginErrorMessage = ""
     
+    @State private var loggedIn = false
+    
     @EnvironmentObject var userTokens: UserTokens
     
     var body: some View {
-        Text("Login to your Account:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
-        VStack(spacing: 25) {
-            HStack { Text("Email"); TextField("email", text: $email) }
-            if (emailErrorMessage != "") {
-                Text(emailErrorMessage).foregroundColor(Color.red)
-            }
-            HStack { Text("Password"); SecureField("password", text: $password) }
-            if (passwordErrorMessage != "") {
-                Text(passwordErrorMessage).foregroundColor(Color.red)
-            }
-            Button("Log In", action: attemptLogin).buttonStyle(.bordered)
-            if (loginErrorMessage != "") {
-                Text(loginErrorMessage).foregroundColor(Color.red)
-            }
-            
-        }.padding()
+        if (!loggedIn) {
+            Text("Login to your Account:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
+            VStack(spacing: 25) {
+                HStack { Text("Email"); TextField("email", text: $email) }
+                if (emailErrorMessage != "") {
+                    Text(emailErrorMessage).foregroundColor(Color.red)
+                }
+                HStack { Text("Password"); SecureField("password", text: $password) }
+                if (passwordErrorMessage != "") {
+                    Text(passwordErrorMessage).foregroundColor(Color.red)
+                }
+                Button("Log In", action: attemptLogin).buttonStyle(.bordered)
+                if (loginErrorMessage != "") {
+                    Text(loginErrorMessage).foregroundColor(Color.red)
+                }
+                
+            }.padding()
+        }
+        else {
+            FeedView()
+        }
     }
     
     func attemptLogin(){
@@ -44,6 +51,7 @@ struct LoginView: View {
             userTokens.accessToken = 1
             userTokens.refreshToken = 2
             saveChanges()
+            loggedIn = true
         }
     }
     
@@ -94,6 +102,7 @@ struct LoginView: View {
     }
 }
 
+
 #Preview {
-    LoginView()
+    LoginView().environmentObject(UserTokens())
 }

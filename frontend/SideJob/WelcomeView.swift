@@ -74,8 +74,12 @@ struct WelcomeView: View {
 }
 
 struct LoginAccountNavigation: View {
+    //@EnvironmentObject var userTokens: UserTokens
+    
     var body: some View {
         NavigationStack {
+            Spacer()
+            //Text("\(userTokens.accessToken)")
             Spacer()
             Text("SideJob").font(.system(size: 48, weight: .bold, design: .default))
                 .foregroundColor(Color(.systemBlue)).padding(100)
@@ -92,5 +96,5 @@ struct LoginAccountNavigation: View {
 }
 
 #Preview {
-    WelcomeView()
+    WelcomeView().environmentObject(UserTokens())
 }
