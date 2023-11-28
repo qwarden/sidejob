@@ -39,7 +39,7 @@ struct LoginView: View {
             }.padding()
         }
         else {
-            FeedView()
+            AppView().navigationBarBackButtonHidden()
         }
     }
     
@@ -48,7 +48,7 @@ struct LoginView: View {
             // where we check with backed to see if user is valid
             // if it works, set logged in to true
             // persist tokens
-            userTokens.accessToken = 1
+            userTokens.accessToken = 2
             userTokens.refreshToken = 2
             saveChanges()
             loggedIn = true

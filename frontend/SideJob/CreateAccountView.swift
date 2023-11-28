@@ -55,7 +55,7 @@ struct CreateAccountView: View {
             }.padding()
         }
         else {
-            FeedView()
+            AppView().navigationBarBackButtonHidden()
         }
     }
     
