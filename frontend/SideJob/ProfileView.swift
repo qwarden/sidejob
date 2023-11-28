@@ -206,6 +206,9 @@ struct ProfileView: View {
                                     primaryButton: .default(Text("Sign Out")) {
                                         // Action to perform when OK is tapped
                                         self.navigateToNextView = true
+                                        userTokens.accessToken = -1
+                                        userTokens.refreshToken = -1
+                                        saveChanges()
                                     },
                                     secondaryButton: .cancel()
                                 )
@@ -224,26 +227,17 @@ struct ProfileView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
                     
-//                    if (navigateToNextView){
-//                        userTokens.accessToken = -1
-//                        userTokens.refreshToken = -1
-//                    }
-                    
                     NavigationLink(destination: WelcomeView().navigationBarBackButtonHidden(), isActive: $navigateToNextView) {
                         EmptyView()
                     }.hidden()
-                     .onAppear {
-                        userTokens.accessToken = -1
-                        userTokens.refreshToken = -1
-                        saveChanges()
+                    
                     } // Hide the NavigationLink
                     
                 }.padding(.bottom, 30)
-                
         
-        }
-         
     }
+         
+
     
     func saveChanges() {
         
