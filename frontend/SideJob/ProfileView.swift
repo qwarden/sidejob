@@ -31,19 +31,17 @@ struct ProfileView: View {
     @State private var user = User(username: "idavis1", email: "idavis1@uvm.edu", about: "Hi, my name is India and I want to work for you. This is all information about me. I can paint and cut grass and do whatever. Feel free to reach out to me I am available always. This is example about text", myListings: [job1, job2])
     //END EXAMPLE USER
     
-    
+    @EnvironmentObject var userTokens: UserTokens
     
     @State private var showSaveAlert = false
     @State private var showAlert = false
     @State private var navigateToNextView = false
     @State private var isEditing = false
+    @State var askToSignOut: Bool = false
+    @State var test: String = "Test"
     
     //@Binding var imageName: String
     var body: some View {
-        
-        @State var askToSignOut: Bool = false
-        @State var test: String = "Test"
-        
       
             VStack(spacing: 20){
                 
@@ -226,25 +224,49 @@ struct ProfileView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
                     
+//                    if (navigateToNextView){
+//                        userTokens.accessToken = -1
+//                        userTokens.refreshToken = -1
+//                    }
                     
                     NavigationLink(destination: WelcomeView().navigationBarBackButtonHidden(), isActive: $navigateToNextView) {
                         EmptyView()
-                    }.hidden() // Hide the NavigationLink
+                    }.hidden()
+                     .onAppear {
+                        userTokens.accessToken = -1
+                        userTokens.refreshToken = -1
+                        saveChanges()
+                    } // Hide the NavigationLink
                     
                 }.padding(.bottom, 30)
                 
         
         }
-        
          
     }
     
-    
+    func saveChanges() {
+        
+        let itemArchiveURL: URL = {
+            let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let documentDirectory = documentDirectories.first!
+            return documentDirectory.appendingPathComponent("tokens.json")
+        }()
+        
+        let jsonEncoder = JSONEncoder()
+        do {
+            let jsonData = try jsonEncoder.encode(userTokens)
+            try jsonData.write(to: itemArchiveURL, options: [.atomicWrite])
+        }
+        catch let error {
+            print("error saving to json: \(error)")
+        }
+    }
     
     
     struct ProfileView_Preview: PreviewProvider {
         static var previews: some View {
-            ProfileView()
+            ProfileView().environmentObject(UserTokens())
         }
     }
     

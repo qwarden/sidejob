@@ -18,7 +18,7 @@ struct WelcomeView: View {
                 LoginAccountNavigation()
             }
             else {
-                FeedView()
+                AppView()
             }
         }.onAppear {
             // Perform the check and update state here
@@ -47,7 +47,7 @@ struct WelcomeView: View {
                 // check new authentication token
             // if it doesn't validate
                 // return false
-        if (userTokens.accessToken == 1){
+        if (userTokens.accessToken == 2){
             return true
         }
         
