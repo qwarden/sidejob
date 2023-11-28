@@ -133,6 +133,8 @@ struct CreateAccountView: View {
     }
 }
 
-#Preview {
-    CreateAccountView().environmentObject(UserTokens())
+struct CreateAccount_Preview: PreviewProvider {
+    static var previews: some View {
+        CreateAccountView()
+    }
 }

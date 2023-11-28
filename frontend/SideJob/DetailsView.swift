@@ -29,6 +29,10 @@ struct DetailsView: View {
     }
 }
 
-#Preview {
-    DetailsView(job: Job(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "Luke"))
+/*struct DetailsView_Preview: PreviewProvider {
+    static var previews: some View {
+        DetailsView(job: )
+    }
 }
+
+*/

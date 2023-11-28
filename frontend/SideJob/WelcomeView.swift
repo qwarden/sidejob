@@ -95,6 +95,8 @@ struct LoginAccountNavigation: View {
     }
 }
 
-#Preview {
-    WelcomeView().environmentObject(UserTokens())
+struct WelcomeView_Preview: PreviewProvider {
+    static var previews: some View {
+        WelcomeView()
+    }
 }

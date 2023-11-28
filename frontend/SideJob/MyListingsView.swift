@@ -7,12 +7,25 @@
 
 import SwiftUI
 
+
+
 struct MyListingsView: View {
+    
+    let strings: [String] = ["test", "test2", "test3"]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Text("My Listings")
+                .font(.system(size: 25)).padding(.bottom, 50)
+            ScrollView{
+                JobListView()
+            }
+        }.frame( maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 
-#Preview {
-    MyListingsView()
+struct MyListingsView_Preview: PreviewProvider {
+    static var previews: some View {
+        MyListingsView()
+    }
 }

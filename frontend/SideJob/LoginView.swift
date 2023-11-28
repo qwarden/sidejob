@@ -103,6 +103,8 @@ struct LoginView: View {
 }
 
 
-#Preview {
-    LoginView().environmentObject(UserTokens())
+struct LoginView_Preview: PreviewProvider {
+    static var previews: some View {
+        LoginView()
+    }
 }
