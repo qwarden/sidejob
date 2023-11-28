@@ -13,7 +13,7 @@ struct SideJobApp: App {
     
     var body: some Scene {
         WindowGroup {
-            WelcomeView().environmentObject(UserTokens())
+            WelcomeView().environmentObject(userTokens)
         }
     }
 }
