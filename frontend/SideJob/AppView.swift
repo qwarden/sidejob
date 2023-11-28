@@ -9,18 +9,20 @@ import SwiftUI
 
 struct AppView: View {
     var body: some View {
-        TabView() {
-            FeedView()
-                .tabItem() {
-                    Image(systemName: "square.stack")
-                }
-            ProfileView()
-                .tabItem() {
-                    Image(systemName: "person")
-                }
+        NavigationView{
+            TabView() {
+                FeedView()
+                    .tabItem() {
+                        Image(systemName: "square.stack")
+                    }
+                ProfileView()
+                    .tabItem() {
+                        Image(systemName: "person")
+                    }
+                
+            }
             
         }
-        
     }
     
 }

@@ -21,46 +21,75 @@ struct CreateAccountView: View {
     @State private var passwordErrorMessageMatch = ""
     @State private var accountCreationErrorMessages = ""
     
+    @State private var accountCreated = false
+    @EnvironmentObject var userTokens: UserTokens
+    
     var body: some View {
-        Text("Create your Account:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
-        VStack(spacing: 25) {
-            HStack { Text("Name"); TextField("name", text: $name) }
-            //error messages go here
-            if (nameErrorMessages != "") {
-                Text(nameErrorMessages).foregroundColor(Color.red)
-            }
-            HStack { Text("Email"); TextField("email", text: $email) }
-            if (emailErrorMessages != "") {
-                Text(emailErrorMessages).foregroundColor(Color.red)
-            }
-            HStack { Text("Password"); SecureField("password", text: $password) }
-            if (passwordErrorMessageEmpty != "") {
-                Text(passwordErrorMessageEmpty).foregroundColor(Color.red)
-            }
-            HStack { Text("Confirm Password"); SecureField("password", text: $passwordConfirm) }
-            if (passwordErrorMessageMatch != "") {
-                Text(passwordErrorMessageMatch).foregroundColor(Color.red)
-            }
-            Button("Create Account", action: attemptCreateAccount).buttonStyle(.bordered)
-            
-            //error messages go here
-            if (accountCreationErrorMessages != ""){
-                Text(accountCreationErrorMessages)
-            }
-            
-        }.padding()
+        if (!accountCreated) {
+            Text("Create your Account:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
+            VStack(spacing: 25) {
+                HStack { Text("Name"); TextField("name", text: $name) }
+                //error messages go here
+                if (nameErrorMessages != "") {
+                    Text(nameErrorMessages).foregroundColor(Color.red)
+                }
+                HStack { Text("Email"); TextField("email", text: $email) }
+                if (emailErrorMessages != "") {
+                    Text(emailErrorMessages).foregroundColor(Color.red)
+                }
+                HStack { Text("Password"); SecureField("password", text: $password) }
+                if (passwordErrorMessageEmpty != "") {
+                    Text(passwordErrorMessageEmpty).foregroundColor(Color.red)
+                }
+                HStack { Text("Confirm Password"); SecureField("password", text: $passwordConfirm) }
+                if (passwordErrorMessageMatch != "") {
+                    Text(passwordErrorMessageMatch).foregroundColor(Color.red)
+                }
+                Button("Create Account", action: attemptCreateAccount).buttonStyle(.bordered)
+                
+                //error messages go here
+                if (accountCreationErrorMessages != ""){
+                    Text(accountCreationErrorMessages)
+                }
+                
+            }.padding()
+        }
+        else {
+            FeedView()
+        }
     }
     
     func attemptCreateAccount(){
         if (frontEndChecks()) {
             // where we check with backend to see if user creation is valid
-//            if (true) {
-//                // update the observable object for the user
-//                FeedView()
-//            }
-//            else {
-//                accountCreationErrorMessages = "Sorry, there were issues on our side creating your account."
-//            }
+            if (true) {
+                // update the observable object for the user
+                userTokens.accessToken = 1
+                userTokens.refreshToken = 2
+                saveChanges()
+                accountCreated = true
+            }
+            else {
+                accountCreationErrorMessages = "Sorry, there were issues on our side creating your account"
+            }
+        }
+    }
+    
+    func saveChanges() {
+        
+        let itemArchiveURL: URL = {
+            let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            let documentDirectory = documentDirectories.first!
+            return documentDirectory.appendingPathComponent("tokens.json")
+        }()
+        
+        let jsonEncoder = JSONEncoder()
+        do {
+            let jsonData = try jsonEncoder.encode(userTokens)
+            try jsonData.write(to: itemArchiveURL, options: [.atomicWrite])
+        }
+        catch let error {
+            print("error saving to json: \(error)")
         }
     }
     
