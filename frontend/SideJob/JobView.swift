@@ -7,57 +7,51 @@
 
 import SwiftUI
 
-struct Job{
-    let title : String
-    let description : String
-    let price : String
-    let postedBy : String
-}
+
 
 struct JobView: View {
-    let job : Job
+    let job: Job
     
     var body: some View {
-        //NavigationView{
-            HStack() {
-                
-                VStack(alignment: .leading) {
-                    Text(job.title)
-                        .frame(alignment: .top)
-                        .font(.system(size: 30))
-                        .foregroundColor(Color.black)
-                        .bold()
-                        .padding(20)
-                    Text(job.description)
-                        .foregroundColor(Color.black)
-                        .font(.system(size: 20))
-                        .padding(10)
-
-                    Text("\(job.price)$ per hour")
-                        .foregroundColor(Color.black)
-                        .font(.system(size: 20))
-                        .padding(10)
-                    
-                    NavigationLink(destination: DetailsView(job : job)) {
-                        Text("View")
-                            .background(Color.red)
-                            .foregroundColor(Color.white)
-                            .cornerRadius(5)
-                            .padding(20)
-                    }
-                }
+        // Vertical stack for job content
+        VStack(alignment: .leading, spacing: 10) {
+            // Job title
+            Text(job.title)
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+                .padding([.top, .horizontal])
+            
+            // Job description
+            Text(job.description)
+                .font(.body)
+                .foregroundColor(.secondary)
+                .padding([.bottom, .horizontal])
+            
+            // Pay information
+            HStack {
+                Text(job.formattedPay)
+                Text(job.payType)
             }
-            .background(Color(red: 0.7, green: 0.8, blue: 1.0))
-            .cornerRadius(5)
-            .frame(width: 300, height: 200)
-            .padding(10)
+            .padding(.horizontal)
+            
+            // Job location
+            Text(job.location)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .padding([.bottom, .horizontal])
+            
+            // Navigation link to the details view
+            NavigationLink(destination: DetailsView(job: job)) {
+                Text("View Details")
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .frame(height: 44)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .padding([.bottom, .horizontal])
+            }
+            .buttonStyle(PlainButtonStyle())
         }
-    
-}
-
-
-struct JobView_Preview: PreviewProvider {
-    static var previews: some View {
-        JobView(job: Job(title: "Lawn Job", description: "Cut my grass", price: "30", postedBy: "India"))
     }
 }

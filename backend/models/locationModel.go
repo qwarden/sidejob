@@ -5,7 +5,7 @@ import (
 )
 
 type Location struct {
-  gorm.Model
+	gorm.Model
 	Zip     string `json:"zip"`
 	City    string `json:"city"`
 	State   string `json:"state"`

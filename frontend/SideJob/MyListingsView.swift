@@ -10,8 +10,7 @@ import SwiftUI
 
 
 struct MyListingsView: View {
-    
-    let strings: [String] = ["test", "test2", "test3"]
+    @StateObject private var jobViewModel = JobService.shared
     
     var body: some View {
         VStack{

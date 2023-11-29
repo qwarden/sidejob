@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  FeedView.swift
 //  SideJob
 //
 //  Created by Quimby Warden on 10/4/23.
@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct FeedView: View {
-    var jobList = [Job]()
-    //postList.append(post1)
-    
+    @StateObject private var jobService = JobService.shared
     
     var body: some View {
-        NavigationView{
-            Text("Feed")
-                .frame(alignment: .top)
-            JobListView()
+        NavigationView {
+            VStack {
+                JobListView()
+            }
+            .onAppear {
+                jobService.fetchJobs()
+            }
         }
     }
 }
-
-
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {

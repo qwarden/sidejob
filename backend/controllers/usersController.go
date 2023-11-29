@@ -4,19 +4,19 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/qwarden/sidejob/backend/models"
 	"github.com/qwarden/sidejob/backend/db"
+	"github.com/qwarden/sidejob/backend/models"
 )
 
-type UsersController struct {}
+type UsersController struct{}
 
 func (u UsersController) Retrieve(c *gin.Context) {
-  db := db.GetDB()
+	db := db.GetDB()
 	userID := c.Param("userID")
 	var user models.User
 
-	if err := db.First(&user, userID).Error; err != nil { 
-      c.JSON(http.StatusNotFound, gin.H{"error": "user not found"})
+	if err := db.First(&user, userID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "user not found"})
 		return
 	}
 
@@ -24,7 +24,7 @@ func (u UsersController) Retrieve(c *gin.Context) {
 }
 
 func (u UsersController) Create(c *gin.Context) {
-  db := db.GetDB()
+	db := db.GetDB()
 	var user models.User
 
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -32,30 +32,30 @@ func (u UsersController) Create(c *gin.Context) {
 		return
 	}
 
-  if err := db.Create(&user).Error; err != nil {
-    c.JSON(http.StatusInternalServerError, gin.H{"error": "could not update user"})
+	if err := db.Create(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not create user"})
 		return
 	}
 	c.JSON(http.StatusCreated, gin.H{"user": user})
 }
 
 func (u UsersController) Update(c *gin.Context) {
-  db := db.GetDB()
-  userID := c.Param("userID")
-  var user models.User
+	db := db.GetDB()
+	userID := c.Param("userID")
+	var user models.User
 
-	if err := db.First(&user, userID).Error; err != nil { 
-      c.JSON(http.StatusNotFound, gin.H{"error": "user not found"})
+	if err := db.First(&user, userID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "user not found"})
 		return
-  }
+	}
 
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "bad request json"})
 		return
 	}
 
-  if err := db.Save(&user).Error; err != nil {
-    c.JSON(http.StatusInternalServerError, gin.H{"error": "could not update user"})
+	if err := db.Save(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not update user"})
 		return
 	}
 
@@ -63,11 +63,11 @@ func (u UsersController) Update(c *gin.Context) {
 }
 
 func (u UsersController) Delete(c *gin.Context) {
-  db := db.GetDB()
+	db := db.GetDB()
 	userID := c.Param("userID")
 
 	if err := db.Delete(&models.User{}, userID).Error; err != nil {
-    c.JSON(http.StatusInternalServerError, gin.H{"error": "could not delete user"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not delete user"})
 		return
 	}
 
@@ -75,7 +75,7 @@ func (u UsersController) Delete(c *gin.Context) {
 }
 
 func (u *UsersController) RetrieveJobs(c *gin.Context) {
-  db := db.GetDB()
+	db := db.GetDB()
 	userID := c.Param("userID")
 	var jobs []models.Job
 
@@ -84,7 +84,7 @@ func (u *UsersController) RetrieveJobs(c *gin.Context) {
 }
 
 func (u *UsersController) RetrieveJob(c *gin.Context) {
-  db := db.GetDB()
+	db := db.GetDB()
 
 	var job models.Job
 	userID := c.Param("userID")

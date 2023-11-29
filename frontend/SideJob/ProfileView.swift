@@ -15,8 +15,8 @@ struct User{
     var about : String;
     var myListings : Array<Job>
 }
-var job1 = Job(title: "Lawn Job", description: "cut my grass", price: "$35 an hour", postedBy: "user5093")
-var job2 = Job(title: "Other Job", description: "ksjdfkjh", price: "$35 an hour", postedBy: "user24341")
+//var job1 = Job(title: "Lawn Job", description: "cut my grass", price: "$35 an hour", postedBy: "user5093")
+//var job2 = Job(title: "Other Job", description: "ksjdfkjh", price: "$35 an hour", postedBy: "user24341")
 
 extension Color{
     static let buttonColor = Color(red: 60/255, green: 100/255, blue: 150/255)
@@ -28,7 +28,7 @@ struct ProfileView: View {
     
     // HARD CODED EXAMPLE USER
     
-    @State private var user = User(username: "idavis1", email: "idavis1@uvm.edu", about: "Hi, my name is India and I want to work for you. This is all information about me. I can paint and cut grass and do whatever. Feel free to reach out to me I am available always. This is example about text", myListings: [job1, job2])
+    @State private var user = User(username: "idavis1", email: "idavis1@uvm.edu", about: "Hi, my name is India and I want to work for you. This is all information about me. I can paint and cut grass and do whatever. Feel free to reach out to me I am available always. This is example about text", myListings: []) // myListings: [job1, job2])
     //END EXAMPLE USER
     
     @EnvironmentObject var userTokens: UserTokens
