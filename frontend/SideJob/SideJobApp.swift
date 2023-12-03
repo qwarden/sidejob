@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct SideJobApp: App {
+    @StateObject private var userTokens = UserTokens()
+    
     var body: some Scene {
         WindowGroup {
-            LoginView().environmentObject(UserInfo())
+            WelcomeView().environmentObject(userTokens)
         }
     }
 }

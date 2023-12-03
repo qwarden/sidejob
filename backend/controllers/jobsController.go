@@ -4,19 +4,19 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/qwarden/sidejob/backend/models"
 	"github.com/qwarden/sidejob/backend/db"
 	"github.com/qwarden/sidejob/backend/auth"
+	"github.com/qwarden/sidejob/backend/models"
 )
 
-type JobsController struct {}
+type JobsController struct{}
 
 func (j JobsController) RetrieveAll(c *gin.Context) {
   var jobs []models.Job
   db := db.GetDB()  
 
-  db.Find(&jobs)
-  c.JSON(http.StatusOK, gin.H{"jobs": jobs})
+	db.Find(&jobs)
+	c.JSON(http.StatusOK, gin.H{"jobs": jobs})
 }
 
 func (j JobsController) Create(c *gin.Context) {
@@ -37,7 +37,7 @@ func (j JobsController) Create(c *gin.Context) {
   job.PostedByID = userID
 
 	if err := db.Create(&job).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not create job" })
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not create job"})
 		return
 	}
 
@@ -74,7 +74,7 @@ func (j JobsController) Update(c *gin.Context) {
 }
 
 func (j JobsController) Delete(c *gin.Context) {
-  db := db.GetDB()
+	db := db.GetDB()
 	jobID := c.Param("jobID")
 
   userID, err := auth.GetIDFromContext(c)

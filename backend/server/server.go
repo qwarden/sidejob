@@ -10,8 +10,8 @@ import (
 )
 
 func Init() {
-  r := NewRouter()
-  r.Run(":8080")
+	r := NewRouter()
+	r.Run(":8080")
 }
 
 func NewRouter() *gin.Engine {
