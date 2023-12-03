@@ -37,6 +37,10 @@ struct JobListView: View {
             }
         }
     }
+    
+    func sortJobsByLocation() {
+        
+    }
 }
 
 // NewJob button

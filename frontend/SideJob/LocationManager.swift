@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-class LocationManager: NSObject, CLLocationManagerDelegate {
+class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
     var locManager = CLLocationManager()
     var locationServicesEnabled = false
     @Published var location: CLLocation?
@@ -18,8 +18,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         super.init()
         locManager.delegate = self
         locManager.desiredAccuracy = kCLLocationAccuracyBest
-        locManager.requestWhenInUseAuthorization()
-        locManager.startUpdatingLocation()
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
@@ -31,16 +29,13 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             print("Location services not enabled")
         }
     }
+    func requestAuthorization() {
+        locManager.requestWhenInUseAuthorization()
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         location = locations.first
     }
-    
-    func getCurrentLocation(completion: @escaping (CLLocation?) -> Void) {
-        self.completion = completion
-        locManager.requestLocation()
-    }
-    
     
     func getLocationZipCode(completion: @escaping (String?) -> Void) {
         let geocoder = CLGeocoder()

@@ -10,7 +10,7 @@ import SwiftUI
 struct PostView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var jobService: JobService = JobService.shared
-    private var locationObject = LocationManager()
+    @EnvironmentObject private var locationObject: LocationManager
     
     @State private var title: String = ""
     @State private var description: String = ""
@@ -28,7 +28,6 @@ struct PostView: View {
             Form {
                 TextField("Title", text: $title)
                 TextField("Description", text: $description)
-                //TextField("Zip Code", text: $location)
                 
                 Section(header: Text("Location")) {
                     TextField("Enter Zip Code", text: $location)
