@@ -11,6 +11,7 @@ import SwiftUI
 
 struct MyListingsView: View {
     @StateObject private var jobViewModel = JobService.shared
+    @ObservedObject var userTokens: UserTokens
     
     var body: some View {
         VStack{
@@ -23,8 +24,8 @@ struct MyListingsView: View {
     }
 }
 
-struct MyListingsView_Preview: PreviewProvider {
-    static var previews: some View {
-        MyListingsView()
-    }
-}
+//struct MyListingsView_Preview: PreviewProvider {
+//    static var previews: some View {
+//        MyListingsView(userTokens: UserTokens(123, 123))
+//    }
+//}

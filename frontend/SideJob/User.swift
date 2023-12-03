@@ -26,6 +26,7 @@ class UserInfo: ObservableObject {
 }
 
 class UserTokens: Codable, ObservableObject {
+    static let shared = UserTokens()
     @Published var accessToken: Int
     @Published var refreshToken: Int
     

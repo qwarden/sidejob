@@ -15,16 +15,12 @@ struct JobResponse: Decodable {
 class JobService: ObservableObject {
     static let shared = JobService()
     @Published var jobs = [Job]()
-
-    func fetchJobs() {
-        // Replace with your server's actual endpoint URL
-        guard let url = URL(string: "http://localhost:8080/jobs/") else {
-            print("Invalid URL")
-            return
-        }
-        print("Fetching jobs...")
-        
     
+    private var userTokens: UserTokens {
+        UserTokens.shared
+    }
+    
+    private func fetchJobsFromURL(_ url: URL) {
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("HTTP Request failed: \(error.localizedDescription)")
@@ -34,7 +30,7 @@ class JobService: ObservableObject {
                 print("No data received")
                 return
             }
-
+            
             let rawJSONString = String(data: data, encoding: .utf8) ?? "Invalid data"
             print("Received JSON: \(rawJSONString)")
             
@@ -44,7 +40,7 @@ class JobService: ObservableObject {
             dateFormatter.locale = Locale(identifier: "en_US_POSIX")
             dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
             decoder.dateDecodingStrategy = .formatted(dateFormatter)
-
+            
             do {
                 let decodedResponse = try decoder.decode(JobResponse.self, from: data)
                 DispatchQueue.main.async {
@@ -56,6 +52,21 @@ class JobService: ObservableObject {
         }.resume()
     }
     
+    func fetchJobs() {
+        guard let url = URL(string: "http://localhost:8080/jobs/") else {
+            print("Invalid URL")
+            return
+        }
+        print("Fetching jobs...")
+        fetchJobsFromURL(url)
+    }
+    
+    func fetchMyJobs() {
+        guard let url = URL(string: "http://localhost:8080/my/jobs") else { return }
+        var request = URLRequest(url: url)
+        request.addValue("Bearer \(userTokens.accessToken)", forHTTPHeaderField: "Authorization")
+        fetchJobsFromURL(request.url!)
+    }
     
     func postJob(newJob: NewJob, completion: @escaping (Bool) -> Void) {
         guard let url = URL(string: "http://localhost:8080/jobs") else {
@@ -66,11 +77,11 @@ class JobService: ObservableObject {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
+        
         do {
             let jsonData = try JSONEncoder().encode(newJob)
             request.httpBody = jsonData
-
+            
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let httpResponse = response as? HTTPURLResponse {
                     if httpResponse.statusCode == 201 {

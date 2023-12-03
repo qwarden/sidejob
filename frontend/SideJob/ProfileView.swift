@@ -18,7 +18,7 @@ struct User{
 //var job1 = Job(title: "Lawn Job", description: "cut my grass", price: "$35 an hour", postedBy: "user5093")
 //var job2 = Job(title: "Other Job", description: "ksjdfkjh", price: "$35 an hour", postedBy: "user24341")
 
-extension Color{
+extension Color {
     static let buttonColor = Color(red: 60/255, green: 100/255, blue: 150/255)
     static let darkGray = Color(red: 100/255, green: 100/255, blue: 100/255)
     static let lightGray = Color(red: 220/255, green: 230/255, blue: 270/255)
@@ -174,7 +174,7 @@ struct ProfileView: View {
                     }
                     else{
                         NavigationLink(
-                            destination: MyListingsView(),
+                            destination: MyListingsView(userTokens: userTokens),
                             label: {
                                 Text("My Listings").padding(.vertical, 20).padding(.horizontal, 80).font(.system(size: 20))
                             }
