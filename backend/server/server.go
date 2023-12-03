@@ -2,9 +2,11 @@ package server
 
 import (
   "net/http"
+  "path"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qwarden/sidejob/backend/controllers"
+	"github.com/qwarden/sidejob/backend/middleware"
 )
 
 func Init() {
@@ -15,14 +17,10 @@ func Init() {
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 
-  router.Use(func(c *gin.Context) {
-		path := c.Request.URL.Path
-		if len(path) > 1 && path[len(path)-1] == '/' {
-			normalizedPath := strings.TrimRight(path, "/")
-			c.Request.URL.Path = normalizedPath
-		}
+  r.Use(func(c *gin.Context) {
+    c.Request.URL.Path = path.Clean(c.Request.URL.Path)
 		c.Next()
-	})
+  })
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -30,24 +28,30 @@ func NewRouter() *gin.Engine {
 		})
 	})
 
-  userGroup := r.Group("users")
+  userGroup := r.Group("my").Use(middleware.AuthHandler())
   {
     userCtrl := new(controllers.UsersController)
-    userGroup.GET("/:userID", userCtrl.Retrieve)
-    userGroup.GET("/:userID/jobs", userCtrl.RetrieveJobs)
-    userGroup.GET(":userID/jobs/:jobID", userCtrl.RetrieveJob)
-    userGroup.POST("/", userCtrl.Create)
-    userGroup.PATCH("/:userID", userCtrl.Update)
-    userGroup.DELETE("/:userID", userCtrl.Delete)
+    userGroup.GET("/profile", userCtrl.Retrieve)
+    userGroup.GET("/jobs", userCtrl.RetrieveJobs)
+    userGroup.PATCH("/profile", userCtrl.Update)
+    userGroup.DELETE("/account", userCtrl.Delete)
   }
 
-  jobGroup := r.Group("jobs")
+  jobGroup := r.Group("jobs").Use(middleware.AuthHandler())
   {
     jobCtrl := new(controllers.JobsController)
     jobGroup.GET("/", jobCtrl.RetrieveAll)
     jobGroup.POST("/", jobCtrl.Create)
     jobGroup.PATCH("/:jobID", jobCtrl.Update)
     jobGroup.DELETE("/:jobID", jobCtrl.Delete)
+  }
+
+  authGroup := r.Group("auth")
+  {
+    authCtrl := new(controllers.AuthController)
+    authGroup.POST("/register", authCtrl.Register)
+    authGroup.POST("/login", authCtrl.Login)
+    authGroup.POST("/refresh", authCtrl.Refresh)
   }
 
   return r
