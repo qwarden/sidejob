@@ -42,27 +42,29 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     
-    func getLocationZipCode(location: CLLocation, completion: @escaping (String?) -> Void) {
+    func getLocationZipCode(completion: @escaping (String?) -> Void) {
         let geocoder = CLGeocoder()
         
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            if let error = error {
-                print("Reverse geocoding failed with error: \(error.localizedDescription)")
-                completion(nil)
-                return
-            }
-            
-            guard let placemark = placemarks?.first else {
-                print("No placemark found.")
-                completion(nil)
-                return
-            }
-            
-            if let postalCode = placemark.postalCode {
-                completion(postalCode)
-            } else {
-                print("No postal code found.")
-                completion(nil)
+        if let currentLoc = location {
+            geocoder.reverseGeocodeLocation(currentLoc) { (placemarks, error) in
+                if let error = error {
+                    print("Reverse geocoding failed with error: \(error.localizedDescription)")
+                    completion(nil)
+                    return
+                }
+                
+                guard let placemark = placemarks?.first else {
+                    print("No placemark found.")
+                    completion(nil)
+                    return
+                }
+                
+                if let postalCode = placemark.postalCode {
+                    completion(postalCode)
+                } else {
+                    print("No postal code found.")
+                    completion(nil)
+                }
             }
         }
     }

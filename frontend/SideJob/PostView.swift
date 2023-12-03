@@ -96,24 +96,10 @@ struct PostView: View {
     }
         
     func getCurrentLocationZipCode() {
-        // Use Core Location to get the current location
-        // Then call getLocationZipCode and update the location property
-        
-        // For example:
-        // Assuming you have a LocationManager instance
-        let locationManager = LocationManager()
-        
-        locationManager.getCurrentLocation { location in
-            guard let location = location else {
-                print("Failed to get current location.")
-                return
-            }
-            
-            locationObject.getLocationZipCode(location: location) { zipCode in
-                if let zipCode = zipCode {
-                    DispatchQueue.main.async {
-                        self.location = zipCode
-                    }
+        locationObject.getLocationZipCode() { zipCode in
+            if let zipCode = zipCode {
+                DispatchQueue.main.async {
+                    self.location = zipCode
                 }
             }
         }
