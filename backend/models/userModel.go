@@ -2,23 +2,31 @@ package models
 
 import (
 	"gorm.io/gorm"
+  "golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
 	gorm.Model        // ID, CreatedAt, UpdatedAt, DeletedAt
-	Email      string `gorm:"type:varchar(100);uniqueIndex;not null" json:"email"`
-	Password   string `gorm:"not null" json:"password"` // Will be hashed & salted
-	Name       string `gorm:"not null" json:"name"`
-	About      string `gorm:"type:text" json:"about"`
+  Email      string `gorm:"type:varchar(100);uniqueIndex;not null" json:"email"`
+  Password   string `gorm:"type:varchar(255);not null" json:"password"`
+  Name       string `gorm:"not null" json:"name"`
+  About      string `gorm:"type:text" json:"about"`
+	Jobs       []Job `gorm:"foreignKey:PostedByID"`
+}
 
-	// TODO: Use MinIO https://fly.io/docs/app-guides/minio/
-	// (Hosts S3-compatible object storage for user photos)
-	// UserPhoto string // URL or ID of photo
+func (u *User) HashPassword(password string) error {
+  bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 
-	// PostedJobs []Job `gorm:"foreignKey:PostedByID"`
+  if err != nil {
+    return err
+  }
 
-	// TODO: Ratings
-	// RatingsReceived []Rating
+  u.Password = string(bytes)
+  return nil
+}
+
+func (u User) CheckPassword(password string) error {
+ return bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 }
 
 // type Rating struct {
