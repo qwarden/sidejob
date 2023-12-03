@@ -26,11 +26,6 @@ extension Color{
 
 struct ProfileView: View {
     
-    // HARD CODED EXAMPLE USER
-    
-    @State private var user = User(username: "idavis1", email: "idavis1@uvm.edu", about: "Hi, my name is India and I want to work for you. This is all information about me. I can paint and cut grass and do whatever. Feel free to reach out to me I am available always. This is example about text", myListings: []) // myListings: [job1, job2])
-    //END EXAMPLE USER
-    
     @EnvironmentObject var userTokens: UserTokens
     
     @State private var showSaveAlert = false
