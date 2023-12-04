@@ -92,7 +92,7 @@ struct PosterProfileView: View {
                 }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .top)
                 
                 NavigationLink(
-                    destination: MyListingsView(user: poster),
+                    destination: ListingsView(user: poster),
                     label: {
                         Text("\(poster.name)'s listings")
                         

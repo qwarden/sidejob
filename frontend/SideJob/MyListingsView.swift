@@ -9,7 +9,7 @@ import SwiftUI
 
 
 
-struct MyListingsView: View {
+struct ListingsView: View {
        let user: UserInfo
 
        init(user: UserInfo) {
@@ -26,15 +26,15 @@ struct MyListingsView: View {
             Text(user.name)
             ZStack(alignment: .bottomTrailing) {
                 // List of jobs, each represented by JobView
-                /*
-                List(jobService.jobs.filter {$0.postedByID == $user.userId}) { job in
+                
+                List(jobService.jobs.filter {$0.postedByID == user.userID}) { job in
                     JobView(job: job)
                 }
                  
                 // Fetch jobs when the view appears
                 .onAppear {
                     jobService.fetchJobs()
-                }*/
+                }
             }
       
             // Present the PostView as a sheet
