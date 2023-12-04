@@ -61,7 +61,7 @@ struct PosterProfileView: View {
                         .frame(maxWidth: .infinity, maxHeight: 40)
                     
                     
-                    Text("poster.email")
+                    Text(poster.email)
                         .font(.system(size: 20)).foregroundColor(.black)
                         .padding(.horizontal, 50)
                         .padding(.vertical, 20)
@@ -82,7 +82,7 @@ struct PosterProfileView: View {
                         .fill(Color.lightGray)
                         .padding(.horizontal, 30)
                         .frame(maxWidth: .infinity, maxHeight: 120)
-                    TextEditor(text: poster.about)
+                    Text(poster.about)
                         .font(.system(size: 20))
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity, maxHeight: 120).padding(.horizontal, 35)
