@@ -22,6 +22,7 @@
 		A87817632AE04B840021625C /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87817622AE04B830021625C /* WelcomeView.swift */; };
 		A87817652AE04B930021625C /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87817642AE04B930021625C /* CreateAccountView.swift */; };
 		A8F2938D2AD9DCD20071F842 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2938C2AD9DCD20071F842 /* ProfileView.swift */; };
+		A8F6E4B72B1E2EE200B9F03D /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F6E4B62B1E2EE200B9F03D /* FilterView.swift */; };
 		AF91E8022AFD380200241824 /* JobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF91E8012AFD380200241824 /* JobView.swift */; };
 		F6B7894D2ACDE8ED00D161BE /* SideJobApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */; };
 		F6B7894F2ACDE8ED00D161BE /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7894E2ACDE8ED00D161BE /* FeedView.swift */; };
@@ -45,6 +46,7 @@
 		A87817622AE04B830021625C /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		A87817642AE04B930021625C /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
 		A8F2938C2AD9DCD20071F842 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		A8F6E4B62B1E2EE200B9F03D /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		AF91E8012AFD380200241824 /* JobView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobView.swift; sourceTree = "<group>"; };
 		F6B789492ACDE8ED00D161BE /* SideJob.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SideJob.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideJobApp.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				A8451E602ADF182400FA3CE0 /* DetailsView.swift */,
 				45863E202AFD395A008C262C /* JobListView.swift */,
 				F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */,
+				A8F6E4B62B1E2EE200B9F03D /* FilterView.swift */,
 				F6B7894E2ACDE8ED00D161BE /* FeedView.swift */,
 				A8F2938C2AD9DCD20071F842 /* ProfileView.swift */,
 				A8451E5E2ADF180500FA3CE0 /* LoginView.swift */,
@@ -201,6 +204,7 @@
 				A8F2938D2AD9DCD20071F842 /* ProfileView.swift in Sources */,
 				A85688D92B1640BA0068CE7F /* AppView.swift in Sources */,
 				A8451E5F2ADF180500FA3CE0 /* LoginView.swift in Sources */,
+				A8F6E4B72B1E2EE200B9F03D /* FilterView.swift in Sources */,
 				F6B7894D2ACDE8ED00D161BE /* SideJobApp.swift in Sources */,
 				A82486872AEAF675003C356B /* User.swift in Sources */,
 			);
