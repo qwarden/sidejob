@@ -61,7 +61,7 @@ struct PosterProfileView: View {
                         .frame(maxWidth: .infinity, maxHeight: 40)
                     
                     
-                    TextField("", text: poster.email)
+                    Text("poster.email")
                         .font(.system(size: 20)).foregroundColor(.black)
                         .padding(.horizontal, 50)
                         .padding(.vertical, 20)
