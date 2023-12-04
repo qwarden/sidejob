@@ -16,11 +16,15 @@ struct Job: Decodable, Identifiable {
     let location: String
     let postedByID : Int64
     let payType: String
-
-//    let photo: URL?
     
     var formattedPay: String {
         return String(format: "$%.2f", Double(payAmount) / 100.0)
+    }
+    var formattedPostedDate: String {
+            createdAt?.formattedDateString() ?? "N/A"
+    }
+    var formattedUpdatedDate: String {
+            updatedAt?.formattedDateString() ?? "N/A"
     }
     
 //    var payUnit: String {
@@ -49,4 +53,12 @@ struct NewJob: Encodable {
     let payAmount: Int64
     let location: String
     let payType: String
+}
+extension Date {
+    func formattedDateString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter.string(from: self)
+    }
 }
