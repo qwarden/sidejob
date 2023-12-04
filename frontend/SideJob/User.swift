@@ -14,6 +14,7 @@ class UserInfo: ObservableObject {
     var userID: Int
     var jobsPostedIDs: [Int]
     var jobsWorkedIDs: [Int]
+    var about: String
     
     init() {
         self.name = ""
@@ -22,6 +23,7 @@ class UserInfo: ObservableObject {
         self.userID = -1
         self.jobsPostedIDs = [Int]()
         self.jobsWorkedIDs = [Int]()
+        self.about = ""
     }
 }
 

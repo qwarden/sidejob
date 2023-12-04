@@ -10,12 +10,20 @@ import SwiftUI
 
 
 struct MyListingsView: View {
+       let user: UserInfo
+
+       init(user: UserInfo) {
+           self.user = user
+       }
+    
+    
     // Using ObservedObject to observe changes in the shared JobService instance
     @ObservedObject var jobService = JobService.shared
     @State private var showingPostView = false
     
     var body: some View {
       NavigationView {
+            Text(user.name)
             ZStack(alignment: .bottomTrailing) {
                 // List of jobs, each represented by JobView
                 /*
@@ -34,11 +42,5 @@ struct MyListingsView: View {
                 PostView()
             }
         }
-    }
-}
-
-struct MyListingsView_Preview: PreviewProvider {
-    static var previews: some View {
-        MyListingsView()
     }
 }

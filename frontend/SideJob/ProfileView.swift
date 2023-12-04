@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-
-
-struct User{
-    var username : String;
-    var email : String;
-    var about : String;
-}
-
 //var job1 = Job(title: "Lawn Job", description: "cut my grass", price: "$35 an hour", postedBy: "user5093")
 //var job2 = Job(title: "Other Job", description: "ksjdfkjh", price: "$35 an hour", postedBy: "user24341")
 
@@ -26,7 +18,7 @@ extension Color{
 
 struct ProfileView: View {
     //DELETE THIS EXAMPLE USER
-    @State private var user = User(username: "idavis1", email: "idavis1@uvm.edu", about: "dsfafdsfsf")
+    @State private var user = UserInfo()
 
     @EnvironmentObject var userTokens: UserTokens
     
@@ -89,7 +81,7 @@ struct ProfileView: View {
                     
                 }
                 
-                Text("Username:")
+                Text("Name:")
                     .font(.system(size: 20)).padding(.top, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 30)
@@ -100,14 +92,14 @@ struct ProfileView: View {
                         .padding(.horizontal, 30)
                         .frame(maxWidth: .infinity, maxHeight: 40)
                     if (isEditing == false){
-                        Text(user.username)
+                        Text(user.name)
                             .font(.system(size: 20)).foregroundColor(.darkGray)
                             .padding(.horizontal, 50)
                             .padding(.vertical, 20)
                             .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
                     }
                     else{
-                        TextField("", text: $user.username)
+                        TextField("", text: $user.name)
                             .font(.system(size: 20)).foregroundColor(.black)
                             .padding(.horizontal, 50)
                             .padding(.vertical, 20)
@@ -196,7 +188,7 @@ struct ProfileView: View {
                     }
                     else{
                         NavigationLink(
-                            destination: MyListingsView(),
+                            destination: MyListingsView(user: user),
                             label: {
                                 Text("My Listings").padding(.vertical, 20).padding(.horizontal, 80).font(.system(size: 20))
                             }
@@ -261,7 +253,7 @@ struct ProfileView: View {
          
 
     private func updateProfile() {
-        if(user.username.isEmpty || user.email.isEmpty || user.about.isEmpty){
+        if(user.name.isEmpty || user.email.isEmpty || user.about.isEmpty){
             alertMessage = "Please fill in all fields"
             showEditAlert = true
             cannotSave = true
