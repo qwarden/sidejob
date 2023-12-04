@@ -12,6 +12,7 @@ struct JobListView: View {
     // Using ObservedObject to observe changes in the shared JobService instance
     @ObservedObject var jobService = JobService.shared
     @State private var showingPostView = false
+    @EnvironmentObject private var locationObject: LocationManager
 
     var body: some View {
         NavigationView {
@@ -38,9 +39,26 @@ struct JobListView: View {
         }
     }
     
-    func sortJobsByLocation() {
-        
+    var filteredJobs: [Job] {
+        guard let userLocation = locationObject.location else {
+            return jobService.jobs
+        }
+
+        return jobService.jobs.filter { job in
+            // here we need to get longitude and latitude from zip code
+            let
+            let jobLocation = CLLocation(latitude: job.latitude, longitude: job.longitude)
+            let distance = userLocation.distance(from: jobLocation) // distance in meters
+
+            // You can adjust the radius (in meters) based on your requirements
+            let radius: CLLocationDistance = 10000 // 10 kilometers
+
+            return distance <= radius
+        }
     }
+    
+    func getLongAndLatFromZip(String
+    
 }
 
 // NewJob button
