@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FeedView: View {
     @StateObject private var jobService = JobService.shared
+    @EnvironmentObject private var location: LocationManager
     
     var body: some View {
         NavigationView {

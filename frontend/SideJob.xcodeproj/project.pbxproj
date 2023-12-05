@@ -18,10 +18,12 @@
 		A8451E652ADF185800FA3CE0 /* MyJobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E642ADF185800FA3CE0 /* MyJobsView.swift */; };
 		A8451E692ADF18B200FA3CE0 /* MyListingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E682ADF18B200FA3CE0 /* MyListingsView.swift */; };
 		A8451E6B2ADF18C600FA3CE0 /* EditInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E6A2ADF18C600FA3CE0 /* EditInfoView.swift */; };
+		A849B20E2B18E4F000C1F133 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A849B20D2B18E4F000C1F133 /* LocationManager.swift */; };
 		A85688D92B1640BA0068CE7F /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85688D82B1640BA0068CE7F /* AppView.swift */; };
 		A87817632AE04B840021625C /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87817622AE04B830021625C /* WelcomeView.swift */; };
 		A87817652AE04B930021625C /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87817642AE04B930021625C /* CreateAccountView.swift */; };
 		A8F2938D2AD9DCD20071F842 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2938C2AD9DCD20071F842 /* ProfileView.swift */; };
+		A8F6E4B72B1E2EE200B9F03D /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F6E4B62B1E2EE200B9F03D /* FilterView.swift */; };
 		AF91E8022AFD380200241824 /* JobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF91E8012AFD380200241824 /* JobView.swift */; };
 		F684A65A2B1D7197006AAF9C /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = F684A6592B1D7197006AAF9C /* Client.swift */; };
 		F6B7894D2ACDE8ED00D161BE /* SideJobApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */; };
@@ -42,10 +44,12 @@
 		A8451E642ADF185800FA3CE0 /* MyJobsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyJobsView.swift; sourceTree = "<group>"; };
 		A8451E682ADF18B200FA3CE0 /* MyListingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListingsView.swift; sourceTree = "<group>"; };
 		A8451E6A2ADF18C600FA3CE0 /* EditInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfoView.swift; sourceTree = "<group>"; };
+		A849B20D2B18E4F000C1F133 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		A85688D82B1640BA0068CE7F /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppView.swift; path = ../AppView.swift; sourceTree = "<group>"; };
 		A87817622AE04B830021625C /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		A87817642AE04B930021625C /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
 		A8F2938C2AD9DCD20071F842 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		A8F6E4B62B1E2EE200B9F03D /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		AF91E8012AFD380200241824 /* JobView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobView.swift; sourceTree = "<group>"; };
 		F684A6592B1D7197006AAF9C /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		F6B789492ACDE8ED00D161BE /* SideJob.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SideJob.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +92,8 @@
 				A85688D82B1640BA0068CE7F /* AppView.swift */,
 				A8451E602ADF182400FA3CE0 /* DetailsView.swift */,
 				45863E202AFD395A008C262C /* JobListView.swift */,
+				F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */,
+				A8F6E4B62B1E2EE200B9F03D /* FilterView.swift */,
 				F6B7894E2ACDE8ED00D161BE /* FeedView.swift */,
 				A8F2938C2AD9DCD20071F842 /* ProfileView.swift */,
 				A8451E5E2ADF180500FA3CE0 /* LoginView.swift */,
@@ -106,6 +112,7 @@
 				A87817642AE04B930021625C /* CreateAccountView.swift */,
 				976174872B0D93F300A4645F /* PostView.swift */,
 				9761748B2B0D9AA600A4645F /* JobService.swift */,
+				A849B20D2B18E4F000C1F133 /* LocationManager.swift */,
 			);
 			path = SideJob;
 			sourceTree = "<group>";
@@ -197,6 +204,7 @@
 				45863E212AFD395A008C262C /* JobListView.swift in Sources */,
 				4538255B2B1D716D00A8A45E /* PosterProfileView.swift in Sources */,
 				9761748C2B0D9AA600A4645F /* JobService.swift in Sources */,
+				A849B20E2B18E4F000C1F133 /* LocationManager.swift in Sources */,
 				F684A65A2B1D7197006AAF9C /* Client.swift in Sources */,
 				A87817632AE04B840021625C /* WelcomeView.swift in Sources */,
 				AF91E8022AFD380200241824 /* JobView.swift in Sources */,
@@ -205,6 +213,7 @@
 				A8F2938D2AD9DCD20071F842 /* ProfileView.swift in Sources */,
 				A85688D92B1640BA0068CE7F /* AppView.swift in Sources */,
 				A8451E5F2ADF180500FA3CE0 /* LoginView.swift in Sources */,
+				A8F6E4B72B1E2EE200B9F03D /* FilterView.swift in Sources */,
 				F6B7894D2ACDE8ED00D161BE /* SideJobApp.swift in Sources */,
 				A82486872AEAF675003C356B /* User.swift in Sources */,
 			);
@@ -340,8 +349,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SideJob/Preview Content\"";
+				DEVELOPMENT_TEAM = 8VC44R5J5T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Requesting Location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -369,8 +380,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SideJob/Preview Content\"";
+				DEVELOPMENT_TEAM = 8VC44R5J5T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Requesting Location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
