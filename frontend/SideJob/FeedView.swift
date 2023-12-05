@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FeedView: View {
     @State private var showingPostView = false
+    @EnvironmentObject private var location: LocationManager
 
     var body: some View {
         NavigationView {
@@ -25,21 +26,20 @@ struct FeedView: View {
             }
         }
     }
-}
+    struct FloatingActionButton: View {
+        var action: () -> Void
 
-struct FloatingActionButton: View {
-    var action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: "plus")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .clipShape(Circle())
-                .padding()
+        var body: some View {
+            Button(action: action) {
+                Image(systemName: "plus")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .clipShape(Circle())
+                    .padding()
+            }
         }
     }
 }

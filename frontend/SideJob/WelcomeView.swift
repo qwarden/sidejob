@@ -8,27 +8,20 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    @State private var loggedIn = false
+    //@State private var loggedIn = false
+    @EnvironmentObject var client: Client
     
     var body: some View {
         //if we haven't already logged in, we show welcome screen.
         Group {
-            if !(loggedIn){
+            if !(client.loggedIn){
                 LoginAccountNavigation()
             }
             else {
                 AppView()
             }
-        }.onAppear {
-            // Perform the check and update state here
-            loggedIn = checkLoggedIn()
         }
     }
-    
-    func checkLoggedIn() -> Bool {
-        //here we implement checking the persistence to see if user has already logged in, if so we get that login info and update the user environment object
-    }
-    
 }
 
 struct LoginAccountNavigation: View {

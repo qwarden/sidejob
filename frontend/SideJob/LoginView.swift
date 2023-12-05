@@ -17,7 +17,12 @@ struct LoginView: View {
     
     @State private var loggedIn = false
     
-    @EnvironmentObject var userTokens: UserTokens
+    @EnvironmentObject var client: Client
+    
+    struct LoginInfo: Codable {
+        let email: String
+        let password: String
+    }
     
     var body: some View {
         if (!loggedIn) {
@@ -45,34 +50,46 @@ struct LoginView: View {
     
     func attemptLogin(){
         if (frontEndChecks()) {
-            // where we check with backed to see if user is valid
-            // if it works, set logged in to true
-            // persist tokens
-            userTokens.accessToken = 2
-            userTokens.refreshToken = 2
-            saveChanges()
-            loggedIn = true
-        }
-    }
-    
-    func saveChanges() {
-        
-        let itemArchiveURL: URL = {
-            let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            let documentDirectory = documentDirectories.first!
-            return documentDirectory.appendingPathComponent("tokens.json")
-        }()
-        
-        let jsonEncoder = JSONEncoder()
-        do {
-            let jsonData = try jsonEncoder.encode(userTokens)
-            try jsonData.write(to: itemArchiveURL, options: [.atomicWrite])
-        }
-        catch let error {
-            print("error saving to json: \(error)")
-        }
-    }
+            let lowercaseEmail = self.email.lowercased()
+            let credentials = LoginInfo(email: lowercaseEmail, password: self.password)
+            
+            do {
+                let encoder = JSONEncoder()
+                let jsonData = try encoder.encode(credentials)
 
+                // Convert Data to String if needed
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    print("JSON String: \(jsonString)")
+                }
+                
+                client.fetch(verb: "POST", endpoint: "auth/login", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
+                     switch result {
+                     case .success(let data):
+                         do {
+                             let decoder = JSONDecoder()
+                             let tokens = try decoder.decode(Tokens.self, from:data)
+                             client.saveTokens(tokens)
+                             client.loggedIn = true
+                             self.loggedIn = true
+                         }
+                         catch {
+                             print("Error encoding and saving tokens.")
+                         }
+                     case .failure(let error):
+                         print("Error during login: \(error)")
+                         loginErrorMessage = "Email and/or Password invalid"
+                         self.loggedIn = false
+                     }
+                 }
+
+                // Now you can pass jsonData to your client.fetch method
+            } catch {
+                print("Error encoding credentials: \(error)")
+                loginErrorMessage = "Email and/or Password invalid"
+            }
+
+        }
+    }
     
     func frontEndChecks() -> Bool {
         var frontendChecksPassed = true
@@ -103,9 +120,9 @@ struct LoginView: View {
 }
 
 
-struct LoginView_Preview: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+//struct LoginView_Preview: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//    }
+//}
 

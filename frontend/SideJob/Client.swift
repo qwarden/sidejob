@@ -16,6 +16,11 @@ class Tokens: Codable {
         case refreshToken = "refresh_token"
     }
     
+    init(accessToken: String, refreshToken: String){
+        self.accessToken = accessToken
+        self.refreshToken = refreshToken
+    }
+    
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         accessToken = try container.decode(String.self, forKey: .accessToken)
@@ -64,6 +69,13 @@ class Client: ObservableObject {
         }
     }
 
+    func logout() {
+        let emptyTokens = Tokens(accessToken: "", refreshToken: "")
+        // Save the empty tokens
+        saveTokens(emptyTokens)
+        // Set the loggedIn state to false
+        loggedIn = false
+    }
     
   
     
@@ -127,14 +139,14 @@ class Client: ObservableObject {
             }
 
             if httpResponse.statusCode == 401 {
-                self.refreshTokens { success in
-                    if success {
-                        self.fetch(verb: verb, endpoint: endpoint, auth: auth, data: data, completion: completion)
-                    } else {
-                        completion(.failure(.unauthorized))
-                    }
-                }
-            } else if let responseData = responseData {
+                //self.refreshTokens { success in
+                //    if success {
+                //        self.fetch(verb: verb, endpoint: endpoint, auth: auth, data: data, completion: completion)
+                //    } else {
+                completion(.failure(.unauthorized))
+                //    }
+            }
+            else if let responseData = responseData {
                 completion(.success(responseData))
             } else {
                 completion(.failure(.noData))
