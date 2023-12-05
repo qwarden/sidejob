@@ -11,7 +11,6 @@ type User struct {
   Password   string `gorm:"type:varchar(255);not null" json:"password"`
   Name       string `gorm:"not null" json:"name"`
   About      string `gorm:"type:text" json:"about"`
-	Jobs       []Job `gorm:"foreignKey:PostedByID"`
 }
 
 func (u *User) HashPassword(password string) error {

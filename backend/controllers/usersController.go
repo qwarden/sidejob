@@ -18,7 +18,7 @@ type UserResponse struct {
 	UpdatedAt time.Time `json:"updated_at"`
 	Email     string    `json:"email"`
 	Name      string    `json:"name"`
-	About     string    `json:"about"`
+  About     string    `json:"about"`
 }
 
 func (u UsersController) RetrieveUsersJob(c *gin.Context) {

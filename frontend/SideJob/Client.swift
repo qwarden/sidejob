@@ -63,9 +63,6 @@ class Client: ObservableObject {
             }
         }
     }
-
-    
-  
     
     func refreshTokens(completion: @escaping (Bool) -> Void) {
            let url = baseURL.appendingPathComponent("/auth/refresh")

@@ -13,16 +13,11 @@ extension Color{
     static let lightGray = Color(red: 220/255, green: 230/255, blue: 270/255)
 }
 
-struct User{
-    var name: String
-    var email: String
-    var about: String
-}
 
 struct ProfileView: View {
-    @State private var user = UserInfo()
+    @State private var user: User
 
-    @EnvironmentObject var userTokens: UserTokens
+    @EnvironmentObject var client: Client
     
     @State private var showSaveAlert = false
     @State private var showAlert = false
@@ -30,9 +25,32 @@ struct ProfileView: View {
     @State private var navigateToNextView = false
     @State private var isEditing = false
     @State var askToSignOut: Bool = false
-    @State var test: String = "Test"
     @State private var alertMessage: String = ""
     @State private var cannotSave = false
+    
+    func loadProfile(completion: @escaping (User?) -> Void) {
+        client.fetch(verb: "GET", endpoint: "/my/profile", auth: true) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let user = try JSONDecoder().decode(User.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(user)
+                    }
+                } catch {
+                    print("Decoding error: \(error)")
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
+                }
+            case .failure(let error):
+                print("Fetch error: \(error)")
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }
+    }
     
     //@Binding var imageName: String
     var body: some View {
@@ -221,10 +239,8 @@ struct ProfileView: View {
                                     message: Text("You will be required to log back into your account"),
                                     primaryButton: .default(Text("Sign Out")) {
                                         // Action to perform when OK is tapped
+                                        
                                         self.navigateToNextView = true
-                                        userTokens.accessToken = -1
-                                        userTokens.refreshToken = -1
-                                        saveChanges()
                                     },
                                     secondaryButton: .cancel()
                                 )
@@ -247,10 +263,14 @@ struct ProfileView: View {
                         EmptyView()
                     }.hidden()
                     
-                    } // Hide the NavigationLink
+                    }
                     
                 }.padding(.bottom, 30)
-        
+            .onAppear {
+                loadProfile { loadedUser in
+                    self.user = loadedUser ?? User()
+                }
+            }
     }
          
 
@@ -274,31 +294,11 @@ struct ProfileView: View {
             }
         }
     }
-        
-    
-    
-    func saveChanges() {
-        
-        let itemArchiveURL: URL = {
-            let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            let documentDirectory = documentDirectories.first!
-            return documentDirectory.appendingPathComponent("tokens.json")
-        }()
-        
-        let jsonEncoder = JSONEncoder()
-        do {
-            let jsonData = try jsonEncoder.encode(userTokens)
-            try jsonData.write(to: itemArchiveURL, options: [.atomicWrite])
-        }
-        catch let error {
-            print("error saving to json: \(error)")
-        }
-    }
     
     
     struct ProfileView_Preview: PreviewProvider {
         static var previews: some View {
-            ProfileView().environmentObject(UserTokens())
+            ProfileView(user: User()).environmentObject(Client())
         }
     }
     
