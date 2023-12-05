@@ -64,8 +64,17 @@ struct LoginView: View {
                 
                 client.fetch(verb: "POST", endpoint: "auth/login", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
                      switch result {
-                     case .success(_):
-                         self.loggedIn = true
+                     case .success(let data):
+                         do {
+                             let decoder = JSONDecoder()
+                             let tokens = try decoder.decode(Tokens.self, from:data)
+                             client.saveTokens(tokens)
+                             client.loggedIn = true
+                             self.loggedIn = true
+                         }
+                         catch {
+                             print("Error encoding and saving tokens.")
+                         }
                      case .failure(let error):
                          print("Error during login: \(error)")
                          loginErrorMessage = "Email and/or Password invalid"
@@ -111,9 +120,9 @@ struct LoginView: View {
 }
 
 
-struct LoginView_Preview: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+//struct LoginView_Preview: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//    }
+//}
 

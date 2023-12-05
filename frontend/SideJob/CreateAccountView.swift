@@ -83,8 +83,16 @@ struct CreateAccountView: View {
                 client.fetch(verb: "POST", endpoint: "auth/register", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
                      switch result {
                      case .success(let data):
-                         let decoder = JSONDecoder()
-                         self.accountCreated = true
+                         do {
+                             let decoder = JSONDecoder()
+                             let tokens = try decoder.decode(Tokens.self, from:data)
+                             client.saveTokens(tokens)
+                             client.loggedIn = true
+                             self.accountCreated = true
+                         }
+                         catch {
+                             print("Error encoding and saving tokens.")
+                         }
                      case .failure(let error):
                          print("Error during account creation: \(error)")
                          accountCreationErrorMessages = "Account Creation Invalid"
@@ -141,8 +149,8 @@ struct CreateAccountView: View {
     }
 }
 
-struct CreateAccount_Preview: PreviewProvider {
-    static var previews: some View {
-        CreateAccountView()
-    }
-}
+//struct CreateAccount_Preview: PreviewProvider {
+//    static var previews: some View {
+//        CreateAccountView()
+//    }
+//}

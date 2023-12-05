@@ -221,10 +221,8 @@ struct ProfileView: View {
                                     message: Text("You will be required to log back into your account"),
                                     primaryButton: .default(Text("Sign Out")) {
                                         // Action to perform when OK is tapped
+                                        client.logout()
                                         self.navigateToNextView = true
-//                                        userTokens.accessToken = -1
-//                                        userTokens.refreshToken = -1
-                                        //saveChanges()
                                     },
                                     secondaryButton: .cancel()
                                 )
