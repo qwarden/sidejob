@@ -22,7 +22,7 @@ struct User{
 struct ProfileView: View {
     @State private var user = UserInfo()
 
-    @EnvironmentObject var userTokens: UserTokens
+    @EnvironmentObject var client: Client
     
     @State private var showSaveAlert = false
     @State private var showAlert = false
@@ -222,9 +222,9 @@ struct ProfileView: View {
                                     primaryButton: .default(Text("Sign Out")) {
                                         // Action to perform when OK is tapped
                                         self.navigateToNextView = true
-                                        userTokens.accessToken = -1
-                                        userTokens.refreshToken = -1
-                                        saveChanges()
+//                                        userTokens.accessToken = -1
+//                                        userTokens.refreshToken = -1
+                                        //saveChanges()
                                     },
                                     secondaryButton: .cancel()
                                 )
@@ -274,32 +274,11 @@ struct ProfileView: View {
             }
         }
     }
-        
     
-    
-    func saveChanges() {
-        
-        let itemArchiveURL: URL = {
-            let documentDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            let documentDirectory = documentDirectories.first!
-            return documentDirectory.appendingPathComponent("tokens.json")
-        }()
-        
-        let jsonEncoder = JSONEncoder()
-        do {
-            let jsonData = try jsonEncoder.encode(userTokens)
-            try jsonData.write(to: itemArchiveURL, options: [.atomicWrite])
-        }
-        catch let error {
-            print("error saving to json: \(error)")
-        }
-    }
-    
-    
-    struct ProfileView_Preview: PreviewProvider {
-        static var previews: some View {
-            ProfileView().environmentObject(UserTokens())
-        }
-    }
+//    struct ProfileView_Preview: PreviewProvider {
+//        static var previews: some View {
+//            ProfileView().environmentObject(UserTokens())
+//        }
+//    }
     
 }
