@@ -22,7 +22,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         if manager.authorizationStatus == .authorizedAlways || manager.authorizationStatus == .authorizedWhenInUse {
-            locManager.startUpdatingLocation()
             self.locationServicesEnabled = true
             print("Location services enabled")
         } else if manager.authorizationStatus == .denied || manager.authorizationStatus == .notDetermined {
@@ -31,6 +30,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     func requestAuthorization() {
         locManager.requestWhenInUseAuthorization()
+        locManager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -63,5 +63,24 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
             }
         }
     }
+    
+    func getLocationFromZipCode(from zipCode: String, completion: @escaping (CLLocation?) -> Void) {
+        let geocoder = CLGeocoder()
 
+        geocoder.geocodeAddressString(zipCode) { (placemarks, error) in
+            if let error = error {
+                print("Geocoding failed with error: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+
+            guard let location = placemarks?.first?.location else {
+                print("No location found.")
+                completion(nil)
+                return
+            }
+
+            completion(location)
+        }
+    }
 }

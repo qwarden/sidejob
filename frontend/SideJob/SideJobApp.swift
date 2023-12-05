@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct SideJobApp: App {
+    
     @StateObject private var userTokens = UserTokens()
     @StateObject private var locationManager = LocationManager()
     
