@@ -23,10 +23,12 @@ struct FilterView: View {
     var body: some View {
         Text("Filter Job Locations:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
         VStack(spacing: 25) {
-            Section(header: Text("Your Location")) {
-                TextField("Enter Zip Code", text: $location)
-                    .keyboardType(.numberPad)
-                
+            Section() {
+                HStack() {
+                    Text("Enter Zip Code:")
+                    TextField("Zip Code", text: $location)
+                        .keyboardType(.numberPad)
+                }
                 Toggle("Use Current Location", isOn: $useCurrentLocation)
                     .onChange(of: useCurrentLocation) { newValue in
                         if newValue {
@@ -44,20 +46,23 @@ struct FilterView: View {
                 Text(zipCodeErrorMessage).foregroundColor(Color.red)
             }
             
-            Picker("Select Radius", selection: $radius) {
-                Text("10 miles").tag(10)
-                Text("25 miles").tag(25)
-                Text("50 miles").tag(50)
-                Text("100 miles").tag(100)
+            HStack {
+                Text("Radius:")
+                Picker("Select Radius", selection: $radius) {
+                    Text("10 miles").tag(10)
+                    Text("25 miles").tag(25)
+                    Text("50 miles").tag(50)
+                    Text("100 miles").tag(100)
+                }
+                .pickerStyle(MenuPickerStyle())
+                .padding()
             }
-            .pickerStyle(MenuPickerStyle())
-            .padding()
             
             // button to filter
             NavigationLink(destination: FeedView().navigationBarBackButtonHidden()) {
                 Text("Filter")
             }
-        }
+        }.padding().padding()
     }
         
     func getCurrentLocationZipCode() {
@@ -70,7 +75,3 @@ struct FilterView: View {
         }
     }
 }
-
-//#Preview {
-//    FilterView().environmentObject(UserTokens())
-//}
