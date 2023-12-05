@@ -27,6 +27,7 @@ struct WelcomeView: View {
     
     func checkLoggedIn() -> Bool {
         //here we implement checking the persistence to see if user has already logged in, if so we get that login info and update the user environment object
+        return false
     }
     
 }

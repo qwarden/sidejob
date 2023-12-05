@@ -14,7 +14,7 @@ struct PosterProfileView: View {
         self.poster = poster
     }
     
-    @EnvironmentObject var userTokens: UserTokens
+    @EnvironmentObject var client: Client
     
     @State private var navigateToNextView = false
     @State var test: String = "Test"
@@ -110,11 +110,11 @@ struct PosterProfileView: View {
         }
     }
     
-    struct PosterProfileView_Preview: PreviewProvider {
-        static var previews: some View {
-            PosterProfileView().environmentObject(UserTokens())
-        }
-    }
+//    struct PosterProfileView_Preview: PreviewProvider {
+//        static var previews: some View {
+//            PosterProfileView()
+//        }
+//    }
     
     
 }
