@@ -7,38 +7,32 @@
 
 import SwiftUI
 
-
-
-struct User{
-    var username : String;
-    var email : String;
-    var about : String;
-    var myListings : Array<Job>
-}
-//var job1 = Job(title: "Lawn Job", description: "cut my grass", price: "$35 an hour", postedBy: "user5093")
-//var job2 = Job(title: "Other Job", description: "ksjdfkjh", price: "$35 an hour", postedBy: "user24341")
-
 extension Color{
     static let buttonColor = Color(red: 60/255, green: 100/255, blue: 150/255)
     static let darkGray = Color(red: 100/255, green: 100/255, blue: 100/255)
     static let lightGray = Color(red: 220/255, green: 230/255, blue: 270/255)
 }
 
+struct User{
+    var name: String
+    var email: String
+    var about: String
+}
+
 struct ProfileView: View {
-    
-    // HARD CODED EXAMPLE USER
-    
-    @State private var user = User(username: "idavis1", email: "idavis1@uvm.edu", about: "Hi, my name is India and I want to work for you. This is all information about me. I can paint and cut grass and do whatever. Feel free to reach out to me I am available always. This is example about text", myListings: []) // myListings: [job1, job2])
-    //END EXAMPLE USER
-    
+    @State private var user = UserInfo()
+
     @EnvironmentObject var userTokens: UserTokens
     
     @State private var showSaveAlert = false
     @State private var showAlert = false
+    @State private var showEditAlert = false
     @State private var navigateToNextView = false
     @State private var isEditing = false
     @State var askToSignOut: Bool = false
     @State var test: String = "Test"
+    @State private var alertMessage: String = ""
+    @State private var cannotSave = false
     
     //@Binding var imageName: String
     var body: some View {
@@ -58,17 +52,38 @@ struct ProfileView: View {
                             .font(.system(size: 25))
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
-                    Button(action: {
-                        isEditing.toggle()
-                    }) {
-                        Text(isEditing ? "Done" : "Edit")
-                    }.frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding(.trailing, 30)
-                        .font(.system(size: 20))
+                    
+                    if (isEditing == false){
+                        Button(action: {
+                            isEditing = true
+                        }) {
+                            Text("Edit")
+                        }.frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding(.trailing, 30)
+                            .font(.system(size: 20))
+                            
+                    }
+                    else{
+                        Button(action: {
+                            updateProfile()
+                            if (cannotSave == false){
+                                isEditing = false
+                            }
+                        }) {
+                            Text("Done")
+                        }.frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding(.trailing, 30)
+                            .font(.system(size: 20))
+                        .alert(isPresented: $showEditAlert) {
+                            Alert(title: Text("Cannot update profile"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                        }
+                        
+                    }
+                    
                     
                 }
                 
-                Text("Username:")
+                Text("Name:")
                     .font(.system(size: 20)).padding(.top, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 30)
@@ -79,14 +94,14 @@ struct ProfileView: View {
                         .padding(.horizontal, 30)
                         .frame(maxWidth: .infinity, maxHeight: 40)
                     if (isEditing == false){
-                        Text(user.username)
+                        Text(user.name)
                             .font(.system(size: 20)).foregroundColor(.darkGray)
                             .padding(.horizontal, 50)
                             .padding(.vertical, 20)
                             .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
                     }
                     else{
-                        TextField("", text: $user.username)
+                        TextField("", text: $user.name)
                             .font(.system(size: 20)).foregroundColor(.black)
                             .padding(.horizontal, 50)
                             .padding(.vertical, 20)
@@ -142,6 +157,7 @@ struct ProfileView: View {
                                 .foregroundColor(.darkGray)
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 15)
+                                .frame(alignment: .leading)
                         }.frame(maxWidth: .infinity, maxHeight: 120).padding(.horizontal, 35)
                     }
                     else{
@@ -174,7 +190,7 @@ struct ProfileView: View {
                     }
                     else{
                         NavigationLink(
-                            destination: MyListingsView(),
+                            destination: ListingsView(user: user),
                             label: {
                                 Text("My Listings").padding(.vertical, 20).padding(.horizontal, 80).font(.system(size: 20))
                             }
@@ -238,6 +254,28 @@ struct ProfileView: View {
     }
          
 
+    private func updateProfile() {
+        if(user.name.isEmpty || user.email.isEmpty || user.about.isEmpty){
+            alertMessage = "Please fill in all fields"
+            showEditAlert = true
+            cannotSave = true
+            return
+        }
+        else {
+            if(!user.email.contains("@") || !user.email.contains(".")){
+                alertMessage = "Please enter valid email"
+                showEditAlert = true
+                cannotSave = true
+                return
+            }
+            else{
+                cannotSave = false
+                return
+            }
+        }
+    }
+        
+    
     
     func saveChanges() {
         
@@ -263,10 +301,5 @@ struct ProfileView: View {
             ProfileView().environmentObject(UserTokens())
         }
     }
-    
-    
-    
-    
-    
     
 }
