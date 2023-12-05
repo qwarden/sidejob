@@ -12,6 +12,7 @@ import SwiftUI
 struct MyListingsView: View {
     @StateObject private var jobViewModel = JobService.shared
     @ObservedObject var userTokens: UserTokens
+    @StateObject private var jobService = JobService.shared
     
     var body: some View {
         VStack{
@@ -20,6 +21,8 @@ struct MyListingsView: View {
             ScrollView{
                 JobListView()
             }
+        }.onAppear {
+            jobService.fetchMyJobs()
         }.frame( maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }

@@ -53,11 +53,11 @@ class JobService: ObservableObject {
     }
     
     func fetchJobs() {
-        guard let url = URL(string: "http://localhost:8080/jobs/") else {
-            print("Invalid URL")
-            return
-        }
-        print("Fetching jobs...")
+        guard let url = URL(string: "http://localhost:8080/jobs/") else { return }
+        var request = URLRequest(url: url)
+        request.addValue("Bearer \(userTokens.accessToken)", forHTTPHeaderField: "Authorization")
+        print(request.allHTTPHeaderFields)
+        fetchJobsFromURL(request.url!)
         fetchJobsFromURL(url)
     }
     

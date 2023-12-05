@@ -257,16 +257,9 @@ struct ProfileView: View {
         }
     }
     
-    
     struct ProfileView_Preview: PreviewProvider {
         static var previews: some View {
             ProfileView().environmentObject(UserTokens())
         }
     }
-    
-    
-    
-    
-    
-    
 }

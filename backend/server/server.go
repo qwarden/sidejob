@@ -1,8 +1,8 @@
 package server
 
 import (
-  "net/http"
-  "path"
+	"net/http"
+	"path"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qwarden/sidejob/backend/controllers"
@@ -17,10 +17,10 @@ func Init() {
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 
-  r.Use(func(c *gin.Context) {
-    c.Request.URL.Path = path.Clean(c.Request.URL.Path)
+	r.Use(func(c *gin.Context) {
+		c.Request.URL.Path = path.Clean(c.Request.URL.Path)
 		c.Next()
-  })
+	})
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -28,31 +28,38 @@ func NewRouter() *gin.Engine {
 		})
 	})
 
-  userGroup := r.Group("my").Use(middleware.AuthHandler())
-  {
-    userCtrl := new(controllers.UsersController)
-    userGroup.GET("/profile", userCtrl.Retrieve)
-    userGroup.GET("/jobs", userCtrl.RetrieveJobs)
-    userGroup.PATCH("/profile", userCtrl.Update)
-    userGroup.DELETE("/account", userCtrl.Delete)
-  }
+	myGroup := r.Group("my").Use(middleware.AuthHandler())
+	{
+		myCtrl := new(controllers.MyController)
+		myGroup.GET("/profile", myCtrl.Retrieve)
+		myGroup.GET("/jobs", myCtrl.RetrieveJobs)
+		myGroup.PATCH("/profile", myCtrl.Update)
+		myGroup.DELETE("/account", myCtrl.Delete)
+	}
 
-  jobGroup := r.Group("jobs").Use(middleware.AuthHandler())
-  {
-    jobCtrl := new(controllers.JobsController)
-    jobGroup.GET("/", jobCtrl.RetrieveAll)
-    jobGroup.POST("/", jobCtrl.Create)
-    jobGroup.PATCH("/:jobID", jobCtrl.Update)
-    jobGroup.DELETE("/:jobID", jobCtrl.Delete)
-  }
+	jobGroup := r.Group("jobs").Use(middleware.AuthHandler())
+	{
+		jobCtrl := new(controllers.JobsController)
+		jobGroup.GET("/", jobCtrl.RetrieveAll)
+		jobGroup.POST("/", jobCtrl.Create)
+		jobGroup.PATCH("/:jobID", jobCtrl.Update)
+		jobGroup.DELETE("/:jobID", jobCtrl.Delete)
+	}
 
-  authGroup := r.Group("auth")
-  {
-    authCtrl := new(controllers.AuthController)
-    authGroup.POST("/register", authCtrl.Register)
-    authGroup.POST("/login", authCtrl.Login)
-    authGroup.POST("/refresh", authCtrl.Refresh)
-  }
+	authGroup := r.Group("auth")
+	{
+		authCtrl := new(controllers.AuthController)
+		authGroup.POST("/register", authCtrl.Register)
+		authGroup.POST("/login", authCtrl.Login)
+		authGroup.POST("/refresh", authCtrl.Refresh)
+	}
 
-  return r
+	usersGroup := r.Group("users").Use(middleware.AuthHandler())
+	{
+		usersCtrl := new(controllers.UsersController)
+		usersGroup.GET("/:userID", usersCtrl.RetrieveUser)
+		usersGroup.GET("/:userID/jobs", usersCtrl.RetrieveUsersJob)
+	}
+
+	return r
 }
