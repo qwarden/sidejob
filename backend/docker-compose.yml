@@ -8,6 +8,8 @@ services:
       - "8080:8080"
     environment:
       DATABASE_URL: "user=sidejob-db password=sidejob-db host=db port=5432 dbname=sidejob-db sslmode=disable"
+    env_file:
+      - .env
     depends_on:
       - db
   db:

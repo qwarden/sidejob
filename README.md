@@ -11,3 +11,9 @@ and the database. First, install [Docker Desktop](https://www.docker.com/product
 `backend` directory and run `docker-compose up --build`. This should bring up the
 two services with the server running on port 8080 and the database on 5432.
 Make sure that there isn't anything already listening on these ports
+
+To get JWT authentication to work, you will need to generate secret keys that
+will be used to sign the tokens. This can be done very simply using the
+command `openssl rand -base64 32`. Make a copy of the `.env.sample` file just
+named `.env` and paste in strings generated with the above command into the
+appropriate locations.

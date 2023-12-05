@@ -14,6 +14,7 @@ class UserInfo: ObservableObject {
     var userID: Int
     var jobsPostedIDs: [Int]
     var jobsWorkedIDs: [Int]
+    var about: String
     
     init() {
         self.name = ""
@@ -22,36 +23,6 @@ class UserInfo: ObservableObject {
         self.userID = -1
         self.jobsPostedIDs = [Int]()
         self.jobsWorkedIDs = [Int]()
+        self.about = ""
     }
-}
-
-class UserTokens: Codable, ObservableObject {
-    @Published var accessToken: Int
-    @Published var refreshToken: Int
-    
-    init() {
-        accessToken = -1
-        refreshToken = -1
-    }
-    
-    enum CodingKeys: Int, CodingKey {
-        case accessToken
-        case refreshToken
-        // Add other coding keys as needed
-    }
-    
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        accessToken = try container.decode(Int.self, forKey: .accessToken)
-        refreshToken = try container.decode(Int.self, forKey: .refreshToken)
-        // Decode other properties if any
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(accessToken, forKey: .accessToken)
-        try container.encode(refreshToken, forKey: .refreshToken)
-        // Encode other properties if any
-    }
-
 }

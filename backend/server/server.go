@@ -2,9 +2,11 @@ package server
 
 import (
 	"net/http"
+	"path"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qwarden/sidejob/backend/controllers"
+	"github.com/qwarden/sidejob/backend/middleware"
 )
 
 func Init() {
@@ -15,28 +17,49 @@ func Init() {
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 
+	r.Use(func(c *gin.Context) {
+		c.Request.URL.Path = path.Clean(c.Request.URL.Path)
+		c.Next()
+	})
+
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"version": "1.0",
 		})
 	})
 
-	userGroup := r.Group("/users")
-	userCtrl := new(controllers.UsersController)
-	userGroup.GET("/:userID", userCtrl.Retrieve)
-	userGroup.GET("/:userID/jobs", userCtrl.RetrieveJobs)
-	userGroup.GET("/:userID/jobs/:jobID", userCtrl.RetrieveJob)
-	userGroup.POST("/", userCtrl.Create)
-	userGroup.PATCH("/:userID", userCtrl.Update)
-	userGroup.DELETE("/:userID", userCtrl.Delete)
+	myGroup := r.Group("my").Use(middleware.AuthHandler())
+	{
+		myCtrl := new(controllers.MyController)
+		myGroup.GET("/profile", myCtrl.Retrieve)
+		myGroup.GET("/jobs", myCtrl.RetrieveJobs)
+		myGroup.PATCH("/profile", myCtrl.Update)
+		myGroup.DELETE("/account", myCtrl.Delete)
+	}
 
-	jobGroup := r.Group("/jobs")
-	jobCtrl := new(controllers.JobsController)
-	jobGroup.GET("/", jobCtrl.RetrieveAll)
-	jobGroup.POST("/", jobCtrl.Create)
-	jobGroup.PATCH("/:jobID", jobCtrl.Update)
-	jobGroup.DELETE("/:jobID", jobCtrl.Delete)
-	jobGroup.POST("/reset", jobCtrl.ResetTable)
+	jobGroup := r.Group("jobs").Use(middleware.AuthHandler())
+	{
+		jobCtrl := new(controllers.JobsController)
+		jobGroup.GET("/", jobCtrl.RetrieveAll)
+		jobGroup.POST("/", jobCtrl.Create)
+		jobGroup.PATCH("/:jobID", jobCtrl.Update)
+		jobGroup.DELETE("/:jobID", jobCtrl.Delete)
+	}
+
+	authGroup := r.Group("auth")
+	{
+		authCtrl := new(controllers.AuthController)
+		authGroup.POST("/register", authCtrl.Register)
+		authGroup.POST("/login", authCtrl.Login)
+		authGroup.POST("/refresh", authCtrl.Refresh)
+	}
+
+	usersGroup := r.Group("users").Use(middleware.AuthHandler())
+	{
+		usersCtrl := new(controllers.UsersController)
+		usersGroup.GET("/:userID", usersCtrl.RetrieveUser)
+		usersGroup.GET("/:userID/jobs", usersCtrl.RetrieveUsersJob)
+	}
 
 	return r
 }

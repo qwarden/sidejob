@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4538255B2B1D716D00A8A45E /* PosterProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4538255A2B1D716D00A8A45E /* PosterProfileView.swift */; };
 		45863E212AFD395A008C262C /* JobListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45863E202AFD395A008C262C /* JobListView.swift */; };
 		976174882B0D93F300A4645F /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976174872B0D93F300A4645F /* PostView.swift */; };
 		9761748C2B0D9AA600A4645F /* JobService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9761748B2B0D9AA600A4645F /* JobService.swift */; };
@@ -24,6 +25,7 @@
 		A8F2938D2AD9DCD20071F842 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2938C2AD9DCD20071F842 /* ProfileView.swift */; };
 		A8F6E4B72B1E2EE200B9F03D /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F6E4B62B1E2EE200B9F03D /* FilterView.swift */; };
 		AF91E8022AFD380200241824 /* JobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF91E8012AFD380200241824 /* JobView.swift */; };
+		F684A65A2B1D7197006AAF9C /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = F684A6592B1D7197006AAF9C /* Client.swift */; };
 		F6B7894D2ACDE8ED00D161BE /* SideJobApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */; };
 		F6B7894F2ACDE8ED00D161BE /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7894E2ACDE8ED00D161BE /* FeedView.swift */; };
 		F6B789512ACDE8EE00D161BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6B789502ACDE8EE00D161BE /* Assets.xcassets */; };
@@ -31,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4538255A2B1D716D00A8A45E /* PosterProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterProfileView.swift; sourceTree = "<group>"; };
 		45863E202AFD395A008C262C /* JobListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListView.swift; sourceTree = "<group>"; };
 		976174872B0D93F300A4645F /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		9761748B2B0D9AA600A4645F /* JobService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobService.swift; sourceTree = "<group>"; };
@@ -48,6 +51,7 @@
 		A8F2938C2AD9DCD20071F842 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A8F6E4B62B1E2EE200B9F03D /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		AF91E8012AFD380200241824 /* JobView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobView.swift; sourceTree = "<group>"; };
+		F684A6592B1D7197006AAF9C /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		F6B789492ACDE8ED00D161BE /* SideJob.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SideJob.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideJobApp.swift; sourceTree = "<group>"; };
 		F6B7894E2ACDE8ED00D161BE /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FeedView.swift; path = SideJob/FeedView.swift; sourceTree = SOURCE_ROOT; };
@@ -93,10 +97,13 @@
 				F6B7894E2ACDE8ED00D161BE /* FeedView.swift */,
 				A8F2938C2AD9DCD20071F842 /* ProfileView.swift */,
 				A8451E5E2ADF180500FA3CE0 /* LoginView.swift */,
+				4538255A2B1D716D00A8A45E /* PosterProfileView.swift */,
 				AF91E8012AFD380200241824 /* JobView.swift */,
 				9797CB842B05C95C0099DD19 /* Job.swift */,
 				A8451E642ADF185800FA3CE0 /* MyJobsView.swift */,
 				A8451E682ADF18B200FA3CE0 /* MyListingsView.swift */,
+				F684A6592B1D7197006AAF9C /* Client.swift */,
+				F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */,
 				A8451E6A2ADF18C600FA3CE0 /* EditInfoView.swift */,
 				F6B789502ACDE8EE00D161BE /* Assets.xcassets */,
 				F6B789522ACDE8EE00D161BE /* Preview Content */,
@@ -195,8 +202,10 @@
 				A8451E612ADF182500FA3CE0 /* DetailsView.swift in Sources */,
 				A87817652AE04B930021625C /* CreateAccountView.swift in Sources */,
 				45863E212AFD395A008C262C /* JobListView.swift in Sources */,
+				4538255B2B1D716D00A8A45E /* PosterProfileView.swift in Sources */,
 				9761748C2B0D9AA600A4645F /* JobService.swift in Sources */,
 				A849B20E2B18E4F000C1F133 /* LocationManager.swift in Sources */,
+				F684A65A2B1D7197006AAF9C /* Client.swift in Sources */,
 				A87817632AE04B840021625C /* WelcomeView.swift in Sources */,
 				AF91E8022AFD380200241824 /* JobView.swift in Sources */,
 				976174882B0D93F300A4645F /* PostView.swift in Sources */,
