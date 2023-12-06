@@ -10,14 +10,14 @@ import SwiftUI
 
 
 struct MyJobsView: View {
-    @StateObject private var jobViewModel = JobService.shared
+    //@StateObject private var jobViewModel = JobService.shared
     
     var body: some View {
         VStack {
             Text("Saved Jobs")
                 .font(.system(size: 25)).padding(.bottom, 50)
             ScrollView {
-                JobListView()
+                JobListView(endpoint: "/my/jobs")
             }
         }
         .frame( maxWidth: .infinity, maxHeight: .infinity, alignment: .top)

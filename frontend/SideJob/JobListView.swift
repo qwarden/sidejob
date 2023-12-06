@@ -30,7 +30,7 @@ struct JobListView: View {
                     }
                     Spacer()
                     
-                        ZStack(alignment: .bottomTrailing) {
+                    ZStack(alignment: .bottomTrailing) {
                         List {
                             if jobs.isEmpty && !loadError {
                                 Text("Loading jobs...")
@@ -43,13 +43,13 @@ struct JobListView: View {
                                     JobView(job: job)
                                 }
                             }
-                            .navigationBarTitle("Jobs")
-                            .onAppear {
-                                fetchJobs()
-                            }
+                            
                         }
                     }
                 }
+            }.navigationBarTitle("Jobs")
+            .onAppear {
+                fetchJobs()
             }
         }
     }
