@@ -16,8 +16,7 @@ struct ListingsView: View {
            self.user = user
        }
     
-    
-    // Using ObservedObject to observe changes in the shared JobService instance
+
     @State private var showingPostView = false
     
     var body: some View {

@@ -9,24 +9,35 @@ import SwiftUI
 
 struct FeedView: View {
     @State private var showingPostView = false
+    @State private var showingFilterView = false
+    @State var filteringByLocation = false
     @EnvironmentObject private var location: LocationManager
 
     var body: some View {
         NavigationView {
             VStack {
-                JobListView(endpoint: "/my/jobs")
+                JobListView(endpoint: "/my/jobs", filteringByLocation: $filteringByLocation)
+                
+                HStack {
+                    FloatingActionButtonFilter(action: {
+                        self.showingFilterView = true
+                    })
+                    FloatingActionButtonPost(action: {
+                        self.showingPostView = true
+                    })
+                }
 
-                FloatingActionButton(action: {
-                    self.showingPostView = true
-                })
             }
             .navigationBarTitle("Jobs")
             .sheet(isPresented: $showingPostView) {
                 PostView()
             }
+            .sheet(isPresented: $showingFilterView) {
+                FilterView(filteringByLocation: $filteringByLocation)
+            }
         }
     }
-    struct FloatingActionButton: View {
+    struct FloatingActionButtonPost: View {
         var action: () -> Void
 
         var body: some View {
@@ -38,6 +49,21 @@ struct FeedView: View {
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .clipShape(Circle())
+                    .padding()
+            }
+        }
+    }
+    
+    struct FloatingActionButtonFilter: View {
+        var action: () -> Void
+
+        var body: some View {
+            Button(action: action) {
+                Text("Filter")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
                     .padding()
             }
         }
