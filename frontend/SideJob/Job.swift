@@ -14,7 +14,8 @@ struct Job: Decodable, Identifiable {
     let description : String
     let payAmount: Int64
     let location: String
-    let postedByID : Int64
+    let deletedAt: Date?
+    //let postedByID : Int64
     let payType: String
 
 //    let photo: URL?
@@ -23,23 +24,20 @@ struct Job: Decodable, Identifiable {
         return String(format: "$%.2f", Double(payAmount) / 100.0)
     }
     
-//    var payUnit: String {
-//        switch payType {
-//        case "hourly":
-//            return "per hour"
-//        case "flat":
-//            return "total"
-//        default:
-//            return ""
-//        }
-//    }
+    
     
     // CodingKeys de-serializes the JSON field names from GORM (that we can't rename before sending)
     enum CodingKeys: String, CodingKey {
         case id = "ID"
         case createdAt = "CreatedAt"
         case updatedAt = "UpdatedAt"
-        case title, description, location, postedByID, payType, payAmount
+        //case postedByID = "posted_by_id"
+        case payAmount = "pay_amount"
+        case payType = "pay_type "
+        case deletedAt = "DeletedAt"
+        case title = "title"
+        case description = "description"
+        case location = "location"
     }
 }
 

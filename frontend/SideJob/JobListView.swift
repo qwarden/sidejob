@@ -112,6 +112,7 @@ struct JobListView: View {
         client.fetch(verb: "GET", endpoint: endpoint, auth: true) { result in
             switch result {
             case .success(let data):
+                print(data)
                 let decoder = JSONDecoder()
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
@@ -119,10 +120,12 @@ struct JobListView: View {
                 dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
                 decoder.dateDecodingStrategy = .formatted(dateFormatter)
 
-                if let decodedJobs = try? decoder.decode([Job].self, from: data) {
+                do {
+                    let decodedJobs = try decoder.decode([Job].self, from: data)
                     self.jobs = decodedJobs
-                } else {
+                } catch {
                     self.loadError = true
+                    print("Error decoding jobs: \(error.localizedDescription)")
                     // TODO: handle decoding error
                 }
             case .failure(_):

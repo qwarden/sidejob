@@ -49,15 +49,15 @@ struct DetailsView: View {
                     Text("Pay: \(job.payType)")
                         .padding([.horizontal, .bottom], 20)
 //                    NavigationLink(destination: PosterProfileView(postedById: job.postedByID)) {
-                            Text("Posted By: \(job.postedByID)")
-                                .padding([.horizontal, .bottom], 20)
-                        }
-                        .foregroundColor(Color.black)
+//                            Text("Posted By: \(job.postedByID)")
+//                                .padding([.horizontal, .bottom], 20)
+//                        }
+//                        .foregroundColor(Color.black)
 
-                    //Text("Created on: \(job.formattedPostedDate)")
-                    //    .padding([.horizontal, .bottom], 20)
-                    //Text("Edited on: \(job.formattedUpdatedDate)")
-                    //    .padding([.horizontal, .bottom], 20)
+//                    Text("Created on: \(job.formattedPostedDate)")
+//                        .padding([.horizontal, .bottom], 20)
+//                    Text("Edited on: \(job.formattedUpdatedDate)")
+//                        .padding([.horizontal, .bottom], 20)
                     Text("Contact: job.email@chess.com")
                         .padding([.horizontal, .bottom], 20)
                         .foregroundColor(Color.black)
@@ -87,5 +87,6 @@ let testJob = Job(id: 420,
                   description: "Cut my grass",
                   payAmount: 20,
                   location: "05151",
-                  postedByID: 420,
+                  deletedAt: Date(),
+//                  postedByID: 420,
                   payType: "Hourly")
