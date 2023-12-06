@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct PosterProfileView: View {
-    let poster: UserInfo
+    let poster: User
 
-    init(poster: UserInfo) {
+    init(poster: User) {
         self.poster = poster
     }
     

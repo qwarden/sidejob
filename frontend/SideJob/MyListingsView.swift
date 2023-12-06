@@ -10,9 +10,9 @@ import SwiftUI
 
 
 struct ListingsView: View {
-       let user: UserInfo
+       let user: User
 
-       init(user: UserInfo) {
+       init(user: User) {
            self.user = user
        }
     
@@ -27,7 +27,7 @@ struct ListingsView: View {
             ZStack(alignment: .bottomTrailing) {
                 // List of jobs, each represented by JobView
                 
-                List(jobService.jobs.filter {$0.postedByID == user.userID}) { job in
+                List(jobService.jobs.filter {$0.postedByID == 0}) { job in
                     JobView(job: job)
                 }
                  

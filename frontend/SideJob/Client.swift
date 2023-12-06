@@ -102,10 +102,11 @@ class Client: ObservableObject {
         let url = baseURL.appendingPathComponent(endpoint)
         var request = URLRequest(url: url)
         request.httpMethod = verb
-
+        
         if auth {
             request.setValue("Bearer \(String(describing: self.tokens?.accessToken))", forHTTPHeaderField: "Authorization")
         }
+        
 
         if let data = data {
             request.httpBody = data

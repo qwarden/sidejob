@@ -15,7 +15,7 @@ extension Color{
 
 
 struct ProfileView: View {
-    @State private var user: User
+    @State private var user: User = User()
 
     @EnvironmentObject var client: Client
     
@@ -28,26 +28,18 @@ struct ProfileView: View {
     @State private var alertMessage: String = ""
     @State private var cannotSave = false
     
-    func loadProfile(completion: @escaping (User?) -> Void) {
+    func loadProfile() {
         client.fetch(verb: "GET", endpoint: "/my/profile", auth: true) { result in
             switch result {
             case .success(let data):
                 do {
                     let user = try JSONDecoder().decode(User.self, from: data)
-                    DispatchQueue.main.async {
-                        completion(user)
-                    }
+                    self.user = user
                 } catch {
                     print("Decoding error: \(error)")
-                    DispatchQueue.main.async {
-                        completion(nil)
-                    }
                 }
             case .failure(let error):
                 print("Fetch error: \(error)")
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
             }
         }
     }
@@ -267,9 +259,7 @@ struct ProfileView: View {
                     
                 }.padding(.bottom, 30)
             .onAppear {
-                loadProfile { loadedUser in
-                    self.user = loadedUser ?? User()
-                }
+                loadProfile()
             }
     }
          
