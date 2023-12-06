@@ -39,7 +39,7 @@ struct JobListView: View {
                                     fetchJobs()
                                 }
                             } else {
-                                ForEach(jobs) { job in
+                                ForEach(filteredJobs) { job in
                                     JobView(job: job)
                                 }
                             }
@@ -71,6 +71,7 @@ struct JobListView: View {
                     // Now you can use the filteredJobs array
                     print("Filtered Jobs: \(filteredJobs)")
                 }
+                filteredJobs = jobs
                 return
             }
             
@@ -84,7 +85,7 @@ struct JobListView: View {
                     
                     if let location = location {
                         let distance = userLocation.distance(from: location)
-                        let radius: CLLocationDistance = CLLocationDistance(miles2meters(miles: Double(self.radius))) // 10 kilometers
+                        let radius: CLLocationDistance = CLLocationDistance(miles2meters(miles: Double(self.radius)))
                         
                         if distance <= radius {
                             filteredJobs.append(job)
