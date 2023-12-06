@@ -47,10 +47,20 @@ class Client: ObservableObject {
     var tokens: Tokens?
     let tokenPath: String
     @Published var loggedIn: Bool
+    let prod: Bool = true
     
     init() {
-        if let url = URL(string: "http://localhost:8080") {
-            self.baseURL = url
+        
+        let url: URL?
+        
+        if prod {
+            url = URL(string: "https://sidejob.fly.dev")
+        } else {
+            url = URL(string: "http://localhost:8080")
+        }
+        
+        if url != nil {
+            self.baseURL = url!
         } else {
             fatalError("Invalid base URL")
         }
@@ -76,9 +86,7 @@ class Client: ObservableObject {
     
     func logout() {
         let emptyTokens = Tokens(accessToken: "", refreshToken: "")
-        // Save the empty tokens
         saveTokens(emptyTokens)
-        // Set the loggedIn state to false
         loggedIn = false
     }
     

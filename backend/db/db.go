@@ -3,18 +3,19 @@ package db
 import (
 	"fmt"
 	"log"
-	"os"
 	"time"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"github.com/qwarden/sidejob/backend/models"
+	"github.com/qwarden/sidejob/backend/config"
 )
 
 var db *gorm.DB
 
 func Init() {
-	dsn := os.Getenv("DATABASE_URL")
+  cfg := config.GetConfig()
+  dsn := cfg.DatabaseUrl
 	config := gorm.Config{}
 	timeout := 5 * time.Minute
   var err error

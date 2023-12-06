@@ -299,13 +299,12 @@ struct ProfileView: View {
                 return
             }
             else{
+                var update = UserUpdate()
+                update.name = user.name
+                update.email = user.email
+                update.about = user.about
+                
                 do {
-                    var update = UserUpdate()
-                    
-                    update.name = user.name
-                    update.email = user.email
-                    update.about = user.about
-                    
                     let encoder = JSONEncoder()
                     let jsonData = try encoder.encode(update)
 
