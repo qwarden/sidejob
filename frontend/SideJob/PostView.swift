@@ -80,6 +80,7 @@ struct PostView: View {
         }
         
         let newJob = NewJob(title: title, description: description, payAmount: payAmountInt, location: location, payType: payType)
+        
         let encoder = JSONEncoder()
 
         do {

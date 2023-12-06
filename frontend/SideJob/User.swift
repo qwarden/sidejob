@@ -14,7 +14,6 @@ struct User: Codable {
     var email: String
     var password: String
     var about: String
-    var Jobs: [Int]
     
     init() {
         self.ID = 0
@@ -24,13 +23,5 @@ struct User: Codable {
         self.email = ""
         self.password = ""
         self.about = ""
-        self.Jobs = []
     }
 }
-
-struct NewUser {
-    let name: String
-    
-}
-
-

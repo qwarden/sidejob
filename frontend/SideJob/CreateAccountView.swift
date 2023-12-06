@@ -85,7 +85,7 @@ struct CreateAccountView: View {
                     print("JSON String: \(jsonString)")
                 }
                 
-                client.fetch(verb: "POST", endpoint: "auth/register", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
+                client.fetch(verb: "POST", endpoint: "/auth/register", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
                      switch result {
                      case .success(let data):
                          do {

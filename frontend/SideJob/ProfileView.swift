@@ -13,6 +13,20 @@ extension Color{
     static let lightGray = Color(red: 220/255, green: 230/255, blue: 270/255)
 }
 
+struct UserUpdate: Codable {
+    var name: String
+    var email: String
+    var about: String
+    
+    init() {
+        self.name = ""
+        self.email = ""
+        self.about = ""
+    }
+}
+
+
+
 
 struct ProfileView: View {
     @State private var user: User = User()
@@ -33,7 +47,13 @@ struct ProfileView: View {
             switch result {
             case .success(let data):
                 do {
-                    let user = try JSONDecoder().decode(User.self, from: data)
+                    let decoder = JSONDecoder()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                    dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+                    decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                    let user = try decoder.decode(User.self, from: data)
                     self.user = user
                 } catch {
                     print("Decoding error: \(error)")
@@ -245,7 +265,7 @@ struct ProfileView: View {
                             .padding(.horizontal, 90)
                             .font(.system(size: 20))
                             .foregroundColor(.white)
-                            .background(Color.grgay)
+                            .background(Color.gray)
                             .cornerRadius(10)
                             .padding(.top, 0)
                             .frame(maxWidth: .infinity, alignment: .center)
@@ -265,7 +285,7 @@ struct ProfileView: View {
          
 
     private func updateProfile() {
-        if(user.name.isEmpty || user.email.isEmpty || user.about.isEmpty){
+        if(user.name.isEmpty || user.email.isEmpty){
             alertMessage = "Please fill in all fields"
             showEditAlert = true
             cannotSave = true
@@ -279,7 +299,35 @@ struct ProfileView: View {
                 return
             }
             else{
-                cannotSave = false
+                do {
+                    var update = UserUpdate()
+                    
+                    update.name = user.name
+                    update.email = user.email
+                    update.about = user.about
+                    
+                    let encoder = JSONEncoder()
+                    let jsonData = try encoder.encode(update)
+
+                    if let jsonString = String(data: jsonData, encoding: .utf8) {
+                        print("JSON String: \(jsonString)")
+                    }
+                    
+                    client.fetch(verb: "PATCH", endpoint: "/my/profile", auth: true, data: jsonData) {  (result: Result<Data, NetworkError>) in
+                        DispatchQueue.main.async {
+                            switch result {
+                            case .success(_):
+                                cannotSave = false
+                            case .failure(let error):
+                                print("Update error: \(error)")
+                                cannotSave = true
+                            }
+                        }
+                     }
+                } catch {
+                    print("Encoding error: \(error)")
+                    cannotSave = true
+                }
                 return
             }
         }

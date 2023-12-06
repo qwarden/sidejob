@@ -57,18 +57,23 @@ class Client: ObservableObject {
         self.loggedIn = false
         self.session = URLSession.shared
         self.tokenPath = "tokens.json"
-        if self.loadTokens() {
-            self.fetch(verb: "GET", endpoint: "/my/profile", auth: true) { (result: Result<Data, NetworkError>) in
-                switch result {
-                case .success(_):
-                    self.loggedIn = true
-                case .failure(_):
-                    self.loggedIn = false
+    }
+    
+    func initialize() {
+        if loadTokens() {
+            fetch(verb: "GET", endpoint: "/my/profile", auth: true) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(_):
+                        self.loggedIn = true
+                    case .failure(_):
+                        self.loggedIn = false
+                    }
                 }
             }
         }
     }
-
+    
     func logout() {
         let emptyTokens = Tokens(accessToken: "", refreshToken: "")
         // Save the empty tokens
