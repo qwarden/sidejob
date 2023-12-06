@@ -243,6 +243,7 @@ class Client: ObservableObject {
     }
     
     func saveTokens(_ tokens: Tokens) {
+        self.tokens = tokens
         let url: URL = {
             let dirs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let dir = dirs.first!
