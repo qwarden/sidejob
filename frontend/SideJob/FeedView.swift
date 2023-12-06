@@ -9,35 +9,39 @@ import SwiftUI
 
 struct FeedView: View {
     @State private var showingPostView = false
+    @State private var showingFilterView = false
+    @State var filteringByLocation = false
     @EnvironmentObject private var client: Client
     @EnvironmentObject private var locationObject: LocationManager
-    @State var radius = 100
-    @State var zipCode = ""
 
     
     var body: some View {
         NavigationView {
             VStack {
-                Spacer()
-                NavigationLink(destination: FilterView(zipCode: $zipCode, radius: $radius)) {
-                    Text("Filter Based on Location")
+                JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation)
+                
+                HStack {
+                    FloatingActionButtonFilter(action: {
+                        self.showingFilterView = true
+                    })
+                    FloatingActionButtonPost(action: {
+                        self.showingPostView = true
+                    })
                 }
-                Spacer()
                 
                 JobListView(endpoint: "/jobs/", zipCode: zipCode, radius: radius)
 
-                FloatingActionButton(action: {
-                    self.showingPostView = true
-                })
             }
             .navigationBarTitle("Jobs")
             .sheet(isPresented: $showingPostView) {
                 PostView()
             }
+            .sheet(isPresented: $showingFilterView) {
+                FilterView(filteringByLocation: $filteringByLocation)
+            }
         }
     }
-    
-    struct FloatingActionButton: View {
+    struct FloatingActionButtonPost: View {
         var action: () -> Void
 
         var body: some View {
@@ -54,9 +58,20 @@ struct FeedView: View {
         }
     }
     
-    
+    struct FloatingActionButtonFilter: View {
+        var action: () -> Void
 
-}
+        var body: some View {
+            Button(action: action) {
+                Text("Filter")
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
+                    .padding()
+            }
+        }
+    }
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {

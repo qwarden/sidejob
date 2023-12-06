@@ -13,6 +13,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
     var locationServicesEnabled = false
     @Published var location: CLLocation?
     private var completion: ((CLLocation?) -> Void)?
+    var userZipCode = ""
+    var searchRadius = 100000000 //big number
 
     override init() {
         super.init()

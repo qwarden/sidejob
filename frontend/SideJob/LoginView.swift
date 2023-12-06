@@ -67,27 +67,29 @@ struct LoginView: View {
                     print("JSON String: \(jsonString)")
                 }
                 
-                client.fetch(verb: "POST", endpoint: "auth/login", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
-                     switch result {
-                     case .success(let data):
-                         do {
-                             let decoder = JSONDecoder()
-                             let tokens = try decoder.decode(Tokens.self, from:data)
-                             client.saveTokens(tokens)
-                             client.loggedIn = true
-                             self.loggedIn = true
-                             isLoading = false
-                         }
-                         catch {
-                             isLoading = false
-                             print("Error encoding and saving tokens.")
-                         }
-                     case .failure(let error):
-                         print("Error during login: \(error)")
-                         loginErrorMessage = "User with that Email and Password does not exist."
-                         self.loggedIn = false
-                         isLoading = false
-                     }
+                client.fetch(verb: "POST", endpoint: "auth/login", auth: false, data: jsonData) { result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let data):
+                            do {
+                                let decoder = JSONDecoder()
+                                let tokens = try decoder.decode(Tokens.self, from:data)
+                                client.saveTokens(tokens)
+                                client.loggedIn = true
+                                self.loggedIn = true
+                                isLoading = false
+                            }
+                            catch {
+                                isLoading = false
+                                print("Error encoding and saving tokens.")
+                            }
+                        case .failure(let error):
+                            print("Error during login: \(error)")
+                            loginErrorMessage = "User with that Email and Password does not exist."
+                            self.loggedIn = false
+                            isLoading = false
+                        }
+                    }
                  }
 
                 // Now you can pass jsonData to your client.fetch method

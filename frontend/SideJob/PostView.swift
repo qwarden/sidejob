@@ -39,12 +39,13 @@ struct PostView: View {
                                 getCurrentLocationZipCode()
                             }
                         }
-                    
                     if let currentZipCode = currentZipCode {
                         Text("Current Zip Code: \(currentZipCode)")
                             .foregroundColor(.secondary)
                     }
-                    
+                }
+                
+                Section(header: Text("Pay")) {
                     Picker("Pay Type", selection: $payType) {
                         Text("Hourly").tag("Hourly")
                         Text("Total").tag("Total")
@@ -53,11 +54,12 @@ struct PostView: View {
                     
                     TextField("Pay Amount", text: $payAmount)
                         .keyboardType(.decimalPad)
-                    
-                    Button("Post Job") {
-                        postJob()
-                    }
                 }
+                
+                Button("Post Job") {
+                    postJob()
+                }
+                
                 .navigationBarTitle("Post Job")
                 .alert(isPresented: $showAlert) {
                     Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))

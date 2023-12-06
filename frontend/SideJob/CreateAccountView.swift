@@ -85,27 +85,29 @@ struct CreateAccountView: View {
                     print("JSON String: \(jsonString)")
                 }
                 
-                client.fetch(verb: "POST", endpoint: "/auth/register", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
-                     switch result {
-                     case .success(let data):
-                         do {
-                             let decoder = JSONDecoder()
-                             let tokens = try decoder.decode(Tokens.self, from:data)
-                             client.saveTokens(tokens)
-                             client.loggedIn = true
-                             self.accountCreated = true
-                             creatingAccount = false
-                         }
-                         catch {
-                             creatingAccount = false
-                             accountCreationErrorMessages = "User with that Email already exists."
-                         }
-                     case .failure(let error):
-                         print("Error during account creation: \(error)")
-                         accountCreationErrorMessages = "User with that Email already exists."
-                         self.accountCreated = false
-                         creatingAccount = false
-                     }
+                client.fetch(verb: "POST", endpoint: "auth/register", auth: false, data: jsonData) {result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let data):
+                            do {
+                                let decoder = JSONDecoder()
+                                let tokens = try decoder.decode(Tokens.self, from:data)
+                                client.saveTokens(tokens)
+                                client.loggedIn = true
+                                self.accountCreated = true
+                                creatingAccount = false
+                            }
+                            catch {
+                                creatingAccount = false
+                                accountCreationErrorMessages = "User with that Email already exists."
+                            }
+                        case .failure(let error):
+                            print("Error during account creation: \(error)")
+                            accountCreationErrorMessages = "User with that Email already exists."
+                            self.accountCreated = false
+                            creatingAccount = false
+                        }
+                    }
                  }
 
                 // Now you can pass jsonData to your client.fetch method
