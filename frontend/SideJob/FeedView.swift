@@ -8,16 +8,37 @@
 import SwiftUI
 
 struct FeedView: View {
-    @StateObject private var jobService = JobService.shared
+    @State private var showingPostView = false
     @EnvironmentObject private var location: LocationManager
-    
+
     var body: some View {
         NavigationView {
             VStack {
-                JobListView()
+                JobListView(endpoint: "/my/jobs")
+
+                FloatingActionButton(action: {
+                    self.showingPostView = true
+                })
             }
-            .onAppear {
-                jobService.fetchJobs()
+            .navigationBarTitle("Jobs")
+            .sheet(isPresented: $showingPostView) {
+                PostView()
+            }
+        }
+    }
+    struct FloatingActionButton: View {
+        var action: () -> Void
+
+        var body: some View {
+            Button(action: action) {
+                Image(systemName: "plus")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .clipShape(Circle())
+                    .padding()
             }
         }
     }
@@ -25,6 +46,6 @@ struct FeedView: View {
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView()
+        FeedView().environmentObject(Client())
     }
 }

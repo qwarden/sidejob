@@ -10,9 +10,11 @@ import CoreLocation
 
 
 struct JobListView: View {
-    // Using ObservedObject to observe changes in the shared JobService instance
-    @ObservedObject var jobService = JobService.shared
-    @State private var showingPostView = false
+    @EnvironmentObject var client: Client
+    @State var jobs: [Job] = []
+    @State var loadError: Bool = false
+    var endpoint: String
+
     @EnvironmentObject private var locationObject: LocationManager
     @State var radius = 100
     @State var zipCode = ""
@@ -28,25 +30,24 @@ struct JobListView: View {
                     }
                     Spacer()
                     
-                    ZStack(alignment: .bottomTrailing) {
-                        // List of jobs, each represented by JobView
-                        List(filteredJobs) { job in
-                            JobView(job: job)
+                        ZStack(alignment: .bottomTrailing) {
+                        List {
+                            if jobs.isEmpty && !loadError {
+                                Text("Loading jobs...")
+                            } else if loadError {
+                                Button("Tap to retry") {
+                                    fetchJobs()
+                                }
+                            } else {
+                                ForEach(jobs) { job in
+                                    JobView(job: job)
+                                }
+                            }
+                            .navigationBarTitle("Jobs")
+                            .onAppear {
+                                fetchJobs()
+                            }
                         }
-                        .navigationBarTitle("Jobs")
-                        // Fetch jobs when the view appears
-                        .onAppear {
-                            jobService.fetchJobs()
-                        }
-                        
-                        // Floating action button to show the PostView
-                        FloatingActionButton(action: {
-                            self.showingPostView = true
-                        })
-                    }
-                    // Present the PostView as a sheet
-                    .sheet(isPresented: $showingPostView) {
-                        PostView()
                     }
                 }
             }
@@ -56,7 +57,7 @@ struct JobListView: View {
     // variable that holds the filtered jobs
     var filteredJobs: [Job] {
         guard !zipCode.isEmpty else {
-            return jobService.jobs
+            return jobs
         }
 
         var filteredJobs: [Job] = []
@@ -73,7 +74,7 @@ struct JobListView: View {
                 return
             }
             
-            for job in jobService.jobs {
+            for job in jobs {
                 dispatchGroup.enter()
                 
                 locationObject.getLocationFromZipCode(from: job.location) { location in
@@ -102,36 +103,41 @@ struct JobListView: View {
         }
 
         // This is a temporary return value; the actual filteredJobs will be available after the completion handler is called
-        return jobService.jobs
+        return jobs
     }
     
     func miles2meters(miles: Double) -> Double{
         return (miles * 1609.34)
     }
 
-}
+    func fetchJobs() {
+        loadError = false
+        client.fetch(verb: "GET", endpoint: endpoint, auth: true) { result in
+            switch result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+                decoder.dateDecodingStrategy = .formatted(dateFormatter)
 
-// NewJob button
-struct FloatingActionButton: View {
-    var action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: "plus")
-                .resizable()
-                .frame(width: 24, height: 24)
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .clipShape(Circle())
-                .padding()
+                if let decodedJobs = try? decoder.decode([Job].self, from: data) {
+                    self.jobs = decodedJobs
+                } else {
+                    self.loadError = true
+                    // TODO: handle decoding error
+                }
+            case .failure(_):
+                self.loadError = true
+                // TODO: handle networking error
+            }
         }
     }
 }
 
-
-struct JobListView_Preview: PreviewProvider {
+struct JobListView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView()
+        JobListView(endpoint: "/jobs").environmentObject(Client())
     }
 }
