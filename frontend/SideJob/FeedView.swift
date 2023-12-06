@@ -13,7 +13,7 @@ struct FeedView: View {
     @State var filteringByLocation = false
     @EnvironmentObject private var client: Client
     @EnvironmentObject private var locationObject: LocationManager
-
+    
     
     var body: some View {
         NavigationView {
@@ -29,8 +29,6 @@ struct FeedView: View {
                     })
                 }
                 
-                JobListView(endpoint: "/jobs/", zipCode: zipCode, radius: radius)
-
             }
             .navigationBarTitle("Jobs")
             .sheet(isPresented: $showingPostView) {
@@ -43,7 +41,7 @@ struct FeedView: View {
     }
     struct FloatingActionButtonPost: View {
         var action: () -> Void
-
+        
         var body: some View {
             Button(action: action) {
                 Image(systemName: "plus")
@@ -60,7 +58,7 @@ struct FeedView: View {
     
     struct FloatingActionButtonFilter: View {
         var action: () -> Void
-
+        
         var body: some View {
             Button(action: action) {
                 Text("Filter")
@@ -72,6 +70,7 @@ struct FeedView: View {
             }
         }
     }
+}
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
