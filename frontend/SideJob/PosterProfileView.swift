@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PosterProfileView: View {
     let postedById: Int64
-    let poster: User = User(name: "Bob", email: "Fuck You", about: "Damnit")
+    let poster: User = User()
     
     @EnvironmentObject var client: Client
     

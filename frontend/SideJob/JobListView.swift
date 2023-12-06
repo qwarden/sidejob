@@ -14,6 +14,7 @@ struct JobListView: View {
     @State var jobs: [Job] = []
     @State var loadError: Bool = false
     @EnvironmentObject private var locationObject: LocationManager
+    var endpoint: String
     @Binding var filteringByLocation: Bool
 
     var body: some View {

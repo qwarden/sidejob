@@ -8,7 +8,7 @@
 import SwiftUI
 struct DetailsView: View {
     let job: Job
-
+    
     var body: some View {
         NavigationView{
             VStack {
@@ -23,7 +23,7 @@ struct DetailsView: View {
                 .cornerRadius(40)
                 .padding(.bottom, 20)
                 .padding(10)
-
+                
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Basic Info")
                         .font(.headline)
@@ -41,23 +41,23 @@ struct DetailsView: View {
                 .cornerRadius(40)
                 .padding(.bottom, 20)
                 .padding(10)
-
+                
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Additional Info")
                         .font(.headline)
                         .padding([.top, .bottom], 10)
                     Text("Pay: \(job.payType)")
                         .padding([.horizontal, .bottom], 20)
-//                    NavigationLink(destination: PosterProfileView(postedById: job.postedByID)) {
-//                            Text("Posted By: \(job.postedByID)")
-//                                .padding([.horizontal, .bottom], 20)
-//                        }
-//                        .foregroundColor(Color.black)
-
-//                    Text("Created on: \(job.formattedPostedDate)")
-//                        .padding([.horizontal, .bottom], 20)
-//                    Text("Edited on: \(job.formattedUpdatedDate)")
-//                        .padding([.horizontal, .bottom], 20)
+                    //                    NavigationLink(destination: PosterProfileView(postedById: job.postedByID)) {
+                    //                            Text("Posted By: \(job.postedByID)")
+                    //                                .padding([.horizontal, .bottom], 20)
+                    //                        }
+                    //                        .foregroundColor(Color.black)
+                    
+                    //                    Text("Created on: \(job.formattedPostedDate)")
+                    //                        .padding([.horizontal, .bottom], 20)
+                    //                    Text("Edited on: \(job.formattedUpdatedDate)")
+                    //                        .padding([.horizontal, .bottom], 20)
                     Text("Contact: job.email@chess.com")
                         .padding([.horizontal, .bottom], 20)
                         .foregroundColor(Color.black)
@@ -73,20 +73,21 @@ struct DetailsView: View {
         }
         
     }
-
-struct DetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        DetailsView(job: testJob)
-    }
 }
-
-let testJob = Job(id: 420,
-                  createdAt: Date(),
-                  updatedAt: Date(),
-                  title: "Lawn Job",
-                  description: "Cut my grass",
-                  payAmount: 20,
-                  location: "05151",
-                  deletedAt: Date(),
-//                  postedByID: 420,
-                  payType: "Hourly")
+    
+//struct DetailsView_Previews: PreviewProvider {
+//    
+//    let testJob = Job(id: 420,
+//                      createdAt: Date(),
+//                      updatedAt: Date(),
+//                      title: "Lawn Job",
+//                      description: "Cut my grass",
+//                      payAmount: 20,
+//                      location: "05151",
+//                      deletedAt: Date(),
+//                      //                  postedByID: 420,
+//                      payType: "Hourly")
+//    static var previews: some View {
+//        DetailsView(job: testJob)
+//    }
+//}
