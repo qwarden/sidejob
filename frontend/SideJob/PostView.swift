@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PostView: View {
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var jobService: JobService = JobService.shared
+    @EnvironmentObject private var client: Client
     @EnvironmentObject private var locationObject: LocationManager
     
     @State private var title: String = ""
@@ -80,17 +80,23 @@ struct PostView: View {
         }
         
         let newJob = NewJob(title: title, description: description, payAmount: payAmountInt, location: location, payType: payType)
-        jobService.postJob(newJob: newJob) { success in
-            DispatchQueue.main.async {
-                if success {
-                    DispatchQueue.main.async {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
-                } else {
-                    alertMessage = "Failed to post the job."
-                    showAlert = true
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(newJob)
+            client.fetch(verb: "POST", endpoint: "/jobs", auth: true, data: data){  (result: Result<Data, NetworkError>) in
+                switch result {
+                case .success(_):
+                    self.alertMessage = "Job Posted Successfully"
+                    self.showAlert = true
+                    self.presentationMode.wrappedValue.dismiss()
+                case .failure(_):
+                    self.alertMessage = "Job Posting Failed"
+                    self.showAlert = true
                 }
             }
+        }
+        catch {
+            print("Couldn't encode jobs")
         }
     }
         
