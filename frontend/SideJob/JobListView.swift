@@ -8,7 +8,6 @@
 import SwiftUI
 import CoreLocation
 
-
 struct JobListView: View {
     @EnvironmentObject var client: Client
     @State var jobs: [Job] = []
@@ -115,6 +114,7 @@ struct JobListView: View {
             case .success(let data):
                 print(data)
                 let decoder = JSONDecoder()
+                //decoder.dateDecodingStrategy = .iso8601
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
                 dateFormatter.locale = Locale(identifier: "en_US_POSIX")
