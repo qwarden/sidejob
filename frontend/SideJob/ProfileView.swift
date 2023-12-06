@@ -245,7 +245,7 @@ struct ProfileView: View {
                             .padding(.horizontal, 90)
                             .font(.system(size: 20))
                             .foregroundColor(.white)
-                            .background(Color.gray)
+                            .background(Color.grgay)
                             .cornerRadius(10)
                             .padding(.top, 0)
                             .frame(maxWidth: .infinity, alignment: .center)
