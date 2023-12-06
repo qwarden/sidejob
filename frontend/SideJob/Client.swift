@@ -50,6 +50,7 @@ class Client: ObservableObject {
     private let prod: Bool = false
     private let tokenRefreshSemaphore = DispatchSemaphore(value: 1)
     private var retryCount = 0
+    @Published var isInitializing = true
     
     init() {
         
@@ -172,8 +173,10 @@ class Client: ObservableObject {
                     switch result {
                     case .success(_):
                         self.loggedIn = true
+                        self.isInitializing = false
                     case .failure(_):
                         self.loggedIn = false
+                        self.isInitializing = false
                     }
                 }
             }

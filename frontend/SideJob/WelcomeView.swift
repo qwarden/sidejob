@@ -14,11 +14,16 @@ struct WelcomeView: View {
     var body: some View {
         //if we haven't already logged in, we show welcome screen.
         Group {
-            if !(client.loggedIn){
-                LoginAccountNavigation()
+            if (client.isInitializing == true) {
+                ProgressView()
             }
             else {
-                AppView()
+                if !(client.loggedIn){
+                    LoginAccountNavigation()
+                }
+                else {
+                    AppView()
+                }
             }
         }
     }
