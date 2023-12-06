@@ -42,117 +42,202 @@ enum NetworkError: Error {
 }
 
 class Client: ObservableObject {
-    let baseURL: URL
-    let session: URLSession
-    var tokens: Tokens?
-    let tokenPath: String
     @Published var loggedIn: Bool
+    private let baseURL: URL
+    private let session: URLSession
+    private var tokens: Tokens?
+    private let tokenPath: String
+    private let prod: Bool = false
+    private let tokenRefreshSemaphore = DispatchSemaphore(value: 1)
+    private var retryCount = 0
     
     init() {
-        if let url = URL(string: "http://localhost:8080") {
-            self.baseURL = url
+        
+        let url: URL?
+        
+        if prod {
+            url = URL(string: "https://sidejob.fly.dev")
+        } else {
+            url = URL(string: "http://localhost:8080")
+        }
+        
+        if url != nil {
+            self.baseURL = url!
         } else {
             fatalError("Invalid base URL")
         }
         self.loggedIn = false
         self.session = URLSession.shared
         self.tokenPath = "tokens.json"
-        if self.loadTokens() {
-            self.fetch(verb: "GET", endpoint: "/my/profile", auth: true) { (result: Result<Data, NetworkError>) in
-                switch result {
-                case .success(_):
-                    self.loggedIn = true
-                case .failure(_):
-                    self.loggedIn = false
-                }
-            }
-        }
     }
 
-    func logout() {
-        let emptyTokens = Tokens(accessToken: "", refreshToken: "")
-        // Save the empty tokens
-        saveTokens(emptyTokens)
-        // Set the loggedIn state to false
-        loggedIn = false
-    }
-    
-  
-    
-    func refreshTokens(completion: @escaping (Bool) -> Void) {
-           let url = baseURL.appendingPathComponent("/auth/refresh")
-           var request = URLRequest(url: url)
-           request.httpMethod = "POST"
-           request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            let body = ["refresh_token": self.tokens?.refreshToken]
-           do {
-               request.httpBody = try JSONEncoder().encode(body)
-           } catch {
-               completion(false)
-               return
-           }
-
-           session.dataTask(with: request) { data, response, error in
-               if error != nil {
-                   completion(false)
-                   return
-               }
-               guard let data = data else {
-                   completion(false)
-                   return
-               }
-
-               do {
-                   let refreshedTokens = try JSONDecoder().decode(Tokens.self, from: data)
-                   self.tokens = refreshedTokens
-                   self.saveTokens(refreshedTokens)
-                   completion(true)
-               } catch {
-                   completion(false)
-               }
-           }.resume()
-       }
-    
-    func fetch(verb: String, endpoint: String, auth: Bool, data: Data? = nil, completion: @escaping (Result<Data,NetworkError>) -> Void) {
+    func fetch(verb: String, endpoint: String, auth: Bool, data: Data? = nil, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         let url = baseURL.appendingPathComponent(endpoint)
         var request = URLRequest(url: url)
         request.httpMethod = verb
 
-        if auth {
-            if let accToken = tokens?.accessToken {
-                request.setValue("Bearer \(accToken)", forHTTPHeaderField: "Authorization")
-            }
+        if auth, let accToken = tokens?.accessToken {
+            let authHeader = "Bearer \(accToken)"
+            request.setValue(authHeader, forHTTPHeaderField: "Authorization")
         }
 
         if let data = data {
             request.httpBody = data
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
+        
+        if let headers = request.allHTTPHeaderFields, let authHeader = headers["Authorization"] {
+            print("Authorization Header: \(authHeader)")
+        } else {
+            print("Authorization header not found")
+        }      
+        print("Request: \(request)")
+        print("Making request to \(endpoint)")
 
         session.dataTask(with: request) { responseData, response, error in
             if let error = error {
-                completion(.failure(.networkFailure(error)))
+                print("Request failed with error: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    completion(.failure(.networkFailure(error)))
+                }
                 return
             }
 
             guard let httpResponse = response as? HTTPURLResponse else {
-                completion(.failure(.noData))
+                print("No valid HTTP response received.")
+                DispatchQueue.main.async {
+                    completion(.failure(.noData))
+                }
                 return
             }
 
             if httpResponse.statusCode == 401 {
-                self.refreshTokens { success in
-                    if success {
-                        self.fetch(verb: verb, endpoint: endpoint, auth: auth, data: data, completion: completion)
-                    } else {
+                print("Received 401 Unauthorized.")
+
+                if let data = responseData, let errorString = String(data: data, encoding: .utf8) {
+                    print("Detailed error from server: \(errorString)")
+                }
+
+                if self.retryCount < 3 {
+                    self.retryCount += 1
+
+                    self.tokenRefreshSemaphore.wait()
+                    print("Starting token refresh.")
+
+                    self.refreshTokens { success in
+                        self.tokenRefreshSemaphore.signal()
+
+                        if success {
+                            print("Token refreshed successfully. Reloading tokens and retrying request.")
+                            _ = self.loadTokens()
+                            self.fetch(verb: verb, endpoint: endpoint, auth: auth, data: data, completion: completion)
+                        } else {
+                            print("Token refresh failed.")
+                            DispatchQueue.main.async {
+                                self.retryCount = 0
+                                completion(.failure(.unauthorized))
+                            }
+                        }
+                    }
+                } else {
+                    print("Maximum retry attempts reached.")
+                    DispatchQueue.main.async {
+                        self.retryCount = 0
                         completion(.failure(.unauthorized))
                     }
                 }
-            }
-            else if let responseData = responseData {
-                completion(.success(responseData))
             } else {
-                completion(.failure(.noData))
+                if let responseData = responseData {
+                    print("Request to \(endpoint) successful.")
+                    DispatchQueue.main.async {
+                        self.retryCount = 0
+                        completion(.success(responseData))
+                    }
+                } else {
+                    print("Response data is nil.")
+                    DispatchQueue.main.async {
+                        self.retryCount = 0
+                        completion(.failure(.noData))
+                    }
+                }
+            }
+        }.resume()
+    }
+
+
+    func initialize() {
+        if loadTokens() {
+            fetch(verb: "GET", endpoint: "/my/profile", auth: true) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(_):
+                        self.loggedIn = true
+                    case .failure(_):
+                        self.loggedIn = false
+                    }
+                }
+            }
+        }
+    }
+    
+    func logout() {
+        let emptyTokens = Tokens(accessToken: "", refreshToken: "")
+        saveTokens(emptyTokens)
+        loggedIn = false
+    }
+    
+    func refreshTokens(completion: @escaping (Bool) -> Void) {
+        print("refresh")
+        guard let refreshToken = self.tokens?.refreshToken else {
+            completion(false)
+            return
+        }
+        
+        let url = baseURL.appendingPathComponent("/auth/refresh")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body = ["refresh_token": refreshToken]
+        do {
+            request.httpBody = try JSONEncoder().encode(body)
+        } catch {
+            print("Error encoding refresh token: \(error)")
+            completion(false)
+            return
+        }
+        
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error refreshing token: \(error)")
+                completion(false)
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                completion(false)
+                return
+            }
+            
+            guard (200...299).contains(httpResponse.statusCode) else {
+                print("Refresh token failed with status code: \(httpResponse.statusCode)")
+                completion(false)
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received during token refresh")
+                completion(false)
+                return
+            }
+            
+            do {
+                let refreshedTokens = try JSONDecoder().decode(Tokens.self, from: data)
+                self.saveTokens(refreshedTokens)
+                completion(true)
+            } catch {
+                print("Error decoding refreshed tokens: \(error)")
+                completion(false)
             }
         }.resume()
     }

@@ -16,6 +16,9 @@ struct SideJobApp: App {
     var body: some Scene {
         WindowGroup {
             WelcomeView().environmentObject(client).environmentObject(locationManager)
+                .onAppear {
+                    client.initialize()
+                }
         }
     }
 }

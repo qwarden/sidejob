@@ -13,8 +13,6 @@ struct JobListView: View {
     @EnvironmentObject var client: Client
     @State var jobs: [Job] = []
     @State var loadError: Bool = false
-    var endpoint: String
-
     @EnvironmentObject private var locationObject: LocationManager
     @Binding var filteringByLocation: Bool
 
@@ -36,17 +34,17 @@ struct JobListView: View {
                                     JobView(job: job)
                                 }
                             }
-                            
-                        }
+                        }  
                     }
+                    
                 }
-            }.navigationBarTitle("Jobs")
-            .onAppear {
-                fetchJobs()
             }
         }
+        .onAppear {
+            fetchJobs()
+        }
     }
-    
+
     // variable that holds the filtered jobs
     var filteredJobs: [Job] {
         // location filtering
