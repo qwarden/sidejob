@@ -9,7 +9,7 @@ import SwiftUI
 
 
 
-struct ListingsView: View {
+struct MyListingsView: View {
        let user: User
 
        init(user: User) {

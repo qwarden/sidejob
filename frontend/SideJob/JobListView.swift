@@ -15,6 +15,10 @@ struct JobListView: View {
     @EnvironmentObject private var locationObject: LocationManager
     var endpoint: String
     @Binding var filteringByLocation: Bool
+    @Binding var radius: Int
+    @Binding var userZipCode: String
+    @State private var stateFilteredJobs: [Job] = []
+
 
     var body: some View {
         VStack {
@@ -30,7 +34,7 @@ struct JobListView: View {
                                     fetchJobs()
                                 }
                             } else {
-                                ForEach(filteredJobs) { job in
+                                ForEach(stateFilteredJobs) { job in
                                     JobView(job: job)
                                 }
                             }
@@ -46,25 +50,25 @@ struct JobListView: View {
     }
 
     // variable that holds the filtered jobs
-    var filteredJobs: [Job] {
+    var computedFilterJobs: [Job] {
         // location filtering
         if filteringByLocation {
-            guard !locationObject.userZipCode.isEmpty else {
+            guard !userZipCode.isEmpty else {
                 return jobs
             }
             
             var filteredJobs: [Job] = []
             let dispatchGroup = DispatchGroup()
             
-            locationObject.getLocationFromZipCode(from: locationObject.userZipCode) { zipCodeLocation in
+            locationObject.getLocationFromZipCode(from: userZipCode) { zipCodeLocation in
                 guard let userLocation = zipCodeLocation else {
                     // Handle the case where the location could not be determined from the zip code
                     dispatchGroup.notify(queue: .main) {
                         // The asynchronous operations are completed
                         // Now you can use the filteredJobs array
                         print("Filtered Jobs: \(filteredJobs)")
+                        self.stateFilteredJobs = filteredJobs
                     }
-                    filteredJobs = jobs
                     return
                 }
                 
@@ -78,7 +82,7 @@ struct JobListView: View {
                         
                         if let location = location {
                             let distance = userLocation.distance(from: location)
-                            let radius: CLLocationDistance = CLLocationDistance(miles2meters(miles: Double(locationObject.searchRadius)))
+                            let radius: CLLocationDistance = CLLocationDistance(miles2meters(miles: Double(radius)))
                             
                             if distance <= radius {
                                 filteredJobs.append(job)
@@ -93,6 +97,7 @@ struct JobListView: View {
                     // The asynchronous operations are completed
                     // Now you can use the filteredJobs array
                     print("Filtered Jobs: \(filteredJobs)")
+                    self.stateFilteredJobs = filteredJobs
                 }
             }
         }
@@ -137,9 +142,9 @@ struct JobListView: View {
     }
 }
 
-struct JobListView_Previews: PreviewProvider {
-    @State static var isFilteringByLocation = true
-    static var previews: some View {
-        JobListView(endpoint: "/jobs", filteringByLocation: $isFilteringByLocation).environmentObject(Client())
-    }
-}
+//struct JobListView_Previews: PreviewProvider {
+//    @State static var isFilteringByLocation = true
+//    static var previews: some View {
+//        JobListView(endpoint: "/jobs", filteringByLocation: $isFilteringByLocation).environmentObject(Client())
+//    }
+//}

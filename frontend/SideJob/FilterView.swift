@@ -11,6 +11,8 @@ struct FilterView: View {
     @EnvironmentObject private var locationManager: LocationManager
     @Binding var filteringByLocation: Bool
     @Environment(\.presentationMode) private var presentationMode
+    @Binding var userZipCode: String
+    @Binding var radius: Int
     
     @State private var location: String = ""
     @State private var useCurrentLocation = false
@@ -25,7 +27,7 @@ struct FilterView: View {
                 Section() {
                     HStack() {
                         Text("Enter Zip Code:")
-                        TextField("Zip Code", text: $locationManager.userZipCode)
+                        TextField("Zip Code", text: $userZipCode)
                             .keyboardType(.numberPad)
                     }
                     Toggle("Use Current Location", isOn: $useCurrentLocation)
@@ -47,7 +49,7 @@ struct FilterView: View {
                 
                 HStack {
                     Text("Radius:")
-                    Picker("Select Radius", selection: $locationManager.searchRadius) {
+                    Picker("Select Radius", selection: $radius) {
                         Text("10 miles").tag(10)
                         Text("25 miles").tag(25)
                         Text("50 miles").tag(50)
@@ -70,11 +72,11 @@ struct FilterView: View {
     }
     
     func FilterJobValidation() -> Bool {
-        if locationManager.userZipCode == "" {
+        if userZipCode == "" {
             zipCodeErrorMessage = "Zip Code Cannot Be Empty"
             return false
         }
-        else if locationManager.userZipCode.count != 5 {
+        else if userZipCode.count != 5 {
             zipCodeErrorMessage = "Zip Code Must be 5 Digits"
             return false
         }
@@ -88,7 +90,7 @@ struct FilterView: View {
         locationManager.getLocationZipCode() { zipCode in
             if let zipCode = zipCode {
                 DispatchQueue.main.async {
-                    locationManager.userZipCode = zipCode
+                    userZipCode = zipCode
                 }
             }
         }
