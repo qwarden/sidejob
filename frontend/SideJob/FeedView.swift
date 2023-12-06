@@ -16,7 +16,7 @@ struct FeedView: View {
     var body: some View {
         NavigationView {
             VStack {
-                JobListView(endpoint: "/my/jobs", filteringByLocation: $filteringByLocation)
+                JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation)
                 
                 HStack {
                     FloatingActionButtonFilter(action: {
