@@ -16,7 +16,7 @@ func (j JobsController) RetrieveAll(c *gin.Context) {
 	db := db.GetDB()
 
 	db.Find(&jobs)
-	c.JSON(http.StatusOK, gin.H{"jobs": jobs})
+	c.JSON(http.StatusOK, jobs)
 }
 
 func (j JobsController) Create(c *gin.Context) {
@@ -41,7 +41,7 @@ func (j JobsController) Create(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"job": job})
+	c.JSON(http.StatusCreated, job)
 }
 
 func (j JobsController) Update(c *gin.Context) {
@@ -70,7 +70,7 @@ func (j JobsController) Update(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"job": job})
+	c.JSON(http.StatusOK, job)
 }
 
 func (j JobsController) Delete(c *gin.Context) {

@@ -18,7 +18,7 @@ type UserResponse struct {
 	UpdatedAt time.Time `json:"updated_at"`
 	Email     string    `json:"email"`
 	Name      string    `json:"name"`
-	About     string    `json:"about"`
+  About     string    `json:"about"`
 }
 
 func (u UsersController) RetrieveUsersJob(c *gin.Context) {
@@ -36,7 +36,7 @@ func (u UsersController) RetrieveUsersJob(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"job": job})
+	c.JSON(http.StatusOK, job)
 }
 
 func (u UsersController) RetrieveUser(c *gin.Context) {
@@ -58,5 +58,5 @@ func (u UsersController) RetrieveUser(c *gin.Context) {
 		About:     user.About,
 	}
 
-	c.JSON(http.StatusOK, gin.H{"user": userResponse})
+	c.JSON(http.StatusOK, userResponse)
 }

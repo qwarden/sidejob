@@ -3,6 +3,7 @@ package middleware
 import (
 	"net/http"
   "strings"
+  "fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qwarden/sidejob/backend/auth"
@@ -12,7 +13,9 @@ import (
 func AuthHandler() gin.HandlerFunc {
   return func (c *gin.Context) {
     cfg := config.GetConfig()
-    authHeader := strings.Split(c.Request.Header.Get("Authorization"), " ")
+    strHeader := c.Request.Header.Get("Authorization")
+    fmt.Println(strHeader)
+    authHeader := strings.Split(strHeader, " ")
 
     if len(authHeader) != 2 {
       c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid credentials"})

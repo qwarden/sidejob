@@ -11,8 +11,10 @@ struct FeedView: View {
     @State private var showingPostView = false
     @State private var showingFilterView = false
     @State var filteringByLocation = false
-    @EnvironmentObject private var location: LocationManager
+    @EnvironmentObject private var client: Client
+    @EnvironmentObject private var locationObject: LocationManager
 
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -26,6 +28,8 @@ struct FeedView: View {
                         self.showingPostView = true
                     })
                 }
+                
+                JobListView(endpoint: "/jobs/", zipCode: zipCode, radius: radius)
 
             }
             .navigationBarTitle("Jobs")
@@ -68,7 +72,6 @@ struct FeedView: View {
             }
         }
     }
-}
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {

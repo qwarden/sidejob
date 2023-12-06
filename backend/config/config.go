@@ -10,6 +10,7 @@ type Config struct {
   RefreshSecret string
   AccessExpriy string
   RefreshExpiry string
+  DatabaseUrl string
 }
 
 var config *Config
@@ -30,6 +31,7 @@ func Load() {
     RefreshSecret: GetEnv("REFRESH_SECRET"),
     AccessExpriy: GetEnv("ACCESS_EXPIRY"),
     RefreshExpiry: GetEnv("REFRESH_EXPIRY"),
+    DatabaseUrl: GetEnv("DATABASE_URL"),
   }
 }
 
