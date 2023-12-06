@@ -26,7 +26,7 @@ func (u MyController) Retrieve(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"user": user})
+	c.JSON(http.StatusOK, user)
 }
 
 func (u MyController) Update(c *gin.Context) {
@@ -54,7 +54,7 @@ func (u MyController) Update(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"user": user})
+	c.JSON(http.StatusCreated, user)
 }
 
 func (u MyController) Delete(c *gin.Context) {
@@ -83,5 +83,5 @@ func (u MyController) RetrieveJobs(c *gin.Context) {
 	}
 
 	db.Where("posted_by_id = ?", userID).Find(&jobs)
-	c.JSON(http.StatusOK, gin.H{"jobs": jobs})
+	c.JSON(http.StatusOK, jobs)
 }
