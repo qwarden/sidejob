@@ -9,14 +9,14 @@ import Foundation
 
 struct Job: Decodable, Identifiable {
     let id: Int
-    let createdAt, updatedAt: Date?
-    let title : String
-    let description : String
-    let payAmount: Int64
-    let location: String
+    let createdAt: Date
+    let updatedAt: Date
     let deletedAt: Date?
-    //let postedByID : Int64
+    let title: String
+    let description: String
     let payType: String
+    let payAmount: Double
+    let location: String
 
 //    let photo: URL?
     
@@ -31,13 +31,12 @@ struct Job: Decodable, Identifiable {
         case id = "ID"
         case createdAt = "CreatedAt"
         case updatedAt = "UpdatedAt"
-        //case postedByID = "posted_by_id"
-        case payAmount = "pay_amount"
-        case payType = "pay_type "
         case deletedAt = "DeletedAt"
-        case title = "title"
-        case description = "description"
-        case location = "location"
+        case title
+        case description
+        case payType = "pay_type"
+        case payAmount = "pay_amount"
+        case location
     }
 }
 
