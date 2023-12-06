@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct PosterProfileView: View {
-    let poster: UserInfo
-
-    init(poster: UserInfo) {
-        self.poster = poster
-    }
+    let postedById: Int64
+    let poster: User = User()
     
-    @EnvironmentObject var userTokens: UserTokens
+    @EnvironmentObject var client: Client
     
     @State private var navigateToNextView = false
     @State var test: String = "Test"

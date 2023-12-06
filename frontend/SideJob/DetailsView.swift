@@ -48,7 +48,7 @@ struct DetailsView: View {
                         .padding([.top, .bottom], 10)
                     Text("Pay: \(job.payType)")
                         .padding([.horizontal, .bottom], 20)
-                    NavigationLink(destination: PosterProfileView(poster: UserInfo)) {
+                    NavigationLink(destination: PosterProfileView(postedById: job.postedByID)) {
                             Text("Posted By: \(job.postedByID)")
                                 .padding([.horizontal, .bottom], 20)
                         }
