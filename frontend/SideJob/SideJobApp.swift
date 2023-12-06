@@ -9,11 +9,13 @@ import SwiftUI
 
 @main
 struct SideJobApp: App {
+    
     @StateObject private var client = Client()
+    @StateObject private var locationManager = LocationManager()
     
     var body: some Scene {
         WindowGroup {
-            WelcomeView().environmentObject(client)
+            WelcomeView().environmentObject(client).environmentObject(locationManager)
         }
     }
 }

@@ -16,6 +16,7 @@ struct LoginView: View {
     @State private var loginErrorMessage = ""
     
     @State private var loggedIn = false
+    @State private var isLoading = false
     
     @EnvironmentObject var client: Client
     
@@ -25,7 +26,10 @@ struct LoginView: View {
     }
     
     var body: some View {
-        if (!loggedIn) {
+        if isLoading {
+            // Show loading spinner while fetching data
+            ProgressView("Logging In...")
+        } else if (!loggedIn) {
             Text("Login to your Account:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
             VStack(spacing: 25) {
                 HStack { Text("Email"); TextField("email", text: $email).autocapitalization(.none) }
@@ -50,6 +54,7 @@ struct LoginView: View {
     
     func attemptLogin(){
         if (frontEndChecks()) {
+            isLoading = true
             let lowercaseEmail = self.email.lowercased()
             let credentials = LoginInfo(email: lowercaseEmail, password: self.password)
             
@@ -64,12 +69,24 @@ struct LoginView: View {
                 
                 client.fetch(verb: "POST", endpoint: "auth/login", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
                      switch result {
-                     case .success(_):
-                         self.loggedIn = true
+                     case .success(let data):
+                         do {
+                             let decoder = JSONDecoder()
+                             let tokens = try decoder.decode(Tokens.self, from:data)
+                             client.saveTokens(tokens)
+                             client.loggedIn = true
+                             self.loggedIn = true
+                             isLoading = false
+                         }
+                         catch {
+                             isLoading = false
+                             print("Error encoding and saving tokens.")
+                         }
                      case .failure(let error):
                          print("Error during login: \(error)")
-                         loginErrorMessage = "Email and/or Password invalid"
+                         loginErrorMessage = "User with that Email and Password does not exist."
                          self.loggedIn = false
+                         isLoading = false
                      }
                  }
 
@@ -111,9 +128,9 @@ struct LoginView: View {
 }
 
 
-struct LoginView_Preview: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+//struct LoginView_Preview: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//    }
+//}
 

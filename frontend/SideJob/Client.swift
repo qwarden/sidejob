@@ -16,6 +16,11 @@ class Tokens: Codable {
         case refreshToken = "refresh_token"
     }
     
+    init(accessToken: String, refreshToken: String){
+        self.accessToken = accessToken
+        self.refreshToken = refreshToken
+    }
+    
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         accessToken = try container.decode(String.self, forKey: .accessToken)
@@ -63,6 +68,14 @@ class Client: ObservableObject {
             }
         }
     }
+
+    func logout() {
+        let emptyTokens = Tokens(accessToken: "", refreshToken: "")
+        // Save the empty tokens
+        saveTokens(emptyTokens)
+        // Set the loggedIn state to false
+        loggedIn = false
+    }
     
     func refreshTokens(completion: @escaping (Bool) -> Void) {
            let url = baseURL.appendingPathComponent("/auth/refresh")
@@ -104,7 +117,9 @@ class Client: ObservableObject {
         request.httpMethod = verb
         
         if auth {
-            request.setValue("Bearer \(String(describing: self.tokens?.accessToken))", forHTTPHeaderField: "Authorization")
+            if let accToken = tokens?.accessToken {
+                request.setValue("Bearer \(accToken)", forHTTPHeaderField: "Authorization")
+            }
         }
         
 
@@ -132,7 +147,8 @@ class Client: ObservableObject {
                         completion(.failure(.unauthorized))
                     }
                 }
-            } else if let responseData = responseData {
+            }
+            else if let responseData = responseData {
                 completion(.success(responseData))
             } else {
                 completion(.failure(.noData))

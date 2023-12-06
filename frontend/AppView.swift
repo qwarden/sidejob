@@ -7,6 +7,8 @@
 import SwiftUI
 
 struct AppView: View {
+    @EnvironmentObject private var locationManager: LocationManager
+    
     var body: some View {
         NavigationView{
             TabView() {
@@ -19,8 +21,9 @@ struct AppView: View {
                         Image(systemName: "person")
                     }
 
+            }.onAppear{
+                locationManager.requestAuthorization()
             }
-
         }
     }
 

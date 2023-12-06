@@ -22,6 +22,7 @@ struct CreateAccountView: View {
     @State private var accountCreationErrorMessages = ""
     
     @State private var accountCreated = false
+    @State private var creatingAccount = false
     @EnvironmentObject var client: Client
     
     struct AccountInfo: Codable {
@@ -32,7 +33,10 @@ struct CreateAccountView: View {
     }
     
     var body: some View {
-        if (!accountCreated) {
+        if creatingAccount {
+            ProgressView("Creating Account...")
+        }
+        else if (!accountCreated) {
             Text("Create your Account:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
             VStack(spacing: 25) {
                 HStack { Text("Name"); TextField("name", text: $name).autocapitalization(.none) }
@@ -56,7 +60,7 @@ struct CreateAccountView: View {
                 
                 //error messages go here
                 if (accountCreationErrorMessages != ""){
-                    Text(accountCreationErrorMessages)
+                    Text(accountCreationErrorMessages).foregroundColor(Color.red)
                 }
                 
             }.padding()
@@ -68,6 +72,7 @@ struct CreateAccountView: View {
     
     func attemptCreateAccount(){
         if (frontEndChecks()) {
+            creatingAccount = true
             let lowercaseEmail = self.email.lowercased()
             let credentials = AccountInfo(email: lowercaseEmail, password: self.password, name: self.name, about: "")
             
@@ -83,17 +88,29 @@ struct CreateAccountView: View {
                 client.fetch(verb: "POST", endpoint: "auth/register", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
                      switch result {
                      case .success(let data):
-                         let decoder = JSONDecoder()
-                         self.accountCreated = true
+                         do {
+                             let decoder = JSONDecoder()
+                             let tokens = try decoder.decode(Tokens.self, from:data)
+                             client.saveTokens(tokens)
+                             client.loggedIn = true
+                             self.accountCreated = true
+                             creatingAccount = false
+                         }
+                         catch {
+                             creatingAccount = false
+                             accountCreationErrorMessages = "User with that Email already exists."
+                         }
                      case .failure(let error):
                          print("Error during account creation: \(error)")
-                         accountCreationErrorMessages = "Account Creation Invalid"
+                         accountCreationErrorMessages = "User with that Email already exists."
                          self.accountCreated = false
+                         creatingAccount = false
                      }
                  }
 
                 // Now you can pass jsonData to your client.fetch method
             } catch {
+                creatingAccount = false
                 print("Error encoding credentials: \(error)")
                 accountCreationErrorMessages = "Account Creation Invalid"
             }
@@ -141,8 +158,8 @@ struct CreateAccountView: View {
     }
 }
 
-struct CreateAccount_Preview: PreviewProvider {
-    static var previews: some View {
-        CreateAccountView()
-    }
-}
+//struct CreateAccount_Preview: PreviewProvider {
+//    static var previews: some View {
+//        CreateAccountView()
+//    }
+//}
