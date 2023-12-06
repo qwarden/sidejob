@@ -2,7 +2,7 @@ package server
 
 import (
 	"net/http"
-	"path"
+	// "path"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qwarden/sidejob/backend/controllers"
@@ -17,10 +17,11 @@ func Init() {
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 
-	r.Use(func(c *gin.Context) {
-		c.Request.URL.Path = path.Clean(c.Request.URL.Path)
-		c.Next()
-	})
+	// r.Use(func(c *gin.Context) {
+	// 	c.Request.URL.Path = path.Clean(c.Request.URL.Path)
+	// 	c.Next()
+
+	// })
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{

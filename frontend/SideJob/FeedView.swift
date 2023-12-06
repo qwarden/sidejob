@@ -9,12 +9,22 @@ import SwiftUI
 
 struct FeedView: View {
     @State private var showingPostView = false
-    @EnvironmentObject private var location: LocationManager
+    @EnvironmentObject private var client: Client
+    @EnvironmentObject private var locationObject: LocationManager
+    @State var radius = 100
+    @State var zipCode = ""
 
+    
     var body: some View {
         NavigationView {
             VStack {
-                JobListView(endpoint: "/my/jobs")
+                Spacer()
+                NavigationLink(destination: FilterView(zipCode: $zipCode, radius: $radius)) {
+                    Text("Filter Based on Location")
+                }
+                Spacer()
+                
+                JobListView(endpoint: "/jobs/", zipCode: zipCode, radius: radius)
 
                 FloatingActionButton(action: {
                     self.showingPostView = true
@@ -26,6 +36,7 @@ struct FeedView: View {
             }
         }
     }
+    
     struct FloatingActionButton: View {
         var action: () -> Void
 
@@ -42,6 +53,9 @@ struct FeedView: View {
             }
         }
     }
+    
+    
+
 }
 
 struct FeedView_Previews: PreviewProvider {

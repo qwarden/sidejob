@@ -66,9 +66,7 @@ struct ProfileView: View {
     
     //@Binding var imageName: String
     var body: some View {
-      
             VStack(spacing: 20){
-                
                 HStack(){
                     
                     Text("").frame(maxWidth: .infinity, alignment: .leading)

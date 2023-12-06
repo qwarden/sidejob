@@ -67,6 +67,7 @@ struct PostView: View {
     }
         
     private func postJob() {
+        print("post")
         guard !title.isEmpty, !description.isEmpty, !location.isEmpty else {
             alertMessage = "please fill in all fields."
             showAlert = true
