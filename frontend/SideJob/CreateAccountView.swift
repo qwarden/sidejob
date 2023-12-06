@@ -39,20 +39,20 @@ struct CreateAccountView: View {
         else if (!accountCreated) {
             Text("Create your Account:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
             VStack(spacing: 25) {
-                HStack { Text("Name"); TextField("name", text: $name) }
+                HStack { Text("Name"); TextField("name", text: $name).autocapitalization(.none) }
                 //error messages go here
                 if (nameErrorMessages != "") {
                     Text(nameErrorMessages).foregroundColor(Color.red)
                 }
-                HStack { Text("Email"); TextField("email", text: $email) }
+                HStack { Text("Email"); TextField("email", text: $email).autocapitalization(.none) }
                 if (emailErrorMessages != "") {
                     Text(emailErrorMessages).foregroundColor(Color.red)
                 }
-                HStack { Text("Password"); SecureField("password", text: $password) }
+                HStack { Text("Password"); SecureField("password", text: $password).autocapitalization(.none) }
                 if (passwordErrorMessageEmpty != "") {
                     Text(passwordErrorMessageEmpty).foregroundColor(Color.red)
                 }
-                HStack { Text("Confirm Password"); SecureField("password", text: $passwordConfirm) }
+                HStack { Text("Confirm Password"); SecureField("password", text: $passwordConfirm).autocapitalization(.none) }
                 if (passwordErrorMessageMatch != "") {
                     Text(passwordErrorMessageMatch).foregroundColor(Color.red)
                 }
@@ -85,7 +85,7 @@ struct CreateAccountView: View {
                     print("JSON String: \(jsonString)")
                 }
                 
-                client.fetch(verb: "POST", endpoint: "auth/register", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
+                client.fetch(verb: "POST", endpoint: "/auth/register", auth: false, data: jsonData) {  (result: Result<Data, NetworkError>) in
                      switch result {
                      case .success(let data):
                          do {

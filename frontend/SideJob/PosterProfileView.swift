@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct PosterProfileView: View {
-    let postedById: Int64
-    let poster: User = User()
+    let poster: User
+
+    init(poster: User) {
+        self.poster = poster
+    }
     
     @EnvironmentObject var client: Client
     

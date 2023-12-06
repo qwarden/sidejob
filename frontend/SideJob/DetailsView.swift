@@ -48,15 +48,15 @@ struct DetailsView: View {
                         .padding([.top, .bottom], 10)
                     Text("Pay: \(job.payType)")
                         .padding([.horizontal, .bottom], 20)
-                    NavigationLink(destination: PosterProfileView(postedById: job.postedByID)) {
+//                    NavigationLink(destination: PosterProfileView(postedById: job.postedByID)) {
                             Text("Posted By: \(job.postedByID)")
                                 .padding([.horizontal, .bottom], 20)
                         }
                         .foregroundColor(Color.black)
-
-                    Text("Created on: \(job.formattedPostedDate)")
-                        .padding([.horizontal, .bottom], 20)
-                    Text("Edited on: \(job.formattedUpdatedDate)")
+//
+//                    Text("Created on: \(job.formattedPostedDate)")
+//                        .padding([.horizontal, .bottom], 20)
+//                    Text("Edited on: \(job.formattedUpdatedDate)")
                         .padding([.horizontal, .bottom], 20)
                     Text("Contact: job.email@chess.com")
                         .padding([.horizontal, .bottom], 20)
@@ -73,7 +73,6 @@ struct DetailsView: View {
         }
         
     }
-}
 
 struct DetailsView_Previews: PreviewProvider {
     static var previews: some View {

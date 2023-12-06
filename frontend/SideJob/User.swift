@@ -7,22 +7,21 @@
 
 import Foundation
 
-class UserInfo: ObservableObject {
+struct User: Codable {
+    let ID: Int
+    let CreatedAt, UpdatedAt: Date?
     var name: String
     var email: String
     var password: String
-    var userID: Int
-    var jobsPostedIDs: [Int]
-    var jobsWorkedIDs: [Int]
     var about: String
     
     init() {
+        self.ID = 0
+        self.CreatedAt = nil
+        self.UpdatedAt = nil
         self.name = ""
         self.email = ""
         self.password = ""
-        self.userID = -1
-        self.jobsPostedIDs = [Int]()
-        self.jobsWorkedIDs = [Int]()
         self.about = ""
     }
 }

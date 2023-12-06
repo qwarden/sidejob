@@ -67,6 +67,7 @@ struct PostView: View {
     }
         
     private func postJob() {
+        print("post")
         guard !title.isEmpty, !description.isEmpty, !location.isEmpty else {
             alertMessage = "please fill in all fields."
             showAlert = true
@@ -80,7 +81,9 @@ struct PostView: View {
         }
         
         let newJob = NewJob(title: title, description: description, payAmount: payAmountInt, location: location, payType: payType)
+        
         let encoder = JSONEncoder()
+
         do {
             let data = try encoder.encode(newJob)
             client.fetch(verb: "POST", endpoint: "/jobs", auth: true, data: data){  (result: Result<Data, NetworkError>) in

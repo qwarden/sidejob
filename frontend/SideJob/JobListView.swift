@@ -13,47 +13,36 @@ struct JobListView: View {
     @EnvironmentObject var client: Client
     @State var jobs: [Job] = []
     @State var loadError: Bool = false
-    var endpoint: String
-
     @EnvironmentObject private var locationObject: LocationManager
-    @State var radius = 100
-    @State var zipCode = ""
-
+    
+    var endpoint: String
+    var zipCode: String = ""
+    var radius: Int = 100
+    
     var body: some View {
         VStack {
-            NavigationView {
-                // Add a button at the top to transition to the Filter View
-                VStack {
-                    Spacer()
-                    NavigationLink(destination: FilterView(zipCode: $zipCode, radius: $radius)) {
-                        Text("Filter Based on Location")
-                    }
-                    Spacer()
-                    
-                    ZStack(alignment: .bottomTrailing) {
-                        List {
-                            if jobs.isEmpty && !loadError {
-                                Text("Loading jobs...")
-                            } else if loadError {
-                                Button("Tap to retry") {
-                                    fetchJobs()
-                                }
-                            } else {
-                                ForEach(jobs) { job in
-                                    JobView(job: job)
-                                }
-                            }
-                            
+            ZStack(alignment: .bottomTrailing) {
+                List {
+                    if jobs.isEmpty && !loadError {
+                        Text("Loading jobs...")
+                    } else if loadError {
+                        Button("Tap to retry") {
+                            fetchJobs()
+                        }
+                    } else {
+                        ForEach(jobs) { job in
+                            JobView(job: job)
                         }
                     }
+                    
                 }
-            }.navigationBarTitle("Jobs")
-            .onAppear {
-                fetchJobs()
             }
         }
+        .onAppear {
+            fetchJobs()
+        }
     }
-    
+
     // variable that holds the filtered jobs
     var filteredJobs: [Job] {
         guard !zipCode.isEmpty else {
@@ -133,11 +122,5 @@ struct JobListView: View {
                 // TODO: handle networking error
             }
         }
-    }
-}
-
-struct JobListView_Previews: PreviewProvider {
-    static var previews: some View {
-        JobListView(endpoint: "/jobs").environmentObject(Client())
     }
 }

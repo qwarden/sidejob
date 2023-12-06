@@ -10,9 +10,9 @@ import SwiftUI
 
 
 struct ListingsView: View {
-       let user: UserInfo
+       let user: User
 
-       init(user: UserInfo) {
+       init(user: User) {
            self.user = user
        }
     
@@ -25,7 +25,6 @@ struct ListingsView: View {
             Text(user.name)
             ZStack(alignment: .bottomTrailing) {
                 // List of jobs, each represented by JobView
-                
             }
       
             // Present the PostView as a sheet
