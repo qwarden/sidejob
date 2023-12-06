@@ -28,11 +28,11 @@ struct LoginView: View {
         if (!loggedIn) {
             Text("Login to your Account:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
             VStack(spacing: 25) {
-                HStack { Text("Email"); TextField("email", text: $email) }
+                HStack { Text("Email"); TextField("email", text: $email).autocapitalization(.none) }
                 if (emailErrorMessage != "") {
                     Text(emailErrorMessage).foregroundColor(Color.red)
                 }
-                HStack { Text("Password"); SecureField("password", text: $password) }
+                HStack { Text("Password"); SecureField("password", text: $password).autocapitalization(.none) }
                 if (passwordErrorMessage != "") {
                     Text(passwordErrorMessage).foregroundColor(Color.red)
                 }
