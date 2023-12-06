@@ -119,7 +119,9 @@ class Client: ObservableObject {
         request.httpMethod = verb
 
         if auth {
-            request.setValue("Bearer \(String(describing: self.tokens?.accessToken))", forHTTPHeaderField: "Authorization")
+            if let accToken = tokens?.accessToken {
+                request.setValue("Bearer \(accToken)", forHTTPHeaderField: "Authorization")
+            }
         }
 
         if let data = data {
@@ -139,12 +141,13 @@ class Client: ObservableObject {
             }
 
             if httpResponse.statusCode == 401 {
-                //self.refreshTokens { success in
-                //    if success {
-                //        self.fetch(verb: verb, endpoint: endpoint, auth: auth, data: data, completion: completion)
-                //    } else {
-                completion(.failure(.unauthorized))
-                //    }
+                self.refreshTokens { success in
+                    if success {
+                        self.fetch(verb: verb, endpoint: endpoint, auth: auth, data: data, completion: completion)
+                    } else {
+                        completion(.failure(.unauthorized))
+                    }
+                }
             }
             else if let responseData = responseData {
                 completion(.success(responseData))
