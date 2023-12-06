@@ -81,6 +81,7 @@ struct PostView: View {
         
         let newJob = NewJob(title: title, description: description, payAmount: payAmountInt, location: location, payType: payType)
         let encoder = JSONEncoder()
+
         do {
             let data = try encoder.encode(newJob)
             client.fetch(verb: "POST", endpoint: "/jobs", auth: true, data: data){  (result: Result<Data, NetworkError>) in
