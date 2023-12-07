@@ -69,7 +69,7 @@ struct JobListView: View {
     
     // this is just to initiate the computed filter jobs variable which then updates the jobs
     func computeFilterJobs() {
-        let asyncInitiator = computedFilterJobs
+        let _ = computedFilterJobs
     }
     // variable that holds the filtered jobs
     var computedFilterJobs: [Job] {
