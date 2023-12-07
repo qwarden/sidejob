@@ -29,92 +29,102 @@ struct DetailsView: View {
                     .frame(maxWidth: .infinity)
                 
                 ScrollView(){
-                    Text("Description:")
+                    Text("Description")
                         .font(.system(size: 20))
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 35)
                         .foregroundColor(.darkGray)
-     
+                        .padding(.bottom, -5)
+
                     Text(job.description)
-                        .font(.system(size: 22)).foregroundColor(.black)
+                        .font(.system(size: 20)).foregroundColor(.black)
                         .padding(.horizontal, 35)
-                        .padding(.top, 10)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
+                        .padding(.bottom, 20)
+
                                         
                     Group{
-                        Text("Pay:")
+                        Text("Pay")
                             .font(.system(size: 20))
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 35)
-                            .padding(.top, 40)
                             .foregroundColor(.darkGray)
+                            .padding(.bottom, -5)
+
                         
                         Text(String(format: "$%.2f \(job.payType)", job.payAmount))
-                            .font(.system(size: 22)).foregroundColor(.black)
+                            .font(.system(size: 20)).foregroundColor(.black)
                             .padding(.horizontal, 35)
-                            .padding(.vertical, 20)
                             .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
+                            .padding(.bottom, 20)
+
                     }
                     
                     Group{
-                        Text("Location Zip:")
+                        Text("Location Zip")
                             .font(.system(size: 20))
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 35)
-                            .padding(.top, 40)
                             .foregroundColor(.darkGray)
+                            .padding(.bottom, -5)
+
                         
                         Text(job.location)
-                            .font(.system(size: 22))
+                            .font(.system(size: 20))
                             .foregroundColor(.black)
                             .frame(maxWidth: .infinity, maxHeight: 120, alignment: .leading).padding(.horizontal, 35)
-                            .padding(.bottom, 50)
                             .scrollContentBackground(.hidden)
+                            .padding(.bottom, 20)
                     }
                     
                     Group{
-                        Text("Posted On:")
+                        Text("Posted On")
                             .font(.system(size: 20))
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 35)
                             .foregroundColor(.darkGray)
+                            .padding(.bottom, -5)
+
                         
                         Text(job.createdAt.formatted(date: .complete, time: .omitted))
-                            .font(.system(size: 22))
+                            .font(.system(size: 20))
                             .foregroundColor(.black)
                             .frame(maxWidth: .infinity, maxHeight: 120, alignment: .leading).padding(.horizontal, 35)
-                            .padding(.bottom, 50)
                             .scrollContentBackground(.hidden)
+                            .padding(.bottom, 20)
+
                     }
                     
-                    Text("Posted By:")
-                        .font(.system(size: 20))
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 35)
-                        .foregroundColor(.darkGray)
-                    
-                    NavigationLink(
-                        destination: PosterProfileView(poster: poster),
-                        label: {
-                            Text("\(poster.name)'s Profile")
-                                .padding(.vertical, 20)
-                                .padding(.horizontal, 80)
-                                .font(.system(size: 22))
-                                .foregroundColor(.white)
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                                .padding(.top, 0)
-                        }
-                    )
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .top)
+                    Group{
+                        
+                        Text("Posted By")
+                            .font(.system(size: 20))
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 35)
+                            .foregroundColor(.darkGray)
+                            .padding(.bottom, -5)
+
+                        
+                        NavigationLink(
+                            destination: PosterProfileView(poster: poster),
+                            label: {
+                                Text("\(poster.name)'s Profile")
+                                    .padding(.horizontal, 35)
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.blue)
+                                    .cornerRadius(10)
+                            }
+                        )
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .topLeading)
+                    }
                 }.padding(.horizontal, 15).padding(.vertical, 20)
             }
         }.navigationBarTitle(job.title).onAppear {
