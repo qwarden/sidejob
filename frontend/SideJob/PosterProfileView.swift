@@ -17,13 +17,12 @@ struct PosterProfileView: View {
     
     //@Binding var imageName: String
     var body: some View {
-        NavigationView{
             
             VStack(spacing: 20){
                 
-                Text(poster.name)
+            /*    Text("\(poster.name)'s Profile")
                     .font(.system(size: 25))
-                    .frame(maxWidth: .infinity, alignment: .center)
+                    .frame(maxWidth: .infinity, alignment: .center)*/
                 
                 Text("Username:")
                     .font(.system(size: 20)).padding(.top, 15)
@@ -96,13 +95,12 @@ struct PosterProfileView: View {
                             .padding(.horizontal, 80)
                             .font(.system(size: 20))
                             .foregroundColor(.white)
-                            .background(Color.buttonColor)
+                            .background(Color.blue)
                             .cornerRadius(10)
                             .padding(.top, 0)
                     }
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .top)
-            }
-        }
+            }.navigationBarTitle("\(poster.name)'s Profile")
     }
 }

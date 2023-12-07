@@ -78,6 +78,8 @@ struct FeedView: View {
             }
         }
     }
+    
+    
 }
 
 struct FeedView_Previews: PreviewProvider {

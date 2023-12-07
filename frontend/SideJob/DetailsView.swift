@@ -22,15 +22,8 @@ struct DetailsView: View {
     let poster = User()
     
     var body: some View {
-        NavigationView{
+        VStack(spacing: 30){
             
-            VStack(spacing: 30){
-                
-                Text(job.title)
-                    .font(.system(size: 30))
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color.lightGray)
@@ -113,7 +106,7 @@ struct DetailsView: View {
                                 .scrollContentBackground(.hidden)
                         }
                    
-                        Text("Posted on:")
+                        Text("Posted by:")
                             .font(.system(size: 20)).padding(.top, 15)
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -136,10 +129,9 @@ struct DetailsView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .top)
                     }.padding(.horizontal, 15).padding(.vertical, 20)
                 }
-            }
-        }
-        }
-    }
+        }.navigationBarTitle(job.title)//vstack
+        }//body
+    }//view
     
     var testJob = Job(id: 420,
                       createdAt: Date(),
