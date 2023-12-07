@@ -23,8 +23,8 @@ struct PosterProfileView: View {
                     .font(.system(size: 25))
                     .frame(maxWidth: .infinity, alignment: .center)*/
                 
-                Text("Username:")
-                    .font(.system(size: 20)).padding(.top, 15)
+                Text("Username")
+                    .font(.body).bold().padding(.top, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 30)
                 
@@ -43,8 +43,8 @@ struct PosterProfileView: View {
                 }.frame(maxWidth: .infinity, maxHeight: 40)
                 
                 
-                Text("Email:")
-                    .font(.system(size: 20)).padding(.top, 15)
+                Text("Email")
+                    .font(.body).bold().padding(.top, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 30)
                 
@@ -64,8 +64,9 @@ struct PosterProfileView: View {
                 }.frame(maxWidth: .infinity, maxHeight: 40)
                     .font(.system(size: 20)).foregroundColor(.darkGray)
                 
-                Text("About:")
-                    .font(.system(size: 20))
+                Text("About")
+                    .font(.body)
+                    .bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 30)
                     .padding(.top, 15)

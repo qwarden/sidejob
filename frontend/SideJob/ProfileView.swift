@@ -68,7 +68,8 @@ struct ProfileView: View {
                     Text("").frame(maxWidth: .infinity, alignment: .leading)
                     if (isEditing == false){
                         Text("Profile")
-                            .font(.system(size: 25))
+                            .font(.title)
+                            .bold()
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
                     else{
@@ -107,8 +108,8 @@ struct ProfileView: View {
                     
                 }
                 
-                Text("Name:")
-                    .font(.system(size: 20)).padding(.top, 15)
+                Text("Name")
+                    .font(.body).bold().padding(.top, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 30)
                 
@@ -134,8 +135,8 @@ struct ProfileView: View {
                 }.frame(maxWidth: .infinity, maxHeight: 40)
                 
                 
-                Text("Email:")
-                    .font(.system(size: 20)).padding(.top, 15)
+                Text("Email")
+                    .font(.body).bold().padding(.top, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 30)
                 
@@ -163,8 +164,8 @@ struct ProfileView: View {
                 }.frame(maxWidth: .infinity, maxHeight: 40)
                     .font(.system(size: 20)).foregroundColor(.darkGray)
                 
-                Text("About:")
-                    .font(.system(size: 20))
+                Text("About")
+                    .font(.body).bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 30)
                     .padding(.top, 15)

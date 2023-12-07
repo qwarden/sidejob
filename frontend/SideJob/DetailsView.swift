@@ -20,7 +20,7 @@ struct DetailsView: View {
     @EnvironmentObject private var client: Client
     
     var body: some View {
-        VStack(spacing: 10){
+        VStack(spacing: 5){
             
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
@@ -30,7 +30,7 @@ struct DetailsView: View {
                 
                 ScrollView(){
                     Text("Description:")
-                        .font(.system(size: 20)).padding(.top, 15)
+                        .font(.system(size: 20))
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 35)
@@ -44,12 +44,10 @@ struct DetailsView: View {
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .multilineTextAlignment(.leading)
-                    
-                    Spacer()
-                    
+                                        
                     Group{
                         Text("Pay:")
-                            .font(.system(size: 20)).padding(.top, 15)
+                            .font(.system(size: 20))
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 35)
@@ -65,7 +63,7 @@ struct DetailsView: View {
                     
                     Group{
                         Text("Location Zip:")
-                            .font(.system(size: 20)).padding(.top, 15)
+                            .font(.system(size: 20))
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 35)
@@ -82,7 +80,7 @@ struct DetailsView: View {
                     
                     Group{
                         Text("Posted On:")
-                            .font(.system(size: 20)).padding(.top, 15)
+                            .font(.system(size: 20))
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 35)
@@ -97,7 +95,7 @@ struct DetailsView: View {
                     }
                     
                     Text("Posted By:")
-                        .font(.system(size: 20)).padding(.top, 15)
+                        .font(.system(size: 20))
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 35)
