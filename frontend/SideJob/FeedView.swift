@@ -15,7 +15,6 @@ struct FeedView: View {
     @EnvironmentObject private var locationObject: LocationManager
     @State private var refreshID = UUID()
     
-    
     var body: some View {
         NavigationView {
             VStack {
@@ -43,6 +42,7 @@ struct FeedView: View {
             }
         }
     }
+    
     struct FloatingActionButtonPost: View {
         var action: () -> Void
         

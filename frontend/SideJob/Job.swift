@@ -48,4 +48,12 @@ struct NewJob: Encodable {
     let payAmount: Double
     let location: String
     let payType: String
+    
+    enum CodingKeys: String, CodingKey {
+        case title
+        case description
+        case payType = "pay_type"
+        case payAmount = "pay_amount"
+        case location
+    }
 }

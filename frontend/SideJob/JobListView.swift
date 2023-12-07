@@ -20,7 +20,6 @@ struct JobListView: View {
     var body: some View {
         VStack {
             NavigationView {
-                // Add a button at the top to transition to the Filter View
                 VStack {
                     ZStack(alignment: .bottomTrailing) {
                         List {
@@ -134,6 +133,49 @@ struct JobListView: View {
                 case .failure(_):
                     self.loadError = true
                 }
+            }
+        }
+                
+                dispatchGroup.notify(queue: .main) {
+                    // The asynchronous operations are completed
+                    // Now you can use the filteredJobs array
+                    print("Filtered Jobs: \(filteredJobs)")
+                }
+            }
+        }
+        else {
+            return jobs
+        }
+        // This is a temporary return value; the actual filteredJobs will be available after the completion handler is called
+        return []
+    }
+    
+    func miles2meters(miles: Double) -> Double{
+        return (miles * 1609.34)
+    }
+
+    func fetchJobs() {
+        loadError = false
+        client.fetch(verb: "GET", endpoint: endpoint, auth: true) { result in
+            switch result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+                decoder.dateDecodingStrategy = .formatted(dateFormatter)
+
+                do {
+                    let decodedJobs = try decoder.decode([Job].self, from: data)
+                    self.jobs = decodedJobs
+                } catch {
+                    self.loadError = true
+                    
+                    print("Error decoding jobs: \(error.localizedDescription)")
+                }
+            case .failure(_):
+                self.loadError = true
             }
         }
     }

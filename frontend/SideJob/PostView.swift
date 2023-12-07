@@ -69,7 +69,6 @@ struct PostView: View {
     }
         
     private func postJob() {
-        print("post")
         guard !title.isEmpty, !description.isEmpty, !location.isEmpty else {
             alertMessage = "please fill in all fields."
             showAlert = true
@@ -88,7 +87,7 @@ struct PostView: View {
 
         do {
             let data = try encoder.encode(newJob)
-            client.fetch(verb: "POST", endpoint: "/jobs/", auth: true, data: data){  (result: Result<Data, NetworkError>) in
+            client.fetch(verb: "POST", endpoint: "/jobs/", auth: true, data: data) { (result: Result<Data, NetworkError>) in
                 switch result {
                 case .success(_):
                     self.alertMessage = "Job Posted Successfully"
