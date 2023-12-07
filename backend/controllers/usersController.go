@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/qwarden/sidejob/backend/auth"
 	"github.com/qwarden/sidejob/backend/db"
 	"github.com/qwarden/sidejob/backend/models"
 )
@@ -21,28 +20,20 @@ type UserResponse struct {
   About     string    `json:"about"`
 }
 
-func (u UsersController) RetrieveUsersJob(c *gin.Context) {
-	var job []models.Job
+func (u UsersController) RetrieveUsersJobs(c *gin.Context) {
+	var jobs []models.Job
 	db := db.GetDB()
-	jobID := c.Param("job_id")
+  userID := c.Param("userID")
 
-	userID, err := auth.GetIDFromContext(c)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	}
+	db.Where("posted_by_id = ?", userID).Find(&jobs)
 
-	if err := db.Where("posted_by_id = ? AND id = ?", userID, jobID).First(&job).Error; err != nil {
-		c.JSON(http.StatusOK, gin.H{"jobs": []models.Job{}})
-		return
-	}
-
-	c.JSON(http.StatusOK, job)
+	c.JSON(http.StatusOK, jobs)
 }
 
 func (u UsersController) RetrieveUser(c *gin.Context) {
 	var user models.User
 	db := db.GetDB()
-	userID := c.Param("user_id")
+	userID := c.Param("userID")
 
 	if err := db.First(&user, userID).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "user not found"})

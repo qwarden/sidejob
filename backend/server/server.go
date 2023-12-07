@@ -59,7 +59,7 @@ func NewRouter() *gin.Engine {
 	{
 		usersCtrl := new(controllers.UsersController)
 		usersGroup.GET("/:userID", usersCtrl.RetrieveUser)
-		usersGroup.GET("/:userID/jobs", usersCtrl.RetrieveUsersJob)
+		usersGroup.GET("/:userID/jobs", usersCtrl.RetrieveUsersJobs)
 	}
 
 	return r
