@@ -37,12 +37,12 @@ struct JobListView: View {
                             } else {
                                 if filteringByLocation {
                                     ForEach(filteredJobs) { job in
-                                        JobView(job: job)
+                                        JobView(job: job, profileDisabled: false, fromMyListings: false)
                                     }
                                 }
                                 else {
                                     ForEach(jobs) { job in
-                                        JobView(job: job)
+                                        JobView(job: job, profileDisabled: false, fromMyListings: false)
                                     }
                                 }
                             }

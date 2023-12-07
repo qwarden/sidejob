@@ -28,13 +28,11 @@ struct MyListingsView: View {
             VStack {
                 List {
                     ForEach(jobs) { job in
-                        JobView(job: job)
+                        JobView(job: job, profileDisabled: true, fromMyListings: true)
                     }
                 }
             }
-            .navigationBarTitle("My Listings", displayMode: .inline)
-            .padding()
-            .padding()
+            .navigationBarTitle("Listings", displayMode: .inline)
             
             .onAppear {
                 if isUser {

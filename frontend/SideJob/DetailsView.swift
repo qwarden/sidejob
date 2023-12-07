@@ -18,6 +18,8 @@ struct DetailsView: View {
     @State private var poster: UserResponse = UserResponse()
     let job: Job
     @EnvironmentObject private var client: Client
+    var profileDisabled: Bool
+    
     
     var body: some View {
         ScrollView {
@@ -74,22 +76,32 @@ struct DetailsView: View {
                         .padding(.bottom, 20)
                 }
 
-                Group {
-                    Text("Posted By")
-                        .font(.system(size: 20))
-                        .fontWeight(.semibold)
-                        .foregroundColor(.darkGray)
-                        .padding(.bottom, 2)
-                    
-                    NavigationLink(
-                        destination: PosterProfileView(poster: poster),
-                        label: {
-                            Text("\(poster.name)'s Profile")
+                    if (!profileDisabled) {
+                        Group{
+                            
+                            Text("Posted By")
                                 .font(.system(size: 20))
-                                .foregroundColor(.blue)
+                                .fontWeight(.semibold)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, 35)
+                                .foregroundColor(.darkGray)
+                                .padding(.bottom, -5)
+                            
+                            
+                            NavigationLink(
+                                destination: PosterProfileView(poster: poster),
+                                label: {
+                                    Text("\(poster.name)'s Profile")
+                                        .padding(.horizontal, 35)
+                                        .font(.system(size: 20))
+                                        .foregroundColor(.blue)
+                                        .cornerRadius(10)
+                                }
+                            )
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .topLeading)
                         }
-                    )
-                }
+                    }
+
             }
             .padding(.horizontal, 35)
             .padding(.vertical, 20)
