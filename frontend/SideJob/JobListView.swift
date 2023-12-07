@@ -25,7 +25,6 @@ struct JobListView: View {
     
     var body: some View {
         VStack {
-            NavigationView {
                 VStack {
                     ZStack(alignment: .bottomTrailing) {
                         List {
@@ -51,7 +50,6 @@ struct JobListView: View {
                     }
                     
                 }
-            }
         }
         .onAppear {
             fetchJobs()

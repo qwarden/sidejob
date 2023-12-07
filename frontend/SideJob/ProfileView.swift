@@ -219,7 +219,7 @@ struct ProfileView: View {
                                 Text("My Listings").padding(.vertical, 20).padding(.horizontal, 80).font(.system(size: 20))
                             }
                         ).foregroundColor(.white)
-                            .background(Color.buttonColor)
+                            .background(Color.blue)
                             .cornerRadius(10)
                             .padding(.top, 0)
                     }
@@ -233,7 +233,7 @@ struct ProfileView: View {
                             .padding(.horizontal, 90)
                             .font(.system(size: 20))
                             .foregroundColor(.white)
-                            .background(Color.buttonColor)
+                            .background(Color.blue)
                             .cornerRadius(10)
                             .padding(.top, 0)
                             .padding(.leading, 28)
