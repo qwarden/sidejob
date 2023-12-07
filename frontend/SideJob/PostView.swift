@@ -58,6 +58,11 @@ struct PostView: View {
                 
                 Section(header: Text("Pay")) {
                     HStack {
+                        Picker("Pay Type", selection: $payType) {
+                            Text("Hourly").tag("Hourly")
+                            Text("Total").tag("Total")
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
                         Text(currencyFormatter.currencySymbol)
                         TextField("Amount", text: $payAmount)
                             .keyboardType(.decimalPad)
