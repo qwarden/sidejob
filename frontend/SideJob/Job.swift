@@ -17,6 +17,7 @@ struct Job: Decodable, Identifiable {
     let payType: String
     let payAmount: Double
     let location: String
+    let postedByID: Int
 
 //    let photo: URL?
     
