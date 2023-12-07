@@ -9,12 +9,6 @@ import SwiftUI
 
 
 struct MyListingsView: View {
-   let user: User
-
-   init(user: User) {
-       self.user = user
-   }
-
     @State private var showingPostView = false
     @State private var refreshID = UUID()
 

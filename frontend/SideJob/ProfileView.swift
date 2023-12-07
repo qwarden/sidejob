@@ -214,7 +214,7 @@ struct ProfileView: View {
                     }
                     else {
                         NavigationLink(
-                            destination: MyListingsView(user: user),
+                            destination: MyListingsView(),
                             label: {
                                 Text("My Listings").padding(.vertical, 20).padding(.horizontal, 80).font(.system(size: 20))
                             }

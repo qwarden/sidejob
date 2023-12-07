@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct PosterProfileView: View {
-    let poster: User
+    let poster: UserResponse
     
     @EnvironmentObject var client: Client
     
     @State private var navigateToNextView = false
-    @State var test: String = "Test"
     
     //@Binding var imageName: String
     var body: some View {
@@ -87,7 +86,7 @@ struct PosterProfileView: View {
                 }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .top)
                 
                 NavigationLink(
-                    destination: MyListingsView(user: poster),
+                    destination: MyListingsView(),
                     label: {
                         Text("\(poster.name)'s listings")
                         

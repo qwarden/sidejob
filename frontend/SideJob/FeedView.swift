@@ -17,8 +17,9 @@ struct FeedView: View {
             ZStack(alignment: .bottomTrailing) {
                 VStack {
                   HStack {
-                        Text("Sidejobs")
+                        Text("Jobs")
                             .font(.title)
+                            .bold()
                             .padding(.leading)
                         Spacer()
                         Button(action: {
