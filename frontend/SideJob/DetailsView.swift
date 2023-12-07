@@ -6,88 +6,157 @@
 //
 
 import SwiftUI
+import Foundation
+
+extension Color{
+    static let buttonColor = Color(red: 60/255, green: 100/255, blue: 150/255)
+    static let darkGray = Color(red: 100/255, green: 100/255, blue: 100/255)
+    static let lightGray = Color(red: 240/255, green: 240/255, blue: 240/255)
+}
+
 struct DetailsView: View {
     let job: Job
     
+    
+    //QUIMBY GET USERS INFO HERE FROM JOB.POSTEDBYID
+    let poster = User()
+    
     var body: some View {
         NavigationView{
-            VStack {
-                VStack {
-                    Text("\(job.title)")
-                        .padding(5)
-                        .font(.title)
-                }
-                .frame(maxWidth: .infinity)
-                .background(Color(red: 0.7, green: 0.8, blue: 1.0))
-                .foregroundColor(Color.black)
-                .cornerRadius(40)
-                .padding(.bottom, 20)
-                .padding(10)
+            
+            VStack(spacing: 30){
                 
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Basic Info")
-                        .font(.headline)
-                        .padding([.top, .bottom], 10)
-                    Text("Description: \(job.description)")
-                        .padding([.horizontal, .bottom], 20)
-                    Text("Location: \(job.location)")
-                        .padding([.horizontal, .bottom], 20)
-                    Text("$\(job.payAmount) per hour")
-                        .padding([.horizontal, .bottom], 20)
-                }
-                .frame(maxWidth: .infinity)
-                .background(Color(red: 0.7, green: 0.8, blue: 1.0))
-                .foregroundColor(Color.black)
-                .cornerRadius(40)
-                .padding(.bottom, 20)
-                .padding(10)
+                Text(job.title)
+                    .font(.system(size: 30))
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Additional Info")
-                        .font(.headline)
-                        .padding([.top, .bottom], 10)
-                    Text("Pay: \(job.payType)")
-                        .padding([.horizontal, .bottom], 20)
-                    //                    NavigationLink(destination: PosterProfileView(postedById: job.postedByID)) {
-                    //                            Text("Posted By: \(job.postedByID)")
-                    //                                .padding([.horizontal, .bottom], 20)
-                    //                        }
-                    //                        .foregroundColor(Color.black)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.lightGray)
+                        .padding(.horizontal, 30)
+                        .frame(maxWidth: .infinity)
                     
-                    //                    Text("Created on: \(job.formattedPostedDate)")
-                    //                        .padding([.horizontal, .bottom], 20)
-                    //                    Text("Edited on: \(job.formattedUpdatedDate)")
-                    //                        .padding([.horizontal, .bottom], 20)
-                    Text("Contact: job.email@chess.com")
-                        .padding([.horizontal, .bottom], 20)
-                        .foregroundColor(Color.black)
+                    ScrollView(){
+                        
+                        
+                        
+                        Text("Description:")
+                            .font(.system(size: 20)).padding(.top, 15)
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 35)
+                            .foregroundColor(.darkGray)
+                        
+                        
+                        
+                        
+                        Text(job.description)
+                            .font(.system(size: 22)).foregroundColor(.black)
+                            .padding(.horizontal, 35)
+                            .padding(.top, 10)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                              .multilineTextAlignment(.leading)
+                        
+                        Spacer()
+                        
+                        Group{
+                            Text("Pay:")
+                                .font(.system(size: 20)).padding(.top, 15)
+                                .fontWeight(.semibold)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, 35)
+                                .padding(.top, 40)
+                                .foregroundColor(.darkGray)
+                            
+                            
+                            
+                            Text("$\(job.payAmount) \(job.payType)")
+                                .font(.system(size: 22)).foregroundColor(.black)
+                                .padding(.horizontal, 35)
+                                .padding(.vertical, 20)
+                                .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
+                        }
+                        
+                        Group{
+                            Text("Location Zip:")
+                                .font(.system(size: 20)).padding(.top, 15)
+                                .fontWeight(.semibold)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, 35)
+                                .padding(.top, 40)
+                                .foregroundColor(.darkGray)
+                            
+                            Text(job.location)
+                                .font(.system(size: 22))
+                                .foregroundColor(.black)
+                                .frame(maxWidth: .infinity, maxHeight: 120, alignment: .leading).padding(.horizontal, 35)
+                                .padding(.bottom, 50)
+                                .scrollContentBackground(.hidden)
+                        }
+                        
+                        Group{
+                            Text("Posted on:")
+                                .font(.system(size: 20)).padding(.top, 15)
+                                .fontWeight(.semibold)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, 35)
+                                .foregroundColor(.darkGray)
+                            
+                            Text(job.createdAt.formatted(date: .complete, time: .omitted))
+                                .font(.system(size: 22))
+                                .foregroundColor(.black)
+                                .frame(maxWidth: .infinity, maxHeight: 120, alignment: .leading).padding(.horizontal, 35)
+                                .padding(.bottom, 50)
+                                .scrollContentBackground(.hidden)
+                        }
+                   
+                        Text("Posted on:")
+                            .font(.system(size: 20)).padding(.top, 15)
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 35)
+                            .foregroundColor(.darkGray)
+                
+                        NavigationLink(
+                            destination: PosterProfileView(poster: poster),
+                            label: {
+                                Text("\(poster.name)'s Profile")
+                                    .padding(.vertical, 20)
+                                    .padding(.horizontal, 80)
+                                    .font(.system(size: 22))
+                                    .foregroundColor(.white)
+                                    .background(Color.blue)
+                                    .cornerRadius(10)
+                                    .padding(.top, 0)
+                            }
+                        )
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .top)
+                    }.padding(.horizontal, 15).padding(.vertical, 20)
                 }
-                .frame(maxWidth: .infinity)
-                .background(Color(red: 0.7, green: 0.8, blue: 1.0))
-                .foregroundColor(Color.black)
-                .cornerRadius(40)
-                .padding(.bottom, 30)
-                .padding(10)
-                Spacer()
             }
         }
-        
+        }
     }
-}
     
-//struct DetailsView_Previews: PreviewProvider {
-//    
-//    let testJob = Job(id: 420,
-//                      createdAt: Date(),
-//                      updatedAt: Date(),
-//                      title: "Lawn Job",
-//                      description: "Cut my grass",
-//                      payAmount: 20,
-//                      location: "05151",
-//                      deletedAt: Date(),
-//                      //                  postedByID: 420,
-//                      payType: "Hourly")
-//    static var previews: some View {
-//        DetailsView(job: testJob)
-//    }
-//}
+    var testJob = Job(id: 420,
+                      createdAt: Date(),
+                      updatedAt: Date(),
+                      deletedAt: Date(),
+                      title: "Lawn Job",
+                      description: "I need someone to come cut my grass. I have a really big yard and a lawn mower.",
+                      payType: "Hourly",
+                      payAmount: 20,
+                      location: "05151",
+                      postedByID: 123
+                      )
+    
+    struct DetailsView_Previews: PreviewProvider {
+        
+        static var previews: some View {
+            DetailsView(job: testJob)
+        }
+    }
+

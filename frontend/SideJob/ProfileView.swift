@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-extension Color{
-    static let buttonColor = Color(red: 60/255, green: 100/255, blue: 150/255)
-    static let darkGray = Color(red: 100/255, green: 100/255, blue: 100/255)
-    static let lightGray = Color(red: 220/255, green: 230/255, blue: 270/255)
-}
 
 struct UserUpdate: Codable {
     var name: String
