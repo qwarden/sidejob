@@ -25,3 +25,20 @@ struct User: Codable {
         self.about = ""
     }
 }
+
+struct UserResponse: Codable {
+    let id: Int
+    let created_at, updated_at: Date?
+    var name: String
+    var email: String
+    var about: String
+    
+    init() {
+        self.id = 0
+        self.created_at = nil
+        self.updated_at = nil
+        self.name = ""
+        self.email = ""
+        self.about = ""
+    }
+}

@@ -148,7 +148,6 @@ struct JobListView: View {
                 do {
                     let decodedJobs = try decoder.decode([Job].self, from: data)
                     self.jobs = decodedJobs.sorted { $0.updatedAt > $1.updatedAt }
-                    print(self.jobs)
                 } catch {
                     self.loadError = true
                     

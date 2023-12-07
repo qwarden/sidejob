@@ -16,9 +16,11 @@ struct FeedView: View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
                 VStack {
-                    HStack {
-                        Text("Sidejobs")
+                  HStack {
+                        Text("Jobs")
+
                             .font(.title)
+                            .bold()
                             .padding(.leading)
                         Spacer()
                         Button(action: {
