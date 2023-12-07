@@ -15,12 +15,14 @@ struct JobListView: View {
     @EnvironmentObject private var locationObject: LocationManager
     var endpoint: String
     @Binding var filteringByLocation: Bool
+    var refreshID: UUID
+    
     @Binding var radius: Int
     @Binding var userZipCode: String
     @Binding var isFiltering: Bool
     @State private var filteredJobs: [Job] = []
-
-
+    
+    
     var body: some View {
         VStack {
             NavigationView {
@@ -45,13 +47,16 @@ struct JobListView: View {
                                     }
                                 }
                             }
-                        }  
+                        }
                     }
                     
                 }
             }
         }
         .onAppear {
+            fetchJobs()
+        }
+        .onChange(of: refreshID) { _ in
             fetchJobs()
         }
         .onChange(of: isFiltering) { _ in
@@ -61,7 +66,7 @@ struct JobListView: View {
             }
         }
     }
-
+    
     // this is just to initiate the computed filter jobs variable which then updates the jobs
     func computeFilterJobs() {
         let asyncInitiator = computedFilterJobs
@@ -92,7 +97,6 @@ struct JobListView: View {
                 
                 for job in jobs {
                     dispatchGroup.enter()
-                    
                     locationObject.getLocationFromZipCode(from: job.location) { location in
                         defer {
                             dispatchGroup.leave()
@@ -130,7 +134,7 @@ struct JobListView: View {
     func miles2meters(miles: Double) -> Double{
         return (miles * 1609.34)
     }
-
+    
     func fetchJobs() {
         loadError = false
         client.fetch(verb: "GET", endpoint: endpoint, auth: true) { result in
@@ -142,7 +146,7 @@ struct JobListView: View {
                 dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                 dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
                 decoder.dateDecodingStrategy = .formatted(dateFormatter)
-
+                
                 do {
                     let decodedJobs = try decoder.decode([Job].self, from: data)
                     self.jobs = decodedJobs
@@ -158,10 +162,3 @@ struct JobListView: View {
         }
     }
 }
-
-//struct JobListView_Previews: PreviewProvider {
-//    @State static var isFilteringByLocation = true
-//    static var previews: some View {
-//        JobListView(endpoint: "/jobs", filteringByLocation: $isFilteringByLocation).environmentObject(Client())
-//    }
-//}

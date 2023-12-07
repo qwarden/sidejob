@@ -13,6 +13,7 @@ struct FeedView: View {
     @State var filteringByLocation = false
     @EnvironmentObject private var client: Client
     @EnvironmentObject private var locationObject: LocationManager
+    @State private var refreshID = UUID()
     @State var userZipCode = ""
     @State var radius = 100
     @State var isFiltering = false
@@ -20,7 +21,11 @@ struct FeedView: View {
     var body: some View {
         NavigationView {
             VStack {
-                JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation, radius: $radius, userZipCode: $userZipCode, isFiltering: $isFiltering)
+                JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation, refreshID: refreshID,
+                            radius: $radius, userZipCode: $userZipCode, isFiltering: $isFiltering)
+                    .refreshable {
+                        self.refreshID = UUID()
+                    }
                 
                 HStack {
                     FloatingActionButtonFilter(action: {
