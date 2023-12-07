@@ -67,14 +67,14 @@ struct LoginView: View {
                     print("JSON String: \(jsonString)")
                 }
                 
-                client.fetch(verb: "POST", endpoint: "auth/login", auth: false, data: jsonData) { result in
+                client.fetch(verb: "POST", endpoint: "/auth/login", auth: false, data: jsonData) { result in
                     DispatchQueue.main.async {
                         switch result {
                         case .success(let data):
                             do {
                                 let decoder = JSONDecoder()
                                 let tokens = try decoder.decode(Tokens.self, from:data)
-                                client.saveTokens(tokens)
+                                client.updateTokens(newTokens: tokens)
                                 client.loggedIn = true
                                 self.loggedIn = true
                                 isLoading = false

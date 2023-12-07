@@ -10,26 +10,20 @@ import SwiftUI
 
 
 struct ListingsView: View {
-       let user: User
+   let user: User
 
-       init(user: User) {
-           self.user = user
-       }
-    
+   init(user: User) {
+       self.user = user
+   }
 
     @State private var showingPostView = false
-    
+
     var body: some View {
-      NavigationView {
-            Text(user.name)
-            ZStack(alignment: .bottomTrailing) {
-                // List of jobs, each represented by JobView
-            }
-      
-            // Present the PostView as a sheet
-            .sheet(isPresented: $showingPostView) {
-                PostView()
+        NavigationView {
+            VStack {
+                JobListView(endpoint: "/my/jobs", filteringByLocation: .constant(false))
             }
         }
+        .navigationBarTitle("My Listings", displayMode: .inline)
     }
 }
