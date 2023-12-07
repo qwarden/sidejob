@@ -16,7 +16,7 @@ struct FeedView: View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
                 VStack {
-                  HStack {
+                    HStack {
                         Text("Sidejobs")
                             .font(.title)
                             .padding(.leading)
@@ -30,9 +30,9 @@ struct FeedView: View {
                         }
                         .padding(.trailing)
                     }
-                  
-                  JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation, refreshID: refreshID,
-                            radius: $radius, userZipCode: $userZipCode, isFiltering: $isFiltering)
+                    
+                    JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation, refreshID: refreshID,
+                                radius: $radius, userZipCode: $userZipCode, isFiltering: $isFiltering)
                     .refreshable {
                         self.refreshID = UUID()
                     }
@@ -42,9 +42,9 @@ struct FeedView: View {
                     PostView()
                 }
                 .sheet(isPresented: $showingFilterView) {
-                FilterView(filteringByLocation: $filteringByLocation, userZipCode: $userZipCode, radius: $radius, isFiltering: $isFiltering)
+                    FilterView(filteringByLocation: $filteringByLocation, userZipCode: $userZipCode, radius: $radius, isFiltering: $isFiltering)
                 }
-
+                
                 Button(action: {
                     self.showingPostView = true
                 }) {
