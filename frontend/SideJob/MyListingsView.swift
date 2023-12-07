@@ -28,7 +28,7 @@ struct MyListingsView: View {
             VStack {
                 List {
                     ForEach(jobs) { job in
-                        JobView(job: job, profileDisabled: true, fromMyListings: true)
+                        JobView(job: job, profileDisabled: true, fromMyListings: isUser)
                     }
                 }
             }
