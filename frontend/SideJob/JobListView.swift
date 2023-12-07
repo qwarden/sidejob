@@ -18,6 +18,7 @@ struct JobListView: View {
     @Binding var radius: Int
     @Binding var userZipCode: String
     @Binding var isFiltering: Bool
+    @State private var filteredJobs: [Job] = []
 
 
     var body: some View {
@@ -27,7 +28,7 @@ struct JobListView: View {
                 VStack {
                     ZStack(alignment: .bottomTrailing) {
                         List {
-                            if jobs.isEmpty && !loadError {
+                            if jobs.isEmpty && filteredJobs.isEmpty && !loadError {
                                 Text("Loading jobs...")
                             } else if loadError {
                                 Button("Tap to retry") {
@@ -35,13 +36,8 @@ struct JobListView: View {
                                 }
                             } else {
                                 if filteringByLocation {
-                                    if isFiltering {
-                                        ProgressView("Filtering...")
-                                    }
-                                    else {
-                                        ForEach(computedFilterJobs) { job in
-                                            JobView(job: job)
-                                        }
+                                    ForEach(filteredJobs) { job in
+                                        JobView(job: job)
                                     }
                                 }
                                 else {
@@ -59,13 +55,22 @@ struct JobListView: View {
         .onAppear {
             fetchJobs()
         }
+        .onChange(of: isFiltering) { _ in
+            // When isFiltering changes, update the filtered jobs
+            if isFiltering {
+                computeFilterJobs()
+            }
+        }
     }
 
+    // this is just to initiate the computed filter jobs variable which then updates the jobs
+    func computeFilterJobs() {
+        let asyncInitiator = computedFilterJobs
+    }
     // variable that holds the filtered jobs
     var computedFilterJobs: [Job] {
         // location filtering
         if filteringByLocation {
-            self.isFiltering = true
             guard !userZipCode.isEmpty else {
                 return jobs
             }
@@ -80,6 +85,7 @@ struct JobListView: View {
                         // The asynchronous operations are completed
                         // Now you can use the filteredJobs array
                         print("Filtered Jobs: \(filteredJobs)")
+                        self.filteredJobs = filteredJobs
                         self.isFiltering = false
                     }
                     return
@@ -111,6 +117,7 @@ struct JobListView: View {
                     // Now you can use the filteredJobs array
                     print("Filtered Jobs: \(filteredJobs)")
                     self.isFiltering = false
+                    self.filteredJobs = filteredJobs
                 }
             }
         }

@@ -47,7 +47,7 @@ class Client: ObservableObject {
     private let session: URLSession
     private var tokens: Tokens?
     private let tokenPath: String
-    private let prod: Bool = false
+    private let prod: Bool = true
     private let tokenRefreshSemaphore = DispatchSemaphore(value: 1)
     private var retryCount = 0
     
