@@ -14,6 +14,9 @@ struct FeedView: View {
     @EnvironmentObject private var client: Client
     @EnvironmentObject private var locationObject: LocationManager
     @State private var refreshID = UUID()
+    @State var userZipCode = ""
+    @State var radius = 100
+    @State var isFiltering = false
     
     var body: some View {
         NavigationView {
@@ -38,7 +41,7 @@ struct FeedView: View {
                 PostView()
             }
             .sheet(isPresented: $showingFilterView) {
-                FilterView(filteringByLocation: $filteringByLocation)
+                FilterView(filteringByLocation: $filteringByLocation, userZipCode: $userZipCode, radius: $radius, isFiltering: $isFiltering)
             }
         }
     }

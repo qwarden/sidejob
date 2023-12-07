@@ -306,7 +306,7 @@ struct ProfileView: View {
     }
     
     private func deleteProfile() {
-        client.fetch(verb: "DELETE", endpoint: "/my/account", auth: true) { (result: Result<Data, NetworkError>) in
+        client.fetch(verb: "DELETE", endpoint: "/my/profile", auth: true) { (result: Result<Data, NetworkError>) in
             DispatchQueue.main.async {
                 switch result {
                 case .success(_):

@@ -106,12 +106,4 @@ struct PosterProfileView: View {
             }
         }
     }
-    
-//    struct PosterProfileView_Preview: PreviewProvider {
-//        static var previews: some View {
-//            PosterProfileView()
-//        }
-//    }
-    
-    
 }
