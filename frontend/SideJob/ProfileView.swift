@@ -62,9 +62,9 @@ struct ProfileView: View {
     
     //@Binding var imageName: String
     var body: some View {
+        NavigationView(){
             VStack(spacing: 20){
                 HStack(){
-                    
                     Text("").frame(maxWidth: .infinity, alignment: .leading)
                     if (isEditing == false){
                         Text("Profile")
@@ -86,7 +86,7 @@ struct ProfileView: View {
                         }.frame(maxWidth: .infinity, alignment: .trailing)
                             .padding(.trailing, 30)
                             .font(.system(size: 20))
-                            
+                        
                     }
                     else{
                         Button(action: {
@@ -99,9 +99,9 @@ struct ProfileView: View {
                         }.frame(maxWidth: .infinity, alignment: .trailing)
                             .padding(.trailing, 30)
                             .font(.system(size: 20))
-                        .alert(isPresented: $showEditAlert) {
-                            Alert(title: Text("Cannot update profile"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                        }
+                            .alert(isPresented: $showEditAlert) {
+                                Alert(title: Text("Cannot update profile"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                            }
                         
                     }
                     
@@ -206,16 +206,9 @@ struct ProfileView: View {
                 
                 VStack(spacing: 10){
                     
-                    if isEditing{
-                        Text("My Listings").padding(.vertical, 20).padding(.horizontal, 80).font(.system(size: 20))
-                            .foregroundColor(.white)
-                            .background(Color.gray)
-                            .cornerRadius(10)
-                            .padding(.top, 0)
-                    }
-                    else {
+                    if !isEditing{
                         NavigationLink(
-                            destination: MyListingsView(),
+                            destination: MyListingsView(isUser: true, userID: -1),
                             label: {
                                 Text("My Listings").padding(.vertical, 20).padding(.horizontal, 80).font(.system(size: 20))
                             }
@@ -254,51 +247,51 @@ struct ProfileView: View {
                             }.frame(maxWidth: .infinity, alignment: .trailing)
                             .padding(.trailing, 30)
                     }
-                    else{
-                        Text("Sign Out")
-                            .padding(.vertical, 20)
-                            .padding(.horizontal, 90)
-                            .font(.system(size: 20))
-                            .foregroundColor(.white)
-                            .background(Color.gray)
-                            .cornerRadius(10)
-                            .padding(.top, 0)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                    }
+                    
+                    
                     
                     if isEditing {
-                        Button("Delete Profile") {
-                            self.showDeleteConfirmation = true
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.red)
+                                .frame(maxWidth: 200, maxHeight: 40)
+                            
+                            Button("Delete Profile") {
+                                self.showDeleteConfirmation = true
+                                
+                            }.padding(.vertical, 20)
+                                .padding(.horizontal, 70)
+                                .font(.system(size: 20))
+                                .foregroundColor(.white)
+                                .background(Color.red)
+                                .cornerRadius(10)
+                                .padding(.top, 0)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            .alert(isPresented: $showDeleteConfirmation) {
+                                Alert(
+                                    title: Text("Delete Profile?"),
+                                    message: Text("This action cannot be undone."),
+                                    primaryButton: .destructive(Text("Delete")) {
+                                        deleteProfile()
+                                    },
+                                    secondaryButton: .cancel()
+                                )
+                            }
                         }
-                        .padding(.vertical, 20)
-                        .padding(.horizontal, 80)
-                        .font(.system(size: 20))
-                        .foregroundColor(.white)
-                        .background(Color.red)
-                        .cornerRadius(10)
-                        .frame(maxWidth: .infinity)
-                        .alert(isPresented: $showDeleteConfirmation) {
-                            Alert(
-                                title: Text("Delete Profile?"),
-                                message: Text("This action cannot be undone."),
-                                primaryButton: .destructive(Text("Delete")) {
-                                    deleteProfile()
-                                },
-                                secondaryButton: .cancel()
-                            )
-                        }
+                      
                     }
                     
                     NavigationLink(destination: WelcomeView().navigationBarBackButtonHidden(), isActive: $navigateToNextView) {
                         EmptyView()
                     }.hidden()
                     
-                    }
-                    
-                }.padding(.bottom, 30)
-            .onAppear {
-                loadProfile()
-            }
+                }
+                
+            }.padding(.bottom, 30)
+                .onAppear {
+                    loadProfile()
+                }
+        }
     }
     
     private func deleteProfile() {

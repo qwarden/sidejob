@@ -35,7 +35,7 @@ struct DetailsView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 35)
                         .foregroundColor(.darkGray)
-                    
+     
                     Text(job.description)
                         .font(.system(size: 22)).foregroundColor(.black)
                         .padding(.horizontal, 35)

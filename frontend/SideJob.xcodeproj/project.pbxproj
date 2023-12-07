@@ -15,7 +15,6 @@
 		A8451E5F2ADF180500FA3CE0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E5E2ADF180500FA3CE0 /* LoginView.swift */; };
 		A8451E612ADF182500FA3CE0 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E602ADF182400FA3CE0 /* DetailsView.swift */; };
 		A8451E692ADF18B200FA3CE0 /* MyListingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E682ADF18B200FA3CE0 /* MyListingsView.swift */; };
-		A8451E6B2ADF18C600FA3CE0 /* EditInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8451E6A2ADF18C600FA3CE0 /* EditInfoView.swift */; };
 		A849B20E2B18E4F000C1F133 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A849B20D2B18E4F000C1F133 /* LocationManager.swift */; };
 		A85688D92B1640BA0068CE7F /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85688D82B1640BA0068CE7F /* AppView.swift */; };
 		A87817632AE04B840021625C /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87817622AE04B830021625C /* WelcomeView.swift */; };
@@ -28,6 +27,7 @@
 		F6B7894D2ACDE8ED00D161BE /* SideJobApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */; };
 		F6B7894F2ACDE8ED00D161BE /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B7894E2ACDE8ED00D161BE /* FeedView.swift */; };
 		F6B789542ACDE8EE00D161BE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6B789532ACDE8EE00D161BE /* Preview Assets.xcassets */; };
+		F6D3964C2B21702C0047A656 /* EditPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D3964B2B21702C0047A656 /* EditPostView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +39,6 @@
 		A8451E5E2ADF180500FA3CE0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A8451E602ADF182400FA3CE0 /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		A8451E682ADF18B200FA3CE0 /* MyListingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListingsView.swift; sourceTree = "<group>"; };
-		A8451E6A2ADF18C600FA3CE0 /* EditInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfoView.swift; sourceTree = "<group>"; };
 		A849B20D2B18E4F000C1F133 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		A85688D82B1640BA0068CE7F /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppView.swift; path = ../AppView.swift; sourceTree = "<group>"; };
 		A87817622AE04B830021625C /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
@@ -53,6 +52,7 @@
 		F6B7894C2ACDE8ED00D161BE /* SideJobApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideJobApp.swift; sourceTree = "<group>"; };
 		F6B7894E2ACDE8ED00D161BE /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FeedView.swift; path = SideJob/FeedView.swift; sourceTree = SOURCE_ROOT; };
 		F6B789532ACDE8EE00D161BE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F6D3964B2B21702C0047A656 /* EditPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPostView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,9 +94,9 @@
 				4538255A2B1D716D00A8A45E /* PosterProfileView.swift */,
 				AF91E8012AFD380200241824 /* JobView.swift */,
 				A8451E682ADF18B200FA3CE0 /* MyListingsView.swift */,
-				A8451E6A2ADF18C600FA3CE0 /* EditInfoView.swift */,
 				F6B789522ACDE8EE00D161BE /* Preview Content */,
 				F63A02F32B20094200FB9843 /* Assets.xcassets */,
+				F6D3964B2B21702C0047A656 /* EditPostView.swift */,
 				976174872B0D93F300A4645F /* PostView.swift */,
 				A87817622AE04B830021625C /* WelcomeView.swift */,
 				A8451E5E2ADF180500FA3CE0 /* LoginView.swift */,
@@ -190,10 +190,10 @@
 			files = (
 				F6B7894F2ACDE8ED00D161BE /* FeedView.swift in Sources */,
 				A8451E692ADF18B200FA3CE0 /* MyListingsView.swift in Sources */,
-				A8451E6B2ADF18C600FA3CE0 /* EditInfoView.swift in Sources */,
 				9797CB852B05C95C0099DD19 /* Job.swift in Sources */,
 				A8451E612ADF182500FA3CE0 /* DetailsView.swift in Sources */,
 				A87817652AE04B930021625C /* CreateAccountView.swift in Sources */,
+				F6D3964C2B21702C0047A656 /* EditPostView.swift in Sources */,
 				45863E212AFD395A008C262C /* JobListView.swift in Sources */,
 				4538255B2B1D716D00A8A45E /* PosterProfileView.swift in Sources */,
 				A849B20E2B18E4F000C1F133 /* LocationManager.swift in Sources */,

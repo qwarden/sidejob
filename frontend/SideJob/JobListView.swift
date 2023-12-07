@@ -67,7 +67,7 @@ struct JobListView: View {
     
     // this is just to initiate the computed filter jobs variable which then updates the jobs
     func computeFilterJobs() {
-        let asyncInitiator = computedFilterJobs
+        let _ = computedFilterJobs
     }
     // variable that holds the filtered jobs
     var computedFilterJobs: [Job] {
@@ -147,7 +147,7 @@ struct JobListView: View {
                 
                 do {
                     let decodedJobs = try decoder.decode([Job].self, from: data)
-                    self.jobs = decodedJobs
+                    self.jobs = decodedJobs.sorted { $0.updatedAt > $1.updatedAt }
                 } catch {
                     self.loadError = true
                     
