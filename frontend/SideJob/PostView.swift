@@ -64,6 +64,11 @@ struct PostView: View {
                     .pickerStyle(SegmentedPickerStyle())
                     
                     HStack {
+                        Picker("Pay Type", selection: $payType) {
+                            Text("Hourly").tag("Hourly")
+                            Text("Total").tag("Total")
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
                         Text(currencyFormatter.currencySymbol)
                         TextField("Amount", text: $payAmount)
                             .keyboardType(.decimalPad)
@@ -83,6 +88,7 @@ struct PostView: View {
                 .alert(isPresented: $showAlert) {
                     Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
+                .navigationBarTitle("Post Job", displayMode: .inline)
                 .navigationBarItems(leading: Button("Cancel") {
                     self.presentationMode.wrappedValue.dismiss()
                 })
