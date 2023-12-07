@@ -13,11 +13,14 @@ struct FeedView: View {
     @State var filteringByLocation = false
     @EnvironmentObject private var client: Client
     @EnvironmentObject private var locationObject: LocationManager
+    @State var userZipCode = ""
+    @State var radius = 100
+    @State var isFiltering = false
     
     var body: some View {
         NavigationView {
             VStack {
-                JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation)
+                JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation, radius: $radius, userZipCode: $userZipCode, isFiltering: $isFiltering)
                 
                 HStack {
                     FloatingActionButtonFilter(action: {
@@ -34,7 +37,7 @@ struct FeedView: View {
                 PostView()
             }
             .sheet(isPresented: $showingFilterView) {
-                FilterView(filteringByLocation: $filteringByLocation)
+                FilterView(filteringByLocation: $filteringByLocation, userZipCode: $userZipCode, radius: $radius, isFiltering: $isFiltering)
             }
         }
     }
