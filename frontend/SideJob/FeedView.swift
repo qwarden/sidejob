@@ -17,7 +17,6 @@ struct FeedView: View {
     @State var radius = 100
     @State var isFiltering = false
     
-    
     var body: some View {
         NavigationView {
             VStack {
@@ -42,6 +41,7 @@ struct FeedView: View {
             }
         }
     }
+    
     struct FloatingActionButtonPost: View {
         var action: () -> Void
         

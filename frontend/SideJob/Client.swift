@@ -50,6 +50,7 @@ class Client: ObservableObject {
     private let prod: Bool = true
     private let tokenRefreshSemaphore = DispatchSemaphore(value: 1)
     private var retryCount = 0
+    @Published var isInitializing = true
     
     init() {
         
@@ -172,8 +173,10 @@ class Client: ObservableObject {
                     switch result {
                     case .success(_):
                         self.loggedIn = true
+                        self.isInitializing = false
                     case .failure(_):
                         self.loggedIn = false
+                        self.isInitializing = false
                     }
                 }
             }
@@ -181,6 +184,7 @@ class Client: ObservableObject {
     }
     
     func logout() {
+        self.tokens = nil
         let emptyTokens = Tokens(accessToken: "", refreshToken: "")
         saveTokens(emptyTokens)
         loggedIn = false
@@ -243,6 +247,7 @@ class Client: ObservableObject {
     }
     
     func saveTokens(_ tokens: Tokens) {
+        self.tokens = tokens
         let url: URL = {
             let dirs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let dir = dirs.first!
@@ -252,9 +257,15 @@ class Client: ObservableObject {
         do {
             let data = try JSONEncoder().encode(tokens)
             try data.write(to: url, options: [.atomic])
+            print("Tokens saved")
         } catch {
             print("Error saving tokens: \(error)")
         }
+    }
+    
+    func updateTokens(newTokens: Tokens) {
+        self.tokens = newTokens
+        saveTokens(newTokens)
     }
     
     func loadTokens() -> Bool {
@@ -268,9 +279,11 @@ class Client: ObservableObject {
             let data = try Data(contentsOf: url)
             let decoder = JSONDecoder()
             self.tokens = try decoder.decode(Tokens.self, from:data)
+            print("Tokens loaded")
             return true
         } catch {
             self.tokens = nil
+            print("Error loading tokens")
             return false
         }
     }
