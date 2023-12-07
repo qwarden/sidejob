@@ -17,6 +17,7 @@ struct Job: Decodable, Identifiable {
     let payType: String
     let payAmount: Double
     let location: String
+    let postedByID: Int
 
 //    let photo: URL?
     
@@ -37,13 +38,14 @@ struct Job: Decodable, Identifiable {
         case payType = "pay_type"
         case payAmount = "pay_amount"
         case location
+        case postedByID = "posted_by_id"
     }
 }
 
 struct NewJob: Encodable {
     let title: String
     let description: String
-    let payAmount: Int64
+    let payAmount: Double
     let location: String
     let payType: String
 }
