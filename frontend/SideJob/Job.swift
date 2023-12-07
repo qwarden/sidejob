@@ -20,7 +20,7 @@ struct Job: Decodable, Identifiable {
     let postedByID: Int
     
     var formattedPay: String {
-        return String(format: "$%.2f", Double(payAmount) / 100.0)
+        return String(format: "$%.2f", payAmount)
     }
     
     
