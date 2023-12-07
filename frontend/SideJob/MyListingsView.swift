@@ -24,24 +24,28 @@ struct MyListingsView: View {
     
 
     var body: some View {
+        ZStack(alignment: .bottomTrailing) {
             VStack {
-                ForEach(jobs) { job in
-                    JobView(job: job)
+                List {
+                    ForEach(jobs) { job in
+                        JobView(job: job)
+                    }
                 }
             }
             .navigationBarTitle("My Listings", displayMode: .inline)
             .padding()
             .padding()
-        
-        .onAppear {
-            if isUser {
-                self.endpoint = "my/jobs"
+            
+            .onAppear {
+                if isUser {
+                    self.endpoint = "my/jobs"
+                }
+                else {
+                    let endpoint = "users/\(userID)/jobs"
+                    self.endpoint = endpoint
+                }
+                fetchJobs()
             }
-            else {
-                let endpoint = "users/\(userID)/jobs"
-                self.endpoint = endpoint
-            }
-            fetchJobs()
         }
     }
     

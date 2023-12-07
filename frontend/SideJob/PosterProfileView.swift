@@ -14,14 +14,9 @@ struct PosterProfileView: View {
     
     @State private var navigateToNextView = false
     
-    //@Binding var imageName: String
     var body: some View {
             
             VStack(spacing: 20){
-                
-            /*    Text("\(poster.name)'s Profile")
-                    .font(.system(size: 25))
-                    .frame(maxWidth: .infinity, alignment: .center)*/
                 
                 Text("Username")
                     .font(.body).bold().padding(.top, 15)
@@ -87,7 +82,7 @@ struct PosterProfileView: View {
                 }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .top)
                 
                 NavigationLink(
-                    destination: MyListingsView(isUser: false, userID: postedById),
+                    destination: MyListingsView(isUser: false, userID: poster.id),
                     label: {
                         Text("\(poster.name)'s listings")
                         
