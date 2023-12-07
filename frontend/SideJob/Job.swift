@@ -18,8 +18,6 @@ struct Job: Decodable, Identifiable {
     let payAmount: Double
     let location: String
     let postedByID: Int
-
-//    let photo: URL?
     
     var formattedPay: String {
         return String(format: "$%.2f", Double(payAmount) / 100.0)
@@ -42,7 +40,7 @@ struct Job: Decodable, Identifiable {
     }
 }
 
-struct NewJob: Encodable {
+struct SendJob: Encodable {
     let title: String
     let description: String
     let payAmount: Double
