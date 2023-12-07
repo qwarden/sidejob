@@ -17,7 +17,7 @@ struct JobListView: View {
     @Binding var filteringByLocation: Bool
     @Binding var radius: Int
     @Binding var userZipCode: String
-    @State private var stateFilteredJobs: [Job] = []
+    @Binding var isFiltering: Bool
 
 
     var body: some View {
@@ -34,8 +34,20 @@ struct JobListView: View {
                                     fetchJobs()
                                 }
                             } else {
-                                ForEach(stateFilteredJobs) { job in
-                                    JobView(job: job)
+                                if filteringByLocation {
+                                    if isFiltering {
+                                        ProgressView("Filtering...")
+                                    }
+                                    else {
+                                        ForEach(computedFilterJobs) { job in
+                                            JobView(job: job)
+                                        }
+                                    }
+                                }
+                                else {
+                                    ForEach(jobs) { job in
+                                        JobView(job: job)
+                                    }
                                 }
                             }
                         }  
@@ -53,6 +65,7 @@ struct JobListView: View {
     var computedFilterJobs: [Job] {
         // location filtering
         if filteringByLocation {
+            self.isFiltering = true
             guard !userZipCode.isEmpty else {
                 return jobs
             }
@@ -67,7 +80,7 @@ struct JobListView: View {
                         // The asynchronous operations are completed
                         // Now you can use the filteredJobs array
                         print("Filtered Jobs: \(filteredJobs)")
-                        self.stateFilteredJobs = filteredJobs
+                        self.isFiltering = false
                     }
                     return
                 }
@@ -97,7 +110,7 @@ struct JobListView: View {
                     // The asynchronous operations are completed
                     // Now you can use the filteredJobs array
                     print("Filtered Jobs: \(filteredJobs)")
-                    self.stateFilteredJobs = filteredJobs
+                    self.isFiltering = false
                 }
             }
         }
@@ -119,7 +132,6 @@ struct JobListView: View {
             case .success(let data):
                 print(data)
                 let decoder = JSONDecoder()
-                //decoder.dateDecodingStrategy = .iso8601
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
                 dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -129,6 +141,7 @@ struct JobListView: View {
                 do {
                     let decodedJobs = try decoder.decode([Job].self, from: data)
                     self.jobs = decodedJobs
+                    print(self.jobs)
                 } catch {
                     self.loadError = true
                     print("Error decoding jobs: \(error.localizedDescription)")

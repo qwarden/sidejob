@@ -13,6 +13,7 @@ struct FilterView: View {
     @Environment(\.presentationMode) private var presentationMode
     @Binding var userZipCode: String
     @Binding var radius: Int
+    @Binding var isFiltering: Bool
     
     @State private var location: String = ""
     @State private var useCurrentLocation = false
@@ -63,6 +64,7 @@ struct FilterView: View {
                 Button("Filter Jobs") {
                     if (FilterJobValidation()) {
                         filteringByLocation = true
+                        isFiltering = true
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
