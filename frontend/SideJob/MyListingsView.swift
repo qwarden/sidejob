@@ -8,7 +8,6 @@
 import SwiftUI
 
 
-
 struct ListingsView: View {
    let user: User
 

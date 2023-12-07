@@ -1,11 +1,13 @@
-import SwiftUI
-
 struct FeedView: View {
     @State private var showingPostView = false
     @State private var showingFilterView = false
     @State var filteringByLocation = false
     @EnvironmentObject private var client: Client
-
+    @EnvironmentObject private var locationObject: LocationManager
+    @State var userZipCode = ""
+    @State var radius = 100
+    @State var isFiltering = false
+    
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
@@ -25,7 +27,7 @@ struct FeedView: View {
                         .padding(.trailing)
                     }
 
-                    JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation)
+                    JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation, radius: $radius, userZipCode: $userZipCode, isFiltering: $isFiltering)
 
                     Spacer()
                 }
@@ -33,7 +35,7 @@ struct FeedView: View {
                     PostView()
                 }
                 .sheet(isPresented: $showingFilterView) {
-                    FilterView(filteringByLocation: $filteringByLocation)
+                    FilterView(filteringByLocation: $filteringByLocation, userZipCode: $userZipCode, radius: $radius, isFiltering: $isFiltering)
                 }
 
                 Button(action: {
@@ -50,6 +52,7 @@ struct FeedView: View {
                         .padding(10)
                 }
             }
+            .navigationBarTitle("Jobs", displayMode: .inline)
         }
     }
 }
