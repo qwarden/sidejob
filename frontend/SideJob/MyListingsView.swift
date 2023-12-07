@@ -22,7 +22,7 @@ struct MyListingsView: View {
     var body: some View {
         NavigationView {
             VStack {
-                JobListView(endpoint: "/my/jobs", filteringByLocation: .constant(false), refreshID: refreshID)
+                
             }
         }
         .navigationBarTitle("My Listings", displayMode: .inline)

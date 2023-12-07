@@ -21,7 +21,8 @@ struct FeedView: View {
     var body: some View {
         NavigationView {
             VStack {
-                JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation, refreshID: refreshID)
+                JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation, refreshID: refreshID,
+                            radius: $radius, userZipCode: $userZipCode, isFiltering: $isFiltering)
                     .refreshable {
                         self.refreshID = UUID()
                     }
