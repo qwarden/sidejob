@@ -1,28 +1,41 @@
 //
-//  PostView.swift
+//  EditPostView.swift
 //  SideJob
 //
-//  Created by Cael Christian on 11/21/23.
+//  Created by Quimby Warden on 12/6/23.
 //
 
 import SwiftUI
 
-struct PostView: View {
+struct EditPostView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject private var client: Client
     @EnvironmentObject private var locationObject: LocationManager
     
-    @State private var title: String = ""
-    @State private var description: String = ""
-    @State private var payAmount: String = ""
-    @State private var location: String = ""
+    var job: Job
+
+    @State private var title: String
+    @State private var description: String
+    @State private var payAmount: String
+    @State private var location: String
     @State private var useCurrentLocation = false
     @State private var currentZipCode: String?
-    @State private var payType: String = ""
+    @State private var payType: String
     
     @State private var showAlert = false
-    @State private var alertTitle = ""
     @State private var alertMessage = ""
+    @State private var alertTitle = ""
+
+    
+
+    init(job: Job) {
+        self.job = job
+        _title = State(initialValue: job.title)
+        _description = State(initialValue: job.description)
+        _payAmount = State(initialValue: String(job.payAmount))
+        _location = State(initialValue: job.location)
+        _payType = State(initialValue: job.payType)
+    }
 
     var body: some View {
         NavigationView {
@@ -57,67 +70,70 @@ struct PostView: View {
                         .keyboardType(.decimalPad)
                 }
                 
-                Button("Post Job") {
-                    postJob()
+                Button("Update Job") {
+                    updateJob()
                 }
-                
-                .navigationBarTitle("Post Job")
-                .alert(isPresented: $showAlert) {
-                    Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                }
+            }
+            .navigationBarTitle("Update Job")
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
         }
     }
-        
-    private func postJob() {
+
+    private func updateJob() {
         guard !title.isEmpty, !description.isEmpty, !location.isEmpty else {
-            alertMessage = "please fill in all fields."
+            alertMessage = "Please fill in all fields."
+            showAlert = true
+            return
+        }
+
+        guard let payAmountDouble = Double(payAmount) else {
+            alertMessage = "Invalid pay amount."
             showAlert = true
             return
         }
         
-        guard let payAmountDub = Double(payAmount) else {
-            alertMessage = "invalid pay amount."
-            showAlert = true
-            return
-        }
-        
-        let newJob = SendJob(title: title, description: description, payAmount: payAmountDub, location: location, payType: payType)
+        // Update the job object
+        let updatedJob = SendJob(title: title, description: description,
+                             payAmount: payAmountDouble, location: location, payType: payType)
         
         let encoder = JSONEncoder()
 
         do {
-            let data = try encoder.encode(newJob)
-            client.fetch(verb: "POST", endpoint: "/jobs/", auth: true, data: data) { (result: Result<Data, NetworkError>) in
+            let data = try encoder.encode(updatedJob)
+            client.fetch(verb: "PATCH", endpoint: "/jobs/\(job.id)", auth: true, data: data) { (result: Result<Data, NetworkError>) in
                 switch result {
                 case .success(_):
                     self.alertTitle = "Success"
-                    self.alertMessage = "Job Posted Successfully"
+                    self.alertMessage = "Job Updated Successfully"
                     self.showAlert = true
                     self.presentationMode.wrappedValue.dismiss()
                 case .failure(_):
                     self.alertTitle = "Error"
-                    self.alertMessage = "Job Posting Failed"
+                    self.alertMessage = "Job Update Failed"
                     self.showAlert = true
                 }
             }
         }
         catch {
             self.alertTitle = "Error"
-            self.alertMessage = "Job Posting Failed"
+            self.alertMessage = "Job Update Failed"
             self.showAlert = true
-            print("Couldn't encode jobs")
+            print("Couldn't encode job")
         }
     }
-        
+
     func getCurrentLocationZipCode() {
         locationObject.getLocationZipCode() { zipCode in
             if let zipCode = zipCode {
                 DispatchQueue.main.async {
-                    self.location = zipCode
+                    self.currentZipCode = zipCode
+                    if useCurrentLocation {
+                        self.location = zipCode
+                    }
                 }
             }
         }
     }
 }
-
