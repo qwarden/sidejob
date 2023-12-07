@@ -24,7 +24,6 @@ struct MyListingsView: View {
     
 
     var body: some View {
-        NavigationView () {
             VStack {
                 ForEach(jobs) { job in
                     JobView(job: job)
@@ -33,7 +32,7 @@ struct MyListingsView: View {
             .navigationBarTitle("My Listings", displayMode: .inline)
             .padding()
             .padding()
-        }
+        
         .onAppear {
             if isUser {
                 self.endpoint = "my/jobs"
