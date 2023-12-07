@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct PosterProfileView: View {
-    let postedById: Int64
-    let poster: User = User()
+    let poster: User
     
     @EnvironmentObject var client: Client
     
@@ -89,7 +88,7 @@ struct PosterProfileView: View {
                 }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .top)
                 
                 NavigationLink(
-                    destination: MyJobsView(),
+                    destination: MyListingsView(user: poster),
                     label: {
                         Text("\(poster.name)'s listings")
                         
@@ -106,12 +105,4 @@ struct PosterProfileView: View {
             }
         }
     }
-    
-//    struct PosterProfileView_Preview: PreviewProvider {
-//        static var previews: some View {
-//            PosterProfileView()
-//        }
-//    }
-    
-    
 }

@@ -75,13 +75,13 @@ struct PostView: View {
             return
         }
         
-        guard let payAmountInt = Int64(payAmount) else {
+        guard let payAmountDub = Double(payAmount) else {
             alertMessage = "invalid pay amount."
             showAlert = true
             return
         }
         
-        let newJob = NewJob(title: title, description: description, payAmount: payAmountInt, location: location, payType: payType)
+        let newJob = NewJob(title: title, description: description, payAmount: payAmountDub, location: location, payType: payType)
         
         let encoder = JSONEncoder()
 

@@ -5,12 +5,18 @@ struct FeedView: View {
     @State private var showingFilterView = false
     @State var filteringByLocation = false
     @EnvironmentObject private var client: Client
+  
+    @EnvironmentObject private var locationObject: LocationManager
+    @State private var refreshID = UUID()
+    @State var userZipCode = ""
+    @State var radius = 100
+    @State var isFiltering = false
 
     var body: some View {
         NavigationView {
             ZStack(alignment: .bottomTrailing) {
                 VStack {
-                    HStack {
+                  HStack {
                         Text("Sidejobs")
                             .font(.title)
                             .padding(.leading)
@@ -24,16 +30,19 @@ struct FeedView: View {
                         }
                         .padding(.trailing)
                     }
-
-                    JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation)
-
+                  
+                  JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation, refreshID: refreshID,
+                            radius: $radius, userZipCode: $userZipCode, isFiltering: $isFiltering)
+                    .refreshable {
+                        self.refreshID = UUID()
+                    }
                     Spacer()
                 }
                 .sheet(isPresented: $showingPostView) {
                     PostView()
                 }
                 .sheet(isPresented: $showingFilterView) {
-                    FilterView(filteringByLocation: $filteringByLocation)
+                FilterView(filteringByLocation: $filteringByLocation, userZipCode: $userZipCode, radius: $radius, isFiltering: $isFiltering)
                 }
 
                 Button(action: {

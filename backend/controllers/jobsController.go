@@ -83,10 +83,16 @@ func (j JobsController) Delete(c *gin.Context) {
 		return
 	}
 
-	if err := db.Where("id = ? AND posted_by_id = ?", jobID, userID).Delete(&models.Job{}).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not delete job"})
-		return
-	}
+  result := db.Where("id = ? AND posted_by_id = ?", jobID, userID).Delete(&models.Job{})
+  if result.Error != nil {
+      c.JSON(http.StatusInternalServerError, gin.H{"error": "could not delete job"})
+      return
+  }
+
+  if result.RowsAffected == 0 {
+      c.JSON(http.StatusForbidden, gin.H{"error": "no job found or permission denied"})
+      return
+  }
 
 	c.JSON(http.StatusOK, gin.H{"status": "job deleted"})
 }
