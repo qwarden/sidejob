@@ -57,6 +57,12 @@ struct PostView: View {
                 }
                 
                 Section(header: Text("Pay")) {
+                    Picker("Pay Type", selection: $payType) {
+                        Text("Hourly").tag("Hourly")
+                        Text("Total").tag("Total")
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    
                     HStack {
                         Text(currencyFormatter.currencySymbol)
                         TextField("Amount", text: $payAmount)

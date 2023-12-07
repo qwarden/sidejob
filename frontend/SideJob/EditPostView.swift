@@ -25,7 +25,16 @@ struct EditPostView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var alertTitle = ""
-
+    
+    @State private var lastValidPayAmount: String = ""
+    let currencyFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 0
+        formatter.alwaysShowsDecimalSeparator = true
+        return formatter
+    }()
     
 
     init(job: Job) {
@@ -66,8 +75,17 @@ struct EditPostView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     
-                    TextField("Pay Amount", text: $payAmount)
-                        .keyboardType(.decimalPad)
+                    HStack {
+                        Text(currencyFormatter.currencySymbol)
+                        TextField("Amount", text: $payAmount)
+                            .keyboardType(.decimalPad)
+                            .onChange(of: payAmount) { newValue in
+                                let filtered = newValue.filter("0123456789.".contains)
+                                if filtered != newValue {
+                                    payAmount = filtered
+                                }
+                            }
+                    }
                 }
                 
                 Button("Update Job") {
