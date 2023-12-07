@@ -22,118 +22,95 @@ struct DetailsView: View {
     
     
     var body: some View {
-        VStack(spacing: 5){
-            
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.lightGray)
-                    .padding(.horizontal, 30)
-                    .frame(maxWidth: .infinity)
-                
-                ScrollView(){
+        ScrollView {
+            VStack(alignment: .leading, spacing: 5) {
+                Group {
                     Text("Description")
                         .font(.system(size: 20))
                         .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 35)
                         .foregroundColor(.darkGray)
-                        .padding(.bottom, -5)
-
+                        .padding(.bottom, 2)
+                    
                     Text(job.description)
-                        .font(.system(size: 20)).foregroundColor(.black)
-                        .padding(.horizontal, 35)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                        .lineLimit(nil)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .multilineTextAlignment(.leading)
+                        .font(.system(size: 20))
+                        .foregroundColor(.black)
                         .padding(.bottom, 20)
+                }
 
-                                        
-                    Group{
-                        Text("Pay")
-                            .font(.system(size: 20))
-                            .fontWeight(.semibold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 35)
-                            .foregroundColor(.darkGray)
-                            .padding(.bottom, -5)
-
-                        
-                        Text(String(format: "$%.2f \(job.payType)", job.payAmount))
-                            .font(.system(size: 20)).foregroundColor(.black)
-                            .padding(.horizontal, 35)
-                            .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)
-                            .padding(.bottom, 20)
-
-                    }
+                Group {
+                    Text("Pay")
+                        .font(.system(size: 20))
+                        .fontWeight(.semibold)
+                        .foregroundColor(.darkGray)
+                        .padding(.bottom, 2)
                     
-                    Group{
-                        Text("Location Zip")
-                            .font(.system(size: 20))
-                            .fontWeight(.semibold)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 35)
-                            .foregroundColor(.darkGray)
-                            .padding(.bottom, -5)
+                    Text(String(format: "$%.2f \(job.payType)", job.payAmount))
+                        .font(.system(size: 20))
+                        .foregroundColor(.black)
+                        .padding(.bottom, 20)
+                }
 
-                        
-                        Text(job.location)
-                            .font(.system(size: 20))
-                            .foregroundColor(.black)
-                            .frame(maxWidth: .infinity, maxHeight: 120, alignment: .leading).padding(.horizontal, 35)
-                            .scrollContentBackground(.hidden)
-                            .padding(.bottom, 20)
-                    }
+                Group {
+                    Text("Location Zip")
+                        .font(.system(size: 20))
+                        .fontWeight(.semibold)
+                        .foregroundColor(.darkGray)
+                        .padding(.bottom, 2)
                     
+                    Text(job.location)
+                        .font(.system(size: 20))
+                        .foregroundColor(.black)
+                        .padding(.bottom, 20)
+                }
+
+                Group {
+                    Text("Posted On")
+                        .font(.system(size: 20))
+                        .fontWeight(.semibold)
+                        .foregroundColor(.darkGray)
+                        .padding(.bottom, 2)
+                    
+                    Text(job.createdAt.formatted(date: .complete, time: .omitted))
+                        .font(.system(size: 20))
+                        .foregroundColor(.black)
+                        .padding(.bottom, 20)
+                }
+
+                if (!profileDisabled) {
                     Group{
-                        Text("Posted On")
+                        
+                        Text("Posted By")
                             .font(.system(size: 20))
                             .fontWeight(.semibold)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 35)
                             .foregroundColor(.darkGray)
                             .padding(.bottom, -5)
-
                         
-                        Text(job.createdAt.formatted(date: .complete, time: .omitted))
-                            .font(.system(size: 20))
-                            .foregroundColor(.black)
-                            .frame(maxWidth: .infinity, maxHeight: 120, alignment: .leading).padding(.horizontal, 35)
-                            .scrollContentBackground(.hidden)
-                            .padding(.bottom, 20)
-
+                        
+                        NavigationLink(
+                            destination: PosterProfileView(poster: poster),
+                            label: {
+                                Text("\(poster.name)'s Profile")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.blue)
+                                    .cornerRadius(10)
+                            }
+                        )
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .topLeading)
                     }
-                    if (!profileDisabled) {
-                        Group{
-                            
-                            Text("Posted By")
-                                .font(.system(size: 20))
-                                .fontWeight(.semibold)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.horizontal, 35)
-                                .foregroundColor(.darkGray)
-                                .padding(.bottom, -5)
-                            
-                            
-                            NavigationLink(
-                                destination: PosterProfileView(poster: poster),
-                                label: {
-                                    Text("\(poster.name)'s Profile")
-                                        .padding(.horizontal, 35)
-                                        .font(.system(size: 20))
-                                        .foregroundColor(.blue)
-                                        .cornerRadius(10)
-                                }
-                            )
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment:  .topLeading)
-                        }
-                    }
-                }.padding(.horizontal, 15).padding(.vertical, 20)
+                }
             }
-        }.navigationBarTitle(job.title).onAppear {
+            .padding(.horizontal, 35)
+            .padding(.vertical, 20)
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.lightGray))
+            .padding(.horizontal, 15)
+        }
+        .navigationBarTitle(job.title)
+        .onAppear {
             loadUser(id: job.postedByID)
         }
     }
+    
     
     func loadUser(id: Int) {
         client.fetch(verb: "GET", endpoint: "/users/\(id)", auth: true) { result in
