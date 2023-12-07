@@ -181,6 +181,10 @@ class Client: ObservableObject {
                 }
             }
         }
+        else {
+            self.isInitializing = false
+            self.loggedIn = false
+        }
     }
     
     func logout() {
@@ -284,6 +288,7 @@ class Client: ObservableObject {
         } catch {
             self.tokens = nil
             print("Error loading tokens")
+            isInitializing = false
             return false
         }
     }

@@ -77,6 +77,7 @@ struct PostView: View {
                 .alert(isPresented: $showAlert) {
                     Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
+                .navigationBarTitle("Post Job", displayMode: .inline)
                 .navigationBarItems(leading: Button("Cancel") {
                     self.presentationMode.wrappedValue.dismiss()
                 })
