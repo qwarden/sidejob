@@ -62,9 +62,9 @@ struct ProfileView: View {
     
     //@Binding var imageName: String
     var body: some View {
+        NavigationView(){
             VStack(spacing: 20){
                 HStack(){
-                    
                     Text("").frame(maxWidth: .infinity, alignment: .leading)
                     if (isEditing == false){
                         Text("Profile")
@@ -85,7 +85,7 @@ struct ProfileView: View {
                         }.frame(maxWidth: .infinity, alignment: .trailing)
                             .padding(.trailing, 30)
                             .font(.system(size: 20))
-                            
+                        
                     }
                     else{
                         Button(action: {
@@ -98,9 +98,9 @@ struct ProfileView: View {
                         }.frame(maxWidth: .infinity, alignment: .trailing)
                             .padding(.trailing, 30)
                             .font(.system(size: 20))
-                        .alert(isPresented: $showEditAlert) {
-                            Alert(title: Text("Cannot update profile"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                        }
+                            .alert(isPresented: $showEditAlert) {
+                                Alert(title: Text("Cannot update profile"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                            }
                         
                     }
                     
@@ -214,7 +214,7 @@ struct ProfileView: View {
                     }
                     else {
                         NavigationLink(
-                            destination: MyListingsView(user: user),
+                            destination: MyListingsView(isUser: true, userID: -1),
                             label: {
                                 Text("My Listings").padding(.vertical, 20).padding(.horizontal, 80).font(.system(size: 20))
                             }
@@ -292,12 +292,13 @@ struct ProfileView: View {
                         EmptyView()
                     }.hidden()
                     
-                    }
-                    
-                }.padding(.bottom, 30)
-            .onAppear {
-                loadProfile()
-            }
+                }
+                
+            }.padding(.bottom, 30)
+                .onAppear {
+                    loadProfile()
+                }
+        }
     }
     
     private func deleteProfile() {

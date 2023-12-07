@@ -23,7 +23,6 @@ struct DetailsView: View {
     
     var body: some View {
         VStack(spacing: 30){
-            
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color.lightGray)
@@ -114,7 +113,7 @@ struct DetailsView: View {
                             .foregroundColor(.darkGray)
                 
                         NavigationLink(
-                            destination: PosterProfileView(poster: poster),
+                            destination: PosterProfileView(postedById: job.postedByID),
                             label: {
                                 Text("\(poster.name)'s Profile")
                                     .padding(.vertical, 20)
