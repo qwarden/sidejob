@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-extension Color{
-    static let buttonColor = Color(red: 60/255, green: 100/255, blue: 150/255)
-    static let darkGray = Color(red: 100/255, green: 100/255, blue: 100/255)
-    static let lightGray = Color(red: 220/255, green: 230/255, blue: 270/255)
-}
 
 struct UserUpdate: Codable {
     var name: String
@@ -224,7 +219,7 @@ struct ProfileView: View {
                                 Text("My Listings").padding(.vertical, 20).padding(.horizontal, 80).font(.system(size: 20))
                             }
                         ).foregroundColor(.white)
-                            .background(Color.buttonColor)
+                            .background(Color.blue)
                             .cornerRadius(10)
                             .padding(.top, 0)
                     }
@@ -238,7 +233,7 @@ struct ProfileView: View {
                             .padding(.horizontal, 90)
                             .font(.system(size: 20))
                             .foregroundColor(.white)
-                            .background(Color.buttonColor)
+                            .background(Color.blue)
                             .cornerRadius(10)
                             .padding(.top, 0)
                             .padding(.leading, 28)

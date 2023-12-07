@@ -15,41 +15,32 @@ struct FilterView: View {
     @Binding var radius: Int
     @Binding var isFiltering: Bool
     
-    @State private var location: String = ""
     @State private var useCurrentLocation = false
     @State private var currentZipCode: String?
-    
-    @State private var zipCodeErrorMessage = ""
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     
     var body: some View {
-        Text("Filter Job Locations:").font(.system(size: 24, weight: .bold, design: .default)).foregroundColor(Color(.systemBlue)).padding()
         NavigationView {
-            VStack(spacing: 25) {
-                Section() {
-                    HStack() {
-                        Text("Enter Zip Code:")
-                        TextField("Zip Code", text: $userZipCode)
-                            .keyboardType(.numberPad)
-                    }
+            Form {
+                Section(header: Text("Location")) {
+                    TextField("Enter Zip Code", text: $userZipCode)
+                        .keyboardType(.numberPad)
+                    
                     Toggle("Use Current Location", isOn: $useCurrentLocation)
                         .onChange(of: useCurrentLocation) { newValue in
                             if newValue {
                                 getCurrentLocationZipCode()
                             }
                         }
-                    //what the fuck does this do
+                    
                     if let currentZipCode = currentZipCode {
                         Text("Current Zip Code: \(currentZipCode)")
                             .foregroundColor(.secondary)
                     }
                 }
-                // Display error if there is one
-                if (zipCodeErrorMessage != "") {
-                    Text(zipCodeErrorMessage).foregroundColor(Color.red)
-                }
                 
-                HStack {
-                    Text("Radius:")
+                Section(header: Text("Radius")) {
                     Picker("Select Radius", selection: $radius) {
                         Text("10 miles").tag(10)
                         Text("25 miles").tag(25)
@@ -57,42 +48,46 @@ struct FilterView: View {
                         Text("100 miles").tag(100)
                     }
                     .pickerStyle(MenuPickerStyle())
-                    .padding()
                 }
                 
-                // button to filter
-                Button("Filter Jobs") {
-                    if (FilterJobValidation()) {
-                        filteringByLocation = true
-                        isFiltering = true
-                        presentationMode.wrappedValue.dismiss()
+                Section {
+                    Button("Filter Jobs") {
+                        if validateInputs() {
+                            filteringByLocation = true
+                            isFiltering = true
+                            presentationMode.wrappedValue.dismiss()
+                        } else {
+                            showAlert = true
+                        }
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                     }
                 }
-                
-            }.padding().padding()
+            }
+            .navigationBarTitle("Filter Jobs", displayMode: .inline)
+            .navigationBarItems(leading: Button("Cancel") {
+                self.presentationMode.wrappedValue.dismiss()
+            })
         }
     }
     
-    func FilterJobValidation() -> Bool {
-        if userZipCode == "" {
-            zipCodeErrorMessage = "Zip Code Cannot Be Empty"
+    private func validateInputs() -> Bool {
+        if userZipCode.isEmpty {
+            alertMessage = "Zip Code cannot be empty."
+            return false
+        } else if userZipCode.count != 5 {
+            alertMessage = "Zip Code must be 5 digits."
             return false
         }
-        else if userZipCode.count != 5 {
-            zipCodeErrorMessage = "Zip Code Must be 5 Digits"
-            return false
-        }
-        else {
-            return true
-        }
-        
+        return true
     }
-        
+    
     func getCurrentLocationZipCode() {
         locationManager.getLocationZipCode() { zipCode in
             if let zipCode = zipCode {
                 DispatchQueue.main.async {
-                    userZipCode = zipCode
+                    self.userZipCode = zipCode
                 }
             }
         }
