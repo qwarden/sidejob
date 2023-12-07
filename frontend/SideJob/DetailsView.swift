@@ -57,7 +57,7 @@ struct DetailsView: View {
                             .padding(.bottom, -5)
 
                         
-                        Text("$\(job.payAmount) \(job.payType)")
+                        Text(String(format: "$%.2f \(job.payType)", job.payAmount))
                             .font(.system(size: 20)).foregroundColor(.black)
                             .padding(.horizontal, 35)
                             .frame(maxWidth: .infinity, maxHeight: 40, alignment: .leading)

@@ -23,6 +23,16 @@ struct PostView: View {
     @State private var showAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
+    
+    @State private var lastValidPayAmount: String = ""
+    let currencyFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 0
+        formatter.alwaysShowsDecimalSeparator = true
+        return formatter
+    }()
 
     var body: some View {
         NavigationView {
@@ -47,21 +57,23 @@ struct PostView: View {
                 }
                 
                 Section(header: Text("Pay")) {
-                    Picker("Pay Type", selection: $payType) {
-                        Text("Hourly").tag("Hourly")
-                        Text("Total").tag("Total")
+                    HStack {
+                        Text(currencyFormatter.currencySymbol)
+                        TextField("Amount", text: $payAmount)
+                            .keyboardType(.decimalPad)
+                            .onChange(of: payAmount) { newValue in
+                                let filtered = newValue.filter("0123456789.".contains)
+                                if filtered != newValue {
+                                    payAmount = filtered
+                                }
+                            }
                     }
-                    .pickerStyle(SegmentedPickerStyle())
-                    
-                    TextField("Pay Amount", text: $payAmount)
-                        .keyboardType(.decimalPad)
                 }
                 
                 Button("Post Job") {
                     postJob()
                 }
                 
-                .navigationBarTitle("Post Job")
                 .alert(isPresented: $showAlert) {
                     Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
@@ -74,18 +86,19 @@ struct PostView: View {
         
     private func postJob() {
         guard !title.isEmpty, !description.isEmpty, !location.isEmpty else {
-            alertMessage = "please fill in all fields."
+            alertMessage = "Please fill in all fields."
             showAlert = true
             return
         }
         
-        guard let payAmountDub = Double(payAmount) else {
-            alertMessage = "invalid pay amount."
+        let numericString = payAmount.filter("0123456789.".contains)
+        guard let payAmountDouble = Double(numericString) else {
+            alertMessage = "Invalid pay amount."
             showAlert = true
             return
         }
         
-        let newJob = SendJob(title: title, description: description, payAmount: payAmountDub, location: location, payType: payType)
+        let newJob = SendJob(title: title, description: description, payAmount: payAmountDouble, location: location, payType: payType)
         
         let encoder = JSONEncoder()
 
