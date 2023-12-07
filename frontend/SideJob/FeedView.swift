@@ -13,12 +13,16 @@ struct FeedView: View {
     @State var filteringByLocation = false
     @EnvironmentObject private var client: Client
     @EnvironmentObject private var locationObject: LocationManager
+    @State private var refreshID = UUID()
     
     
     var body: some View {
         NavigationView {
             VStack {
-                JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation)
+                JobListView(endpoint: "/jobs/", filteringByLocation: $filteringByLocation, refreshID: refreshID)
+                    .refreshable {
+                        self.refreshID = UUID()
+                    }
                 
                 HStack {
                     FloatingActionButtonFilter(action: {

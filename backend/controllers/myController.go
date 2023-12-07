@@ -63,6 +63,12 @@ func (u MyController) Delete(c *gin.Context) {
 	userID, err := auth.GetIDFromContext(c)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := db.Where("posted_by_id = ?", userID).Delete(&models.Job{}).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not delete user's jobs"})
+		return
 	}
 
 	if err := db.Delete(&models.User{}, userID).Error; err != nil {
@@ -70,7 +76,7 @@ func (u MyController) Delete(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"status": "user deleted successfully"})
+	c.JSON(http.StatusOK, gin.H{"status": "user and associated jobs deleted successfully"})
 }
 
 func (u MyController) RetrieveJobs(c *gin.Context) {

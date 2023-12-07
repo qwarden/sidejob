@@ -35,7 +35,7 @@ func NewRouter() *gin.Engine {
 		myGroup.GET("/profile", myCtrl.Retrieve)
 		myGroup.GET("/jobs", myCtrl.RetrieveJobs)
 		myGroup.PATCH("/profile", myCtrl.Update)
-		myGroup.DELETE("/account", myCtrl.Delete)
+		myGroup.DELETE("/profile", myCtrl.Delete)
 	}
 
 	jobGroup := r.Group("jobs").Use(middleware.AuthHandler())

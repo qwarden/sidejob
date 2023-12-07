@@ -41,6 +41,7 @@ struct ProfileView: View {
     @State var askToSignOut: Bool = false
     @State private var alertMessage: String = ""
     @State private var cannotSave = false
+    @State private var showDeleteConfirmation = false
     
     func loadProfile() {
         client.fetch(verb: "GET", endpoint: "/my/profile", auth: true) { result in
@@ -216,9 +217,9 @@ struct ProfileView: View {
                             .cornerRadius(10)
                             .padding(.top, 0)
                     }
-                    else{
+                    else {
                         NavigationLink(
-                            destination: ListingsView(user: user),
+                            destination: MyListingsView(user: user),
                             label: {
                                 Text("My Listings").padding(.vertical, 20).padding(.horizontal, 80).font(.system(size: 20))
                             }
@@ -269,6 +270,29 @@ struct ProfileView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
                     
+                    if isEditing {
+                        Button("Delete Profile") {
+                            self.showDeleteConfirmation = true
+                        }
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 80)
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
+                        .background(Color.red)
+                        .cornerRadius(10)
+                        .frame(maxWidth: .infinity)
+                        .alert(isPresented: $showDeleteConfirmation) {
+                            Alert(
+                                title: Text("Delete Profile?"),
+                                message: Text("This action cannot be undone."),
+                                primaryButton: .destructive(Text("Delete")) {
+                                    deleteProfile()
+                                },
+                                secondaryButton: .cancel()
+                            )
+                        }
+                    }
+                    
                     NavigationLink(destination: WelcomeView().navigationBarBackButtonHidden(), isActive: $navigateToNextView) {
                         EmptyView()
                     }.hidden()
@@ -279,6 +303,20 @@ struct ProfileView: View {
             .onAppear {
                 loadProfile()
             }
+    }
+    
+    private func deleteProfile() {
+        client.fetch(verb: "DELETE", endpoint: "/my/account", auth: true) { (result: Result<Data, NetworkError>) in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    client.logout()
+                    self.navigateToNextView = true
+                case .failure(_):
+                    self.showAlert = true
+                }
+            }
+        }
     }
          
 
