@@ -181,6 +181,7 @@ class Client: ObservableObject {
     }
     
     func logout() {
+        self.tokens = nil
         let emptyTokens = Tokens(accessToken: "", refreshToken: "")
         saveTokens(emptyTokens)
         loggedIn = false
@@ -252,9 +253,15 @@ class Client: ObservableObject {
         do {
             let data = try JSONEncoder().encode(tokens)
             try data.write(to: url, options: [.atomic])
+            print("Tokens saved")
         } catch {
             print("Error saving tokens: \(error)")
         }
+    }
+    
+    func updateTokens(newTokens: Tokens) {
+        self.tokens = newTokens
+        saveTokens(newTokens)
     }
     
     func loadTokens() -> Bool {
@@ -268,9 +275,11 @@ class Client: ObservableObject {
             let data = try Data(contentsOf: url)
             let decoder = JSONDecoder()
             self.tokens = try decoder.decode(Tokens.self, from:data)
+            print("Tokens loaded")
             return true
         } catch {
             self.tokens = nil
+            print("Error loading tokens")
             return false
         }
     }
