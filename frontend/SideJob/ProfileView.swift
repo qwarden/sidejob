@@ -20,12 +20,8 @@ struct UserUpdate: Codable {
     }
 }
 
-
-
-
 struct ProfileView: View {
     @State private var user: User = User()
-
     @EnvironmentObject var client: Client
     
     @State private var showSaveAlert = false
@@ -38,32 +34,11 @@ struct ProfileView: View {
     @State private var cannotSave = false
     @State private var showDeleteConfirmation = false
     
-    func loadProfile() {
-        client.fetch(verb: "GET", endpoint: "/my/profile", auth: true) { result in
-            switch result {
-            case .success(let data):
-                do {
-                    let decoder = JSONDecoder()
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                    dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-                    decoder.dateDecodingStrategy = .formatted(dateFormatter)
-                    let user = try decoder.decode(User.self, from: data)
-                    self.user = user
-                } catch {
-                    print("Decoding error: \(error)")
-                }
-            case .failure(let error):
-                print("Fetch error: \(error)")
-            }
-        }
-    }
     
     //@Binding var imageName: String
     var body: some View {
         NavigationView(){
-            VStack(spacing: 20){
+            VStack(spacing: 30){
                 HStack(){
                     Text("").frame(maxWidth: .infinity, alignment: .leading)
                     if (isEditing == false){
@@ -73,8 +48,8 @@ struct ProfileView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
                     else{
-                        Text("Edit Profile")
-                            .font(.system(size: 25))
+                        Text("Edit")
+                            .font(.title).bold()
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
                     
@@ -293,6 +268,29 @@ struct ProfileView: View {
                 }
         }
     }
+    
+    private func loadProfile() {
+        client.fetch(verb: "GET", endpoint: "/my/profile", auth: true) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                    dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+                    decoder.dateDecodingStrategy = .formatted(dateFormatter)
+                    let user = try decoder.decode(User.self, from: data)
+                    self.user = user
+                } catch {
+                    print("Decoding error: \(error)")
+                }
+            case .failure(let error):
+                print("Fetch error: \(error)")
+            }
+        }
+    }
+
     
     private func deleteProfile() {
         client.fetch(verb: "DELETE", endpoint: "/my/profile", auth: true) { (result: Result<Data, NetworkError>) in

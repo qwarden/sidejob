@@ -18,7 +18,6 @@ struct FeedView: View {
                 VStack {
                   HStack {
                         Text("Jobs")
-
                             .font(.title)
                             .bold()
                             .padding(.leading)
