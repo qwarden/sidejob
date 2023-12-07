@@ -14,7 +14,6 @@ struct FeedView: View {
     @EnvironmentObject private var client: Client
     @EnvironmentObject private var locationObject: LocationManager
     
-    
     var body: some View {
         NavigationView {
             VStack {
@@ -39,6 +38,7 @@ struct FeedView: View {
             }
         }
     }
+    
     struct FloatingActionButtonPost: View {
         var action: () -> Void
         
