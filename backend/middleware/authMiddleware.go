@@ -3,7 +3,6 @@ package middleware
 import (
 	"net/http"
   "strings"
-  "fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/qwarden/sidejob/backend/auth"
@@ -14,7 +13,6 @@ func AuthHandler() gin.HandlerFunc {
   return func (c *gin.Context) {
     cfg := config.GetConfig()
     strHeader := c.Request.Header.Get("Authorization")
-    fmt.Println(strHeader)
     authHeader := strings.Split(strHeader, " ")
 
     if len(authHeader) != 2 {

@@ -19,7 +19,6 @@ struct JobListView: View {
     var body: some View {
         VStack {
             NavigationView {
-                // Add a button at the top to transition to the Filter View
                 VStack {
                     ZStack(alignment: .bottomTrailing) {
                         List {
@@ -112,9 +111,7 @@ struct JobListView: View {
         client.fetch(verb: "GET", endpoint: endpoint, auth: true) { result in
             switch result {
             case .success(let data):
-                print(data)
                 let decoder = JSONDecoder()
-                //decoder.dateDecodingStrategy = .iso8601
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
                 dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -126,12 +123,11 @@ struct JobListView: View {
                     self.jobs = decodedJobs
                 } catch {
                     self.loadError = true
+                    
                     print("Error decoding jobs: \(error.localizedDescription)")
-                    // TODO: handle decoding error
                 }
             case .failure(_):
                 self.loadError = true
-                // TODO: handle networking error
             }
         }
     }
